@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::get('report', function (){
     return view('report');
 });
+
+Route::get('report', 'ReportController@getReport')->name('report');

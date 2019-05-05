@@ -3,7 +3,8 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
+import DatePicker from 'vue-md-date-picker';
+import VueRouter from 'vue-router'
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -18,8 +19,16 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+export const bus = new Vue();
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('report-component', require('./components/ReportComponent.vue').default);
+Vue.component('modal', require('./components/RequireModalComponent.vue').default);
+Vue.component('main-report-component', require('./components/MainReportComponent.vue').default);
+Vue.component('table-component', require('./components/TableComponent.vue').default);
+Vue.component('demo', require('./components/ReportTableComponent.vue').default);
+Vue.component('datepicker', DatePicker);
+Vue.use(VueRouter);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
