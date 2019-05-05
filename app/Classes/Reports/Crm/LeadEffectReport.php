@@ -2,6 +2,7 @@
 
 namespace App\Classes\Reports\Crm;
 
+use App\Classes\Connectors\Connectors;
 use Illuminate\Support\Facades\DB;
 use PDO;
 
@@ -10,46 +11,40 @@ use PDO;
  *
  * @package App\Classes\Reports\Crm
  */
-class LeadEffectReport
+class LeadEffectReport extends Connectors
 {
-    public function query()
-    {
+    public function report($type, $report_type, $from = null, $to = null){
 
-        $dbh = new PDO('mysql:host=localhost;dbname=crm', 'prodengi', 'prodengi');
+        if($type == 'db'){
+            $this->connect($report_type);
+        }else{
+            $this->getHttp($report_type);
+        }
 
-        $query = DB::connection($dbh)
-                   ->table('crm_request_in')
-                   ->leftJoin('crm_request', 'crm_request.request_in_id', '=', 'crm_request_in.id')
-                   ->leftJoin('crm_send_product', 'crm_send_product.request_id', '=', 'crm_request.id')
-                   ->leftJoin(
-                       'crm_send_product_status', 'crm_send_product_status.id', '=',
-                       'crm_send_product.send_product_status_id'
-                   )
-                   ->leftJoin('crm_company', 'crm_company.id', '=', 'crm_request_in.company_id')
-                   ->leftJoin('crm_product', 'crm_product.id', '=', 'crm_request_in.product_id')
-                   ->leftJoin(
-                       'crm_product_currency', 'crm_product_currency.id', '=', 'crm_request_in.product_currency_id'
-                   )
-                   ->where('crm_request.oracle_version', 3)
-                   ->where('crm_request.send_product_date', '>=', '')
-                   ->where('crm_request.send_product_date', '<=', '')
-                   ->select(
-                       'crm_request.send_product_date',
-                       'crm_send_product_status.name',
-                       'crm_request.name_full',
-                       'crm_request.phone_mob',
-                       'crm_request.document_inn',
-                       'crm_company.name',
-                       'crm_product.name',
-                       'crm_request.affiliate_id',
-                       'crm_request.amount_product',
-                       'crm_product_currency.code',
-                       'crm_request.address_region_name_arch',
-                       'crm_request.id',
-                       'crm_request.email'
-                   )
-                   ->get()
-        ;
-        dd($query);
+        $sql = 'select
+                cin.send_product_date,
+                stat.name,
+                cin.name_full,
+                cin.phone_mob,
+                cin.document_inn,
+                com.name,
+                prd.name,
+                cin.affiliate_id,
+                cin.amount_product,
+                prdc.code,
+                cin.address_region_name_arch,
+                cin.id,
+                cin.email
+                from crm_request_in cin
+                left join crm_request cr on cr.request_in_id = cin.id
+                left join crm_send_product spr on spr.request_id = cr.id
+                left join crm_send_product_status stat on stat.id = spr.send_product_status_id
+                left join crm_company com on com.id = cin.company_id
+                left join crm_product prd on prd.id = cin.product_id
+                left join crm_product_currency prdc on prdc.id = cin.product_currency_id
+                WHERE cin.send_product_date >= \''.$from.' 00:00:00 \'
+                and cin.send_product_date <= \''.$to.' 23:59:59 \'';
+
+        $result = $this->query($sql);
     }
 }

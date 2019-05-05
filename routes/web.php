@@ -19,4 +19,5 @@ Route::get('report', function (){
     return view('report');
 });
 
+Route::get('users/data-table', 'UserData@getUsers')->name('users.table');
 Route::get('report', 'ReportController@getReport')->name('report');
