@@ -4,15 +4,15 @@
             <div class="row">
                 <main-report-component @submitClick="submitClick"></main-report-component>
                 <div class="col-md-9" id="table">
-                    <div class="col" ><h3>{{report}}</h3></div>
+                    <div class="col"><h3>{{report}}</h3></div>
                     <report-component @sendDate="sendDate"></report-component>
-                    <div class="data-table">
+                    <div class="data-table" v-if="empty">
                         <div class="main-table">
                             <table class="ui celled table">
                                 <thead>
                                 <tr>
                                     <th class="table-head">#</th>
-                                    <th v-for="column in columns" :key="column" @click="sortByColumn(column)"
+                                    <th v-for="column in columns" :key="column"
                                         class="table-head">
                                         {{ column | columnHead }}
                                         <span v-if="column === sortedColumn">
@@ -48,7 +48,7 @@
                                 <li class="page-item" :class="{'disabled': currentPage === pagination.meta.last_page }">
                                     <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Next</a>
                                 </li>
-                                <span style="margin-top: 8px;"> &nbsp; <i>Displaying {{ pagination.data.length }} of {{ pagination.meta.total }} entries.</i></span>
+                                <span style="margin-top: 8px;"> &nbsp; <i>Displaying {{ pagination.report.length }} of {{ pagination.meta.total }} entries.</i></span>
                             </ul>
                         </nav>
                     </div>
@@ -61,13 +61,14 @@
 <script type="text/ecmascript-6">
     export default {
         props:    {
-            fetchUrl: {type: String, required: true},
-            columns:  {type: Array, required: true},
+            fetchUrl: {type: String, required: true}
         },
         data() {
             return {
+                empty:        false,
+                columns:      [],
                 tableData:    [],
-                report: "",
+                report:       "",
                 url:          '',
                 pagination:   {
                     meta: {to: 1, from: 1}
@@ -75,9 +76,13 @@
                 offset:       4,
                 currentPage:  1,
                 perPage:      5,
-                sortedColumn: this.columns[0],
+                sortedColumn: '',
                 order:        'asc',
-                type: ''
+                type:         '',
+                report_id:    '',
+                date_end:     '',
+                date_start:   '',
+
             }
         },
         watch:    {
@@ -87,9 +92,6 @@
                 },
                 immediate: true
             }
-        },
-        created() {
-            return this.fetchData()
         },
         mounted() {
             this.$on('report', 'mega');
@@ -124,19 +126,24 @@
             }
         },
         methods:  {
-            sendDate: function(dates) {
-                let dataFetchUrl = `${this.url}?page=${this.currentPage}&column=${this.sortedColumn}&order=${this.order}&per_page=${this.perPage}&date_start=${dates[0]}&date_end=${dates[1]}&type=${this.type}`;
-                axios.get(dataFetchUrl)
-                    .then(({data}) => {
-                        console.log(data);
-                    }).catch(error => this.tableData = [])
+            sendDate: function (dates) {
+
+                this.date_start = dates[0]
+                this.date_end   = dates[1]
+                this.fetchData()
             },
             fetchData() {
-                let dataFetchUrl = `${this.url}?page=${this.currentPage}&column=${this.sortedColumn}&order=${this.order}&per_page=${this.perPage}`
+                let dataFetchUrl = `${this.url}?page=${this.currentPage}&date_start=${this.date_start}&date_end=${this.date_end}&type=${this.type}&id=${this.report_id}`;
+                console.log(dataFetchUrl);
                 axios.get(dataFetchUrl)
                     .then(({data}) => {
                         this.pagination = data
-                        this.tableData  = data.data
+                        this.tableData  = data.report
+                        this.columns    = data.keys
+
+                        if (!this.columns.isEmpty) {
+                            this.empty = true;
+                        }
                     }).catch(error => this.tableData = [])
             },
             /**
@@ -151,8 +158,10 @@
              * @param pageNumber
              */
             changePage(pageNumber) {
+
                 this.currentPage = pageNumber
                 this.fetchData()
+                console.log(pageNumber)
             },
             /**
              * Sort the data by column.
@@ -166,9 +175,10 @@
                 }
                 this.fetchData()
             },
-            submitClick(data){
-                    this.report = data[0]
-                    this.type = data[1]
+            submitClick(data) {
+                this.report    = data[0]
+                this.type      = data[1]
+                this.report_id = data[2]
             }
         },
         filters:  {
@@ -176,10 +186,6 @@
                 return value.split('_').join(' ').toUpperCase()
             }
         },
-        name: 'DataTable'
+        name:     'DataTable'
     }
 </script>
-
-<style scoped>
-</style>
-view rawDataTable.vue hosted with ❤ by GitHub

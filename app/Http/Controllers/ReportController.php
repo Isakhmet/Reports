@@ -3,19 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Classes\GeneratorReport;
-use App\Http\Resources\ReportResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use PDO;
 
+/**
+ * Class ReportController
+ *
+ * @package App\Http\Controllers
+ */
 class ReportController extends Controller
 {
-    public function getReport(Request $request){
-
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return array
+     */
+    public function getReport(Request $request)
+    {
         $data = $request->toArray();
 
-        if(isset($data['type'])){
-            (new GeneratorReport)->generate($data);
+        if (isset($data['type'])) {
+            $report = (new GeneratorReport)->generate($data);
+            $result = [];
+
+            if ($report ?? false) {
+                $result['meta']   = [
+                    "current_page" => $report['current_page'],
+                    "from"         => $report['from'],
+                    "last_page"    => $report['last_page'],
+                    "path"         => $report['path'],
+                    "per_page"     => $report['per_page'],
+                    "to"           => $report['to'],
+                    "total"        => $report['total'],
+                ];
+                $result['keys']   = array_keys($report['data'][0]);
+                $result['report'] = $report['data'];
+            }
+
+            return $result;
         }
     }
 }

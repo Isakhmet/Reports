@@ -17,14 +17,12 @@
 </head>
 <body>
 <h3 class="ui block header">
-    Reports
+    Report
 </h3>
 <div id="app">
     <demo
-        fetch-url="{{url('users/data-table')}}"
-        :columns="['name', 'email', 'created_at']"
+        fetch-url="{{url('reports/')}}"
     ></demo>
-</div>
 </div>
 </body>
 </html>

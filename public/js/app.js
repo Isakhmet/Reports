@@ -1872,9 +1872,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    changeLink: function changeLink(title, type) {
-      console.log(title);
-      this.$emit('submitClick', [title, type]);
+    changeLink: function changeLink(title, type, id) {
+      console.log(id);
+      this.$emit('submitClick', [title, type, id]);
     }
   }
 });
@@ -2035,14 +2035,12 @@ __webpack_require__.r(__webpack_exports__);
     fetchUrl: {
       type: String,
       required: true
-    },
-    columns: {
-      type: Array,
-      required: true
     }
   },
   data: function data() {
     return {
+      empty: false,
+      columns: [],
       tableData: [],
       report: "",
       url: '',
@@ -2055,9 +2053,12 @@ __webpack_require__.r(__webpack_exports__);
       offset: 4,
       currentPage: 1,
       perPage: 5,
-      sortedColumn: this.columns[0],
+      sortedColumn: '',
       order: 'asc',
-      type: ''
+      type: '',
+      report_id: '',
+      date_end: '',
+      date_start: ''
     };
   },
   watch: {
@@ -2067,9 +2068,6 @@ __webpack_require__.r(__webpack_exports__);
       },
       immediate: true
     }
-  },
-  created: function created() {
-    return this.fetchData();
   },
   mounted: function mounted() {
     this.$on('report', 'mega');
@@ -2113,26 +2111,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     sendDate: function sendDate(dates) {
-      var _this = this;
-
-      var dataFetchUrl = "".concat(this.url, "?page=").concat(this.currentPage, "&column=").concat(this.sortedColumn, "&order=").concat(this.order, "&per_page=").concat(this.perPage, "&date_start=").concat(dates[0], "&date_end=").concat(dates[1], "&type=").concat(this.type);
-      axios.get(dataFetchUrl).then(function (_ref) {
-        var data = _ref.data;
-        console.log(data);
-      })["catch"](function (error) {
-        return _this.tableData = [];
-      });
+      this.date_start = dates[0];
+      this.date_end = dates[1];
+      this.fetchData();
     },
     fetchData: function fetchData() {
-      var _this2 = this;
+      var _this = this;
 
-      var dataFetchUrl = "".concat(this.url, "?page=").concat(this.currentPage, "&column=").concat(this.sortedColumn, "&order=").concat(this.order, "&per_page=").concat(this.perPage);
-      axios.get(dataFetchUrl).then(function (_ref2) {
-        var data = _ref2.data;
-        _this2.pagination = data;
-        _this2.tableData = data.data;
+      var dataFetchUrl = "".concat(this.url, "?page=").concat(this.currentPage, "&date_start=").concat(this.date_start, "&date_end=").concat(this.date_end, "&type=").concat(this.type, "&id=").concat(this.report_id);
+      console.log(dataFetchUrl);
+      axios.get(dataFetchUrl).then(function (_ref) {
+        var data = _ref.data;
+        _this.pagination = data;
+        _this.tableData = data.report;
+        _this.columns = data.keys;
+
+        if (!_this.columns.isEmpty) {
+          _this.empty = true;
+        }
       })["catch"](function (error) {
-        return _this2.tableData = [];
+        return _this.tableData = [];
       });
     },
 
@@ -2151,6 +2149,7 @@ __webpack_require__.r(__webpack_exports__);
     changePage: function changePage(pageNumber) {
       this.currentPage = pageNumber;
       this.fetchData();
+      console.log(pageNumber);
     },
 
     /**
@@ -2169,6 +2168,7 @@ __webpack_require__.r(__webpack_exports__);
     submitClick: function submitClick(data) {
       this.report = data[0];
       this.type = data[1];
+      this.report_id = data[2];
     }
   },
   filters: {
@@ -38315,7 +38315,7 @@ var render = function() {
                     staticClass: "item",
                     on: {
                       click: function($event) {
-                        return _vm.changeLink(_vm.crm[item], "crm")
+                        return _vm.changeLink(_vm.crm[item], "crm", item)
                       }
                     }
                   },
@@ -38588,198 +38588,200 @@ var render = function() {
               _vm._v(" "),
               _c("report-component", { on: { sendDate: _vm.sendDate } }),
               _vm._v(" "),
-              _c("div", { staticClass: "data-table" }, [
-                _c("div", { staticClass: "main-table" }, [
-                  _c("table", { staticClass: "ui celled table" }, [
-                    _c("thead", [
-                      _c(
-                        "tr",
-                        [
-                          _c("th", { staticClass: "table-head" }, [
-                            _vm._v("#")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.columns, function(column) {
-                            return _c(
-                              "th",
-                              {
-                                key: column,
-                                staticClass: "table-head",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.sortByColumn(column)
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(_vm._f("columnHead")(column)) +
-                                    "\n                                    "
-                                ),
-                                column === _vm.sortedColumn
-                                  ? _c("span", [
-                                      _vm.order === "asc"
-                                        ? _c("i", {
-                                            staticClass: "fas fa-arrow-up"
-                                          })
-                                        : _c("i", {
-                                            staticClass: "fas fa-arrow-down"
-                                          })
-                                    ])
-                                  : _vm._e()
-                              ]
-                            )
-                          })
-                        ],
-                        2
-                      )
+              _vm.empty
+                ? _c("div", { staticClass: "data-table" }, [
+                    _c("div", { staticClass: "main-table" }, [
+                      _c("table", { staticClass: "ui celled table" }, [
+                        _c("thead", [
+                          _c(
+                            "tr",
+                            [
+                              _c("th", { staticClass: "table-head" }, [
+                                _vm._v("#")
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.columns, function(column) {
+                                return _c(
+                                  "th",
+                                  { key: column, staticClass: "table-head" },
+                                  [
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(_vm._f("columnHead")(column)) +
+                                        "\n                                    "
+                                    ),
+                                    column === _vm.sortedColumn
+                                      ? _c("span", [
+                                          _vm.order === "asc"
+                                            ? _c("i", {
+                                                staticClass: "fas fa-arrow-up"
+                                              })
+                                            : _c("i", {
+                                                staticClass: "fas fa-arrow-down"
+                                              })
+                                        ])
+                                      : _vm._e()
+                                  ]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          [
+                            _vm.tableData.length === 0
+                              ? _c("tr", {}, [
+                                  _c(
+                                    "td",
+                                    {
+                                      staticClass: "lead text-center",
+                                      attrs: { colspan: _vm.columns.length + 1 }
+                                    },
+                                    [_vm._v("No data found.")]
+                                  )
+                                ])
+                              : _vm._l(_vm.tableData, function(data, key1) {
+                                  return _c(
+                                    "tr",
+                                    {
+                                      key: data.id,
+                                      staticClass: "m-datatable__row"
+                                    },
+                                    [
+                                      _c("td", [
+                                        _vm._v(_vm._s(_vm.serialNumber(key1)))
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._l(data, function(value, key) {
+                                        return _c("td", [_vm._v(_vm._s(value))])
+                                      })
+                                    ],
+                                    2
+                                  )
+                                })
+                          ],
+                          2
+                        )
+                      ])
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "tbody",
-                      [
-                        _vm.tableData.length === 0
-                          ? _c("tr", {}, [
+                    _vm.pagination && _vm.tableData.length > 0
+                      ? _c("nav", [
+                          _c(
+                            "ul",
+                            { staticClass: "pagination" },
+                            [
                               _c(
-                                "td",
+                                "li",
                                 {
-                                  staticClass: "lead text-center",
-                                  attrs: { colspan: _vm.columns.length + 1 }
-                                },
-                                [_vm._v("No data found.")]
-                              )
-                            ])
-                          : _vm._l(_vm.tableData, function(data, key1) {
-                              return _c(
-                                "tr",
-                                {
-                                  key: data.id,
-                                  staticClass: "m-datatable__row"
+                                  staticClass: "page-item",
+                                  class: { disabled: _vm.currentPage === 1 }
                                 },
                                 [
-                                  _c("td", [
-                                    _vm._v(_vm._s(_vm.serialNumber(key1)))
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm._l(data, function(value, key) {
-                                    return _c("td", [_vm._v(_vm._s(value))])
-                                  })
-                                ],
-                                2
-                              )
-                            })
-                      ],
-                      2
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm.pagination && _vm.tableData.length > 0
-                  ? _c("nav", [
-                      _c(
-                        "ul",
-                        { staticClass: "pagination" },
-                        [
-                          _c(
-                            "li",
-                            {
-                              staticClass: "page-item",
-                              class: { disabled: _vm.currentPage === 1 }
-                            },
-                            [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "page-link",
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.changePage(_vm.currentPage - 1)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Previous")]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm._l(_vm.pagesNumber, function(page) {
-                            return _c(
-                              "li",
-                              {
-                                staticClass: "page-item",
-                                class: {
-                                  active:
-                                    page == _vm.pagination.meta.current_page
-                                }
-                              },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "page-link",
-                                    attrs: { href: "javascript:void(0)" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.changePage(page)
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "page-link",
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.changePage(
+                                            _vm.currentPage - 1
+                                          )
+                                        }
                                       }
+                                    },
+                                    [_vm._v("Previous")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.pagesNumber, function(page) {
+                                return _c(
+                                  "li",
+                                  {
+                                    staticClass: "page-item",
+                                    class: {
+                                      active:
+                                        page == _vm.pagination.meta.current_page
                                     }
                                   },
-                                  [_vm._v(_vm._s(page))]
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "page-link",
+                                        attrs: { href: "javascript:void(0)" },
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.changePage(page)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(page))]
+                                    )
+                                  ]
                                 )
-                              ]
-                            )
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            {
-                              staticClass: "page-item",
-                              class: {
-                                disabled:
-                                  _vm.currentPage ===
-                                  _vm.pagination.meta.last_page
-                              }
-                            },
-                            [
+                              }),
+                              _vm._v(" "),
                               _c(
-                                "a",
+                                "li",
                                 {
-                                  staticClass: "page-link",
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.changePage(_vm.currentPage + 1)
-                                    }
+                                  staticClass: "page-item",
+                                  class: {
+                                    disabled:
+                                      _vm.currentPage ===
+                                      _vm.pagination.meta.last_page
                                   }
                                 },
-                                [_vm._v("Next")]
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "page-link",
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.changePage(
+                                            _vm.currentPage + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Next")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticStyle: { "margin-top": "8px" } },
+                                [
+                                  _vm._v("   "),
+                                  _c("i", [
+                                    _vm._v(
+                                      "Displaying " +
+                                        _vm._s(_vm.pagination.report.length) +
+                                        " of " +
+                                        _vm._s(_vm.pagination.meta.total) +
+                                        " entries."
+                                    )
+                                  ])
+                                ]
                               )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", { staticStyle: { "margin-top": "8px" } }, [
-                            _vm._v("   "),
-                            _c("i", [
-                              _vm._v(
-                                "Displaying " +
-                                  _vm._s(_vm.pagination.data.length) +
-                                  " of " +
-                                  _vm._s(_vm.pagination.meta.total) +
-                                  " entries."
-                              )
-                            ])
-                          ])
-                        ],
-                        2
-                      )
-                    ])
-                  : _vm._e()
-              ])
+                            ],
+                            2
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
             ],
             1
           )

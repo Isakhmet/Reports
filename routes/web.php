@@ -20,4 +20,4 @@ Route::get('report', function (){
 });
 
 Route::get('users/data-table', 'UserData@getUsers')->name('users.table');
-Route::get('report', 'ReportController@getReport')->name('report');
+Route::get('reports', 'ReportController@getReport')->name('reports');

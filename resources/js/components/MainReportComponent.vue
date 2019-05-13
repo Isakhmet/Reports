@@ -5,7 +5,7 @@
                 <div class="item">
                     <div class="header">CRM</div>
                     <div class="menu">
-                        <a class="item" @click="changeLink(crm[item], 'crm')"
+                        <a class="item" @click="changeLink(crm[item], 'crm', item)"
                            v-for="item in Object.keys(crm).sort((a,b) => b - a) " :key="item">{{
                             crm[item] }}</a>
                     </div>
@@ -75,9 +75,9 @@
             }
         },
         methods: {
-            changeLink: function (title, type) {
-                console.log(title);
-                this.$emit('submitClick', [title, type])
+            changeLink: function (title, type, id) {
+                console.log(id);
+                this.$emit('submitClick', [title, type, id])
             },
         }
     }
