@@ -25,7 +25,7 @@ class ReportController extends Controller
             $report = (new GeneratorReport)->generate($data);
             $result = [];
 
-            if ($report ?? false) {
+            if ($report['data'] ?? false && !empty($report['data'])) {
                 $result['meta']   = [
                     "current_page" => $report['current_page'],
                     "from"         => $report['from'],

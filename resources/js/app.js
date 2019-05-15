@@ -25,7 +25,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('report-component', require('./components/ReportComponent.vue').default);
 Vue.component('modal', require('./components/RequireModalComponent.vue').default);
 Vue.component('main-report-component', require('./components/MainReportComponent.vue').default);
-Vue.component('table-component', require('./components/TableComponent.vue').default);
 Vue.component('demo', require('./components/ReportTableComponent.vue').default);
 Vue.component('datepicker', DatePicker);
 Vue.use(VueRouter);
