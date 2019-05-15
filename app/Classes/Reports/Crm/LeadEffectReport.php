@@ -37,8 +37,8 @@ class LeadEffectReport extends Connectors implements Report
                 'crm_product_currency', 'crm_product_currency.id', '=', 'crm_request_in.product_currency_id'
             )
             ->where('crm_request_in.oracle_version', '=', 3)
-            ->where('crm_request_in.send_product_date', '>=', $from)
-            ->where('crm_request_in.send_product_date', '<=', $to)
+            ->where('crm_request_in.send_product_date', '>=', $from.' 00:00:00')
+            ->where('crm_request_in.send_product_date', '<=', $to.' 23:59:59')
             ->select(
                 'crm_request_in.send_product_date',
                 'crm_send_product_status.name',
