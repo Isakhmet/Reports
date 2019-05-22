@@ -14,21 +14,21 @@ class Cluster extends Connectors implements Report
 {
 
     /**
-     * @param     $report_type
+     * @param     $reportType
      * @param int $page
-     * @param int $per_page
+     * @param int $perPage
      * @param     $from
      * @param     $to
      *
      * @return mixed
      */
-    public function report($report_type, $page, $per_page, $from, $to)
+    public function report($reportType, $page, $perPage, $from, $to)
     {
-        $connect = $this->connect($report_type);
+        $connect = $this->connect($reportType);
         $query   = $connect->table('clusters')
                            ->where('created_at', '>=', $from . ' 00:00:00')
                            ->where('created_at', '<=', $to . ' 23:59:59')
-                           ->paginate($per_page)
+                           ->paginate($perPage)
         ;
         $result  = json_decode(json_encode($query), true);
 

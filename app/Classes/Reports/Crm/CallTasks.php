@@ -4,22 +4,21 @@ namespace App\Classes\Reports\Crm;
 
 use App\Classes\Connectors\Connectors;
 use App\Classes\Reports\Report;
-use Illuminate\Support\Facades\DB;
 
 class CallTasks extends Connectors implements Report
 {
     /**
-     * @param     $report_type
+     * @param     $reportType
      * @param int $page
-     * @param int $per_page
+     * @param int $perPage
      * @param     $from
      * @param     $to
      *
      * @return mixed
      */
-    public function report($report_type, $page = 1, $per_page = 15, $from, $to)
+    public function report($reportType, $page = 1, $perPage = 15, $from, $to)
     {
-        $connect = $this->connect($report_type);
+        $connect = $this->connect($reportType);
         $query = $connect
             ->table('crm_task')
             ->leftJoin('crm_task_status', 'crm_task_status.id', '=', 'crm_task.task_status_id')
@@ -59,7 +58,7 @@ class CallTasks extends Connectors implements Report
                      'crm_company.name',
                      'crm_utm_source.name'
             )
-            ->paginate($per_page)
+            ->paginate($perPage)
         ;
         $result  = json_decode(json_encode($query), true);
 

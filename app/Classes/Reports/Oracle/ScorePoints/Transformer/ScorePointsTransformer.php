@@ -51,9 +51,9 @@ class ScorePointsTransformer
      *
      * @return array
      */
-    public function transform_common(array $row): array
+    public function transformCommon(array $row): array
     {
-        $row['products'] = $this->replace_products($row);
+        $row['products'] = $this->replaceProducts($row);
 
         if (is_array($row['category'])) {
             $row['category'] = $row['category']['code'];
@@ -67,57 +67,12 @@ class ScorePointsTransformer
     }
 
     /**
-     * @param array $data
-     *
-     * @return array
-     * @throws \Exception
-     */
-    public function get_fields(array $data): array
-    {
-        $fields       = [];
-        $fields       = array_merge($fields, array_keys($data['fields']));
-        $fields       = array_unique($fields);
-        $fields_cache = cache('fields');
-
-        if (!$fields_cache) {
-            $fields_cache = Fields::get();
-            cache(['fields' => $fields_cache], 1440);
-        }
-
-        if (!empty($fields)) {
-            $fields = $fields_cache->whereIn('name', $fields);
-        }
-
-        $columns = new Collection(
-            [
-                'id'           => '#',
-                'created_at'   => 'Дата/Время',
-                'iin'          => 'ИИН',
-                'full_name'    => 'ФИО',
-                'mobile_phone' => 'Телефон',
-                'email'        => 'email',
-                'ore'          => 'Руда',
-                'products'     => 'Продукты',
-            ]
-        );
-
-        $columns = $columns->merge(
-            $fields->pluck('title', 'name')
-                   ->toArray()
-        )
-                           ->toArray()
-        ;
-
-        return $columns;
-    }
-
-    /**
      * @param       $data
      * @param array $columns
      *
      * @return array
      */
-    public function available_products($data, array $columns): array
+    public function availableProducts($data, array $columns): array
     {
         $data                        = json_decode(json_encode($data), true);
         $available_products          = json_decode($data['available_products'] ?? '', true);
@@ -148,11 +103,11 @@ class ScorePointsTransformer
      *
      * @return array
      */
-    public function only($data, $attributes)
+    public function only($data, ...$attributes)
     {
         $results = [];
 
-        foreach (is_array($attributes) ? $attributes : func_get_args() as $attribute) {
+        foreach ($attributes as $attribute) {
             $results[$attribute] = $data[$attribute] ?? null;
         }
 
@@ -164,7 +119,7 @@ class ScorePointsTransformer
      *
      * @return string
      */
-    public function replace_products(array $data): string
+    public function replaceProducts(array $data): string
     {
         if (!isset($data['passed_products_ids'])) {
             return '';

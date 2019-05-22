@@ -10,13 +10,13 @@ namespace App\Classes\Reports;
 interface Report
 {
     /**
-     * @param $report_type
+     * @param $reportType
      * @param $page
-     * @param $per_page
+     * @param $perPage
      * @param $from
      * @param $to
      *
      * @return mixed
      */
-    public function report($report_type, $page, $per_page, $from, $to);
+    public function report($reportType, $page, $perPage, $from, $to);
 }

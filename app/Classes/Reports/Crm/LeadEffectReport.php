@@ -13,17 +13,17 @@ use App\Classes\Reports\Report;
 class LeadEffectReport extends Connectors implements Report
 {
     /**
-     * @param      $report_type
+     * @param      $reportType
      * @param int  $page
-     * @param int  $per_page
+     * @param int  $perPage
      * @param null $from
      * @param null $to
      *
      * @return mixed
      */
-    public function report($report_type, $page, $per_page, $from = null, $to = null)
+    public function report($reportType, $page, $perPage, $from = null, $to = null)
     {
-        $connect = $this->connect($report_type);
+        $connect = $this->connect($reportType);
         $query   = $connect
             ->table('crm_request_in')
             ->leftJoin('crm_request', 'crm_request.request_in_id', '=', 'crm_request_in.id')
@@ -55,25 +55,11 @@ class LeadEffectReport extends Connectors implements Report
                 'crm_request_in.id',
                 'crm_request_in.email'
             )
-            ->paginate($per_page)
+            ->paginate($perPage)
         ;
 
         $result            = json_decode(json_encode($query), true);
-        $result['headers'] = [
-            'Дата_отправки',
-            'Статус_отправки',
-            'ФИО',
-            'Мобильный',
-            'ИИН',
-            'Компания',
-            'Продукт',
-            'affiliate_id',
-            'Сумма',
-            'Валюта',
-            'Регион',
-            'id',
-            'email',
-        ];
+        $result['headers'] = __('report.reports.leadEffect.headers');
 
         return $result;
     }

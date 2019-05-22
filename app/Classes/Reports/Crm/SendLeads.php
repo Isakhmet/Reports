@@ -8,17 +8,17 @@ use App\Classes\Reports\Report;
 class SendLeads extends Connectors implements Report
 {
     /**
-     * @param     $report_type
+     * @param     $reportType
      * @param int $page
-     * @param int $per_page
+     * @param int $perPage
      * @param     $from
      * @param     $to
      *
      * @return mixed
      */
-    public function report($report_type, $page = 1, $per_page = 15, $from, $to)
+    public function report($reportType, $page = 1, $perPage = 15, $from, $to)
     {
-        $connect = $this->connect($report_type);
+        $connect = $this->connect($reportType);
         $query = $connect
             ->table('crm_send_product')
             ->leftJoin('crm_send_product_status', 'crm_send_product_status.id', '=', 'crm_send_product.send_product_status_id')
@@ -55,7 +55,7 @@ class SendLeads extends Connectors implements Report
                      'crm_send_product.*',
                      'crm_utm_source.name as "Источник создания клиента"'
             )
-            ->paginate($per_page)
+            ->paginate($perPage)
         ;
         $result  = json_decode(json_encode($query), true);
 

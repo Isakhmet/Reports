@@ -15,36 +15,25 @@ use Illuminate\Support\Facades\Request;
 class ScorePoints extends Connectors implements Report
 {
     /**
-     * @param $report_type
+     * @param $reportType
      * @param $page
-     * @param $per_page
+     * @param $perPage
      * @param $from
      * @param $to
      *
      * @return array|mixed
      * @throws \Exception
      */
-    public function report($report_type, $page = 1, $per_page = 15, $from, $to)
+    public function report($reportType, $page = 1, $perPage = 15, $from, $to)
     {
-        $connect = $this->connect($report_type);
-
+        $connect = $this->connect($reportType);
         $first = $connect->table('score_results')
                          ->first()
         ;
 
         $fields  = array_keys(json_decode($first->fields, true));
         $fields  = array_unique($fields);
-        $columns =
-            [
-                'id'           => 'ID',
-                'created_at'   => 'Дата/Время',
-                'iin'          => 'ИИН',
-                'full_name'    => 'ФИО',
-                'mobile_phone' => 'Телефон',
-                'email'        => 'email',
-                'ore'          => 'Руда',
-                'products'     => 'Продукты',
-            ];
+        $columns = __('report.reports.scorePoints.headers');
 
         $data = $connect->table('fields')
                         ->whereIn('name', $fields)
@@ -68,9 +57,9 @@ class ScorePoints extends Connectors implements Report
 
                         $results = $results->map(
                             function ($item, $key) use ($keys, $transformer) {
-                                $array = $transformer->available_products($item, $keys);
+                                $array = $transformer->availableProducts($item, $keys);
 
-                                return $transformer->transform_common($array);
+                                return $transformer->transformСommon($array);
                             }
                         );
                         $data    = $results->toArray();
@@ -82,7 +71,7 @@ class ScorePoints extends Connectors implements Report
         $data  = cache('data');
         $data  = collect($data);
         $array = $transformer->paginate(
-            $data, $per_page, $page, [
+            $data, $perPage, $page, [
                      'path'     => Request::url(),
                      'pageName' => 'page',
                  ]
