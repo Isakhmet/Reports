@@ -13,8 +13,9 @@
                 <div class="item">
                     <div class="header">ORACLE</div>
                     <div class="menu">
-                        <a class="item" @click="changeLink(title)" v-for="(title, key) in oracle" :key="key">{{
-                            title }}</a>
+                        <a class="item" @click="changeLink(oracle[item], 'oracle', item)"
+                           v-for="item in Object.keys(oracle).sort((a,b) => b - a)" :key="item">{{
+                            oracle[item] }}</a>
                     </div>
                 </div>
                 <div class="item">
@@ -49,19 +50,18 @@
                 },
                 type:   '',
                 oracle: {
-                    'score_data':   'Скоринг данные',
-                    'score_points': 'Баллы скоринга',
-                    'client':       'Данные по клиентам',
-                    'cluster':      'Кластер',
-                    'alfa_bank':    'AlfaBank',
-                    'hcb_long':     'ХКБ лиды длинные',
-                    'hcb_short':    'ХКБ лиды короткие',
-                    'agency':       '123Agency'
+                    score_points: 'Скоринг данные',
+                    score_values: 'Баллы скоринга',
+                    client:       'Данные по клиентам',
+                    cluster:      'Кластер',
+                    alfa_bank:    'AlfaBank',
+                    hcb_long:     'ХКБ лиды длинные',
+                    hcb_short:    'ХКБ лиды короткие',
+                    agency:       '123Agency'
                 },
                 array:  [
                     {name: '# 001 - Входящие заявки(Детали)'},
-                    {name: '# 002 - Входящие заявки(Итоги)'},
-                    {name: '# 003 - Входящие заявки'},
+                    {name: '# 002 - Входящие заявки(Итоги)'},                    {name: '# 003 - Входящие заявки'},
                 ],
             }
         },
@@ -76,7 +76,6 @@
         },
         methods: {
             changeLink: function (title, type, id) {
-                console.log(id);
                 this.$emit('submitClick', [title, type, id])
             },
         }

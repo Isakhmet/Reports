@@ -42,6 +42,20 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
+        'oracle' => [
+            'driver' => 'pgsql',
+            'host' => env('ORACLE_DB_HOST', '127.0.0.1'),
+            'port' => env('ORACLE_DB_PORT', '5432'),
+            'database' => env('ORACLE_DB_DATABASE', 'score_service'),
+            'username' => env('ORACLE_DB_USERNAME', 'crm_service'),
+            'password' => env('ORACLE_DB_PASSWORD', 'crm_service'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'crm' => [
             'driver' => 'mysql',
             'host' => env('CRM_DB_HOST', '127.0.0.1'),

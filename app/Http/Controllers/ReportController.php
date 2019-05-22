@@ -35,7 +35,7 @@ class ReportController extends Controller
                     "to"           => $report['to'],
                     "total"        => $report['total'],
                 ];
-                $result['keys']   = array_keys($report['data'][0]);
+                $result['keys']   = $report['headers'];
                 $result['report'] = $report['data'];
             }
 
