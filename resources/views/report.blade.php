@@ -10,6 +10,10 @@
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{ asset('js/semantic.min.js') }}"></script>
     <style>
+        body {
+            height: 100%;
+            overflow: scroll;
+        }
         #table {
             margin-top: 50px;
         }

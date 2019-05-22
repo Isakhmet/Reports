@@ -74,7 +74,7 @@
                     meta: {to: 1, from: 1}
                 },
                 offset:       4,
-                currentPage:  1,
+                currentPage:  2,
                 perPage:      5,
                 sortedColumn: '',
                 order:        'asc',
@@ -109,6 +109,7 @@
                     from = 1
                 }
                 let to = from + (this.offset * 2)
+
                 if (to >= this.pagination.meta.last_page) {
                     to = this.pagination.meta.last_page
                 }
@@ -116,6 +117,7 @@
                 for (let page = from; page <= to; page++) {
                     pagesArray.push(page)
                 }
+
                 return pagesArray
             },
             /**
@@ -134,7 +136,7 @@
             },
             fetchData() {
                 let dataFetchUrl = `${this.url}?page=${this.currentPage}&date_start=${this.date_start}&date_end=${this.date_end}&type=${this.type}&id=${this.report_id}`;
-                console.log(dataFetchUrl);
+
                 axios.get(dataFetchUrl)
                     .then(({data}) => {
                         this.pagination = data

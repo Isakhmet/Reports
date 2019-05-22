@@ -1834,6 +1834,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1845,14 +1846,14 @@ __webpack_require__.r(__webpack_exports__);
       },
       type: '',
       oracle: {
-        'score_data': 'Скоринг данные',
-        'score_points': 'Баллы скоринга',
-        'client': 'Данные по клиентам',
-        'cluster': 'Кластер',
-        'alfa_bank': 'AlfaBank',
-        'hcb_long': 'ХКБ лиды длинные',
-        'hcb_short': 'ХКБ лиды короткие',
-        'agency': '123Agency'
+        score_points: 'Скоринг данные',
+        score_values: 'Баллы скоринга',
+        client: 'Данные по клиентам',
+        cluster: 'Кластер',
+        alfa_bank: 'AlfaBank',
+        hcb_long: 'ХКБ лиды длинные',
+        hcb_short: 'ХКБ лиды короткие',
+        agency: '123Agency'
       },
       array: [{
         name: '# 001 - Входящие заявки(Детали)'
@@ -1873,7 +1874,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     changeLink: function changeLink(title, type, id) {
-      console.log(id);
       this.$emit('submitClick', [title, type, id]);
     }
   }
@@ -2051,7 +2051,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       offset: 4,
-      currentPage: 1,
+      currentPage: 2,
       perPage: 5,
       sortedColumn: '',
       order: 'asc',
@@ -2119,7 +2119,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var dataFetchUrl = "".concat(this.url, "?page=").concat(this.currentPage, "&date_start=").concat(this.date_start, "&date_end=").concat(this.date_end, "&type=").concat(this.type, "&id=").concat(this.report_id);
-      console.log(dataFetchUrl);
       axios.get(dataFetchUrl).then(function (_ref) {
         var data = _ref.data;
         _this.pagination = data;
@@ -38284,21 +38283,26 @@ var render = function() {
           _c(
             "div",
             { staticClass: "menu" },
-            _vm._l(_vm.oracle, function(title, key) {
-              return _c(
-                "a",
-                {
-                  key: key,
-                  staticClass: "item",
-                  on: {
-                    click: function($event) {
-                      return _vm.changeLink(title)
+            _vm._l(
+              Object.keys(_vm.oracle).sort(function(a, b) {
+                return b - a
+              }),
+              function(item) {
+                return _c(
+                  "a",
+                  {
+                    key: item,
+                    staticClass: "item",
+                    on: {
+                      click: function($event) {
+                        return _vm.changeLink(_vm.oracle[item], "oracle", item)
+                      }
                     }
-                  }
-                },
-                [_vm._v(_vm._s(title))]
-              )
-            }),
+                  },
+                  [_vm._v(_vm._s(_vm.oracle[item]))]
+                )
+              }
+            ),
             0
           )
         ]),
