@@ -57,7 +57,7 @@ class ScorePoints extends Connectors implements Report
                             function ($item, $key) use ($keys, $transformer) {
                                 $array = $transformer->availableProducts($item, $keys);
 
-                                return $transformer->transformСommon($array);
+                                return $transformer->transformCommon($array);
                             }
                         );
                         $data    = $results->toArray();

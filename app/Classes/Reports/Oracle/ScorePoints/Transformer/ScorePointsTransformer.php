@@ -103,7 +103,7 @@ class ScorePointsTransformer
      *
      * @return array
      */
-    public function only($data, ...$attributes)
+    public function only($data, $attributes)
     {
         $results = [];
 
