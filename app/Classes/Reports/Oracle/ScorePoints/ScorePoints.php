@@ -30,7 +30,6 @@ class ScorePoints extends Connectors implements Report
         $first = $connect->table('score_results')
                          ->first()
         ;
-
         $fields  = array_keys(json_decode($first->fields, true));
         $fields  = array_unique($fields);
         $columns = __('report.reports.scorePoints.headers');
@@ -40,7 +39,6 @@ class ScorePoints extends Connectors implements Report
                         ->pluck('title', 'name')
                         ->toArray()
         ;
-
         $columns     = array_merge($columns, $data);
         $keys        = array_keys($columns);
         $headers     = array_values($columns);
@@ -67,7 +65,6 @@ class ScorePoints extends Connectors implements Report
                     }
                 )
         ;
-
         $data  = cache('data');
         $data  = collect($data);
         $array = $transformer->paginate(
@@ -78,7 +75,6 @@ class ScorePoints extends Connectors implements Report
         )
                              ->toArray()
         ;
-
         $array['headers'] = $headers;
         $array['data']    = $transformer->paginateOrder($array['data']);
 
