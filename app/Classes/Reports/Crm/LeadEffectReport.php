@@ -13,16 +13,17 @@ use App\Classes\Reports\Report;
 class LeadEffectReport extends Connectors implements Report
 {
     /**
-     * @param      $type
-     * @param      $report_type
+     * @param      $reportType
+     * @param int  $page
+     * @param int  $perPage
      * @param null $from
      * @param null $to
      *
      * @return mixed
      */
-    public function report($type, $report_type, $from = null, $to = null)
+    public function report($reportType, $page, $perPage, $from = null, $to = null)
     {
-        $connect = $this->connect($report_type);
+        $connect = $this->connect($reportType);
         $query   = $connect
             ->table('crm_request_in')
             ->leftJoin('crm_request', 'crm_request.request_in_id', '=', 'crm_request_in.id')
@@ -37,16 +38,16 @@ class LeadEffectReport extends Connectors implements Report
                 'crm_product_currency', 'crm_product_currency.id', '=', 'crm_request_in.product_currency_id'
             )
             ->where('crm_request_in.oracle_version', '=', 3)
-            ->where('crm_request_in.send_product_date', '>=', $from.' 00:00:00')
-            ->where('crm_request_in.send_product_date', '<=', $to.' 23:59:59')
+            ->where('crm_request_in.send_product_date', '>=', $from . ' 00:00:00')
+            ->where('crm_request_in.send_product_date', '<=', $to . ' 23:59:59')
             ->select(
                 'crm_request_in.send_product_date',
-                'crm_send_product_status.name',
+                'crm_send_product_status.name as status' ,
                 'crm_request_in.name_full',
                 'crm_request_in.phone_mob',
                 'crm_request_in.document_inn',
-                'crm_company.name',
-                'crm_product.name',
+                'crm_company.name as company_name',
+                'crm_product.name as product_name',
                 'crm_request_in.affiliate_id',
                 'crm_request_in.amount_product',
                 'crm_product_currency.code',
@@ -54,9 +55,11 @@ class LeadEffectReport extends Connectors implements Report
                 'crm_request_in.id',
                 'crm_request_in.email'
             )
-            ->paginate(5)
+            ->paginate($perPage)
         ;
-        $result  = json_decode(json_encode($query), true);
+
+        $result            = json_decode(json_encode($query), true);
+        $result['headers'] = __('report.reports.leadEffect.headers');
 
         return $result;
     }
