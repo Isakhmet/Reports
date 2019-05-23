@@ -24,3 +24,10 @@ webpack.mix.js
 yarn.lock
 semantic
 semantic.json
+.styleci.yml
+.env.production
+.env.staging
+.env.development
+.env.test
+.env.local
+.editorconfig
