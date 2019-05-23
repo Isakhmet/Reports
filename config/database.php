@@ -69,8 +69,22 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([                                                         PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-             ]) : [],
+            'options' => extension_loaded('pdo_mysql') ? array_filter([PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                                                                      ]) : [],
+        ],
+
+        'sms' => [
+            'driver' => 'pgsql',
+            'host' => env('CM_DB_HOST', '127.0.0.1'),
+            'port' => env('CM_DB_PORT', '5432'),
+            'database' => env('CM_DB_DATABASE', 'campaign_manager'),
+            'username' => env('CM_DB_USERNAME', 'postgres'),
+            'password' => env('CM_DB_PASSWORD', 'postgres'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
         ],
 
         'mysql' => [
@@ -88,8 +102,8 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+                                                                          PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                                                                      ]) : [],
         ],
 
         'pgsql' => [

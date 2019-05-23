@@ -13,5 +13,8 @@ return [
         'score_points' => App\Classes\Reports\Oracle\ScorePoints\ScorePoints::class,
         'score_values' => App\Classes\Reports\Oracle\ScoreValues::class,
         'client' => App\Classes\Reports\Oracle\ScoreValues::class,
+    ],
+    'sms' => [
+        'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing::class
     ]
 ];
