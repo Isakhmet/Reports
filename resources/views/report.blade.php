@@ -6,14 +6,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Laravel</title>
     <link href="/css/app.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/semantic.min.css') }}">
-    <script src="{{asset('js/jquery.min.js')}}"></script>
-    <script src="{{ asset('js/semantic.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ secure_asset('css/semantic.min.css') }}">
+    <script src="{{ secure_asset('js/jquery.min.js') }}"></script>
+    <script src="{{ secure_asset('js/semantic.min.js') }}"></script>
     <style>
         body {
-            height: 100%;
+            height:   100%;
             overflow: scroll;
         }
+
         #table {
             margin-top: 50px;
         }
@@ -25,9 +26,9 @@
 </h3>
 <div id="app">
     <demo
-        fetch-url="{{url('reports/')}}"
+            fetch-url="{{ secure_url('reports/') }}"
     ></demo>
 </div>
 </body>
 </html>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ secure_asset('js/app.js') }}"></script>
