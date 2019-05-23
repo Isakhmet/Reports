@@ -16,3 +16,11 @@ server.php
 data/
 submodule/
 composer.*
+node_modules/
+package.json
+package-lock.json
+CHANGELOG.md
+webpack.mix.js
+yarn.lock
+semantic
+semantic.json
