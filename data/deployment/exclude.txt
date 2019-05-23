@@ -30,4 +30,5 @@ semantic.json
 .env.development
 .env.test
 .env.local
+.env.example
 .editorconfig
