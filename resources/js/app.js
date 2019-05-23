@@ -21,7 +21,6 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 export const bus = new Vue();
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('report-component', require('./components/ReportComponent.vue').default);
 Vue.component('modal', require('./components/RequireModalComponent.vue').default);
 Vue.component('main-report-component', require('./components/MainReportComponent.vue').default);
