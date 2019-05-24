@@ -7,7 +7,7 @@ namespace App\Classes\Reports\SmsCampaignManager;
 use App\Classes\Connectors\Connectors;
 use App\Classes\Reports\Report;
 
-class Outgoing extends Connectors implements Report
+class Incoming extends Connectors implements Report
 {
 
     /**
@@ -23,31 +23,27 @@ class Outgoing extends Connectors implements Report
     {
         $connect           = $this->connect($reportType);
         $query             = $connect
-            ->table('sms_outgoing')
-            ->leftJoin('sms_outgoing_status as status', 'status.message_id', '=', 'sms_outgoing.message_id')
-            ->where('sms_outgoing.created_at', '>=', $from . ' 00:00:00')
-            ->where('sms_outgoing.created_at', '<=', $to . ' 23:59:59')
+            ->table('sms_incoming')
+            ->where('sms_incoming.created_at', '>=', $from . ' 00:00:00')
+            ->where('sms_incoming.created_at', '<=', $to . ' 23:59:59')
             ->select(
-                'status.sent_at',
-                'status.done_at',
-                'status.status_id',
-                'status.from',
-                'sms_outgoing.to',
-                'status.sms_count',
-                'status.price',
-                'sms_outgoing.text'
+                'sms_incoming.created_at',
+                'sms_incoming.received_at',
+                'sms_incoming.from',
+                'sms_incoming.to',
+                'sms_incoming.sms_count',
+                'sms_incoming.price',
+                'sms_incoming.text'
             )
             ->paginate($perPage)
         ;
         $result            = json_decode(json_encode($query), true);
-        $result['headers'] = __('report.reports.sms.outgoing.headers');
+        $result['headers'] = __('report.reports.sms.incoming.headers');
         $array             = [];
 
         foreach ($result['data'] as $key => $data) {
-            $array[$key]['sent_at']   = $data['sent_at'];
-            $array[$key]['done_at']   = strtotime($data['done_at']) - strtotime($data['sent_at']);
-            $array[$key]['status_id'] = $data['status_id'];
-            $array[$key]['author']    = '';
+            $array[$key]['sent_at']   = $data['created_at'];
+            $array[$key]['done_at']   = strtotime($data['received_at']) - strtotime($data['created_at']);
             $array[$key]['from']      = $data['from'];
             $array[$key]['to']        = $data['to'];
             $array[$key]['sms_count'] = $data['sms_count'];
