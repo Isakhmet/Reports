@@ -44,17 +44,17 @@ class Outgoing extends Connectors implements Report
         $result['headers'] = __('report.reports.sms.headers');
 
         $array = [];
-        foreach ($result['data'] as $key => $data){
-            $array[$key]['sent_at'] = $data['sent_at'];
-            $array[$key]['done_at'] = strtotime($data['done_at']) - strtotime($data['sent_at']);
+        foreach ($result['data'] as $key => $data) {
+            $array[$key]['sent_at']   = $data['sent_at'];
+            $array[$key]['done_at']   = strtotime($data['done_at']) - strtotime($data['sent_at']);
             $array[$key]['status_id'] = $data['status_id'];
-            $array[$key]['author'] = '';
-            $array[$key]['from'] = $data['from'];
-            $array[$key]['to'] = $data['to'];
+            $array[$key]['author']    = '';
+            $array[$key]['from']      = $data['from'];
+            $array[$key]['to']        = $data['to'];
             $array[$key]['sms_count'] = $data['sms_count'];
-            $array[$key]['price'] = $data['price'];
-            $array[$key]['sum'] = $data['sms_count'] * $data['price'];
-            $array[$key]['text'] = $data['text'];
+            $array[$key]['price']     = $data['price'];
+            $array[$key]['sum']       = $data['sms_count'] * $data['price'];
+            $array[$key]['text']      = $data['text'];
         }
 
         $result['data'] = $array;
