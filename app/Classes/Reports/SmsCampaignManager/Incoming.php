@@ -1,15 +1,17 @@
 <?php
 
-
 namespace App\Classes\Reports\SmsCampaignManager;
-
 
 use App\Classes\Connectors\Connectors;
 use App\Classes\Reports\Report;
 
+/**
+ * Class Incoming
+ *
+ * @package App\Classes\Reports\SmsCampaignManager
+ */
 class Incoming extends Connectors implements Report
 {
-
     /**
      * @param $reportType
      * @param $page
