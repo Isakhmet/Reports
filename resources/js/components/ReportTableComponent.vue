@@ -74,7 +74,7 @@
                     meta: {to: 1, from: 1}
                 },
                 offset:       4,
-                currentPage:  2,
+                currentPage:  1,
                 perPage:      5,
                 sortedColumn: '',
                 order:        'asc',
