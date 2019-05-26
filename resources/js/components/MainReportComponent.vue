@@ -19,17 +19,11 @@
                     </div>
                 </div>
                 <div class="item">
-                    <div class="header">Hosting</div>
+                    <div class="header">Sms Campaign Manager</div>
                     <div class="menu">
-                        <a class="item" @click="changeLink(item.name)" v-for="item in array">{{ item.name |
-                            capitalize}}</a>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="header">Support</div>
-                    <div class="menu">
-                        <a class="item">E-mail Support</a>
-                        <a class="item">FAQs</a>
+                        <a class="item" @click="changeLink(sms[item], 'sms', item)"
+                           v-for="item in Object.keys(sms).sort((a,b) => b - a) " :key="item">{{
+                            sms[item] }}</a>
                     </div>
                 </div>
             </div>
@@ -59,11 +53,10 @@
                     hcb_short:    'ХКБ лиды короткие',
                     agency:       '123Agency'
                 },
-                array:  [
-                    {name: '# 001 - Входящие заявки(Детали)'},
-                    {name: '# 002 - Входящие заявки(Итоги)'},
-                    {name: '# 003 - Входящие заявки'},
-                ],
+                sms: {
+                    outgoing: 'Исходящие СМС',
+                    incoming: 'Входящие СМС'
+                },
             }
         },
 

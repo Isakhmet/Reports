@@ -15,6 +15,7 @@ return [
         'client' => App\Classes\Reports\Oracle\ScoreValues::class,
     ],
     'sms' => [
-        'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing::class
+        'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing::class,
+        'incoming' => App\Classes\Reports\SmsCampaignManager\Incoming::class
     ]
 ];
