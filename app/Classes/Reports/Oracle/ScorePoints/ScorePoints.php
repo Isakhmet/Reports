@@ -24,20 +24,19 @@ class ScorePoints extends Connectors implements Report
      * @return array|mixed
      * @throws \Exception
      */
-    public function report($reportType, $page = 1, $perPage = 15, $from, $to)
+    public function report($reportType, $page, $perPage, $from, $to)
     {
-        $connect = $this->connect($reportType);
-        $first = $connect->table('score_results')
-                         ->first()
+        $connect     = $this->connect($reportType);
+        $first       = $connect->table('score_results')
+                               ->first()
         ;
-        $fields  = array_keys(json_decode($first->fields, true));
-        $fields  = array_unique($fields);
-        $columns = __('report.reports.scorePoints.headers');
-
-        $data = $connect->table('fields')
-                        ->whereIn('name', $fields)
-                        ->pluck('title', 'name')
-                        ->toArray()
+        $fields      = array_keys(json_decode($first->fields, true));
+        $fields      = array_unique($fields);
+        $columns     = __('report.reports.scorePoints.headers');
+        $data        = $connect->table('fields')
+                               ->whereIn('name', $fields)
+                               ->pluck('title', 'name')
+                               ->toArray()
         ;
         $columns     = array_merge($columns, $data);
         $keys        = array_keys($columns);
@@ -65,15 +64,15 @@ class ScorePoints extends Connectors implements Report
                     }
                 )
         ;
-        $data  = cache('data');
-        $data  = collect($data);
-        $array = $transformer->paginate(
+        $data             = cache('data');
+        $data             = collect($data);
+        $array            = $transformer->paginate(
             $data, $perPage, $page, [
                      'path'     => Request::url(),
                      'pageName' => 'page',
                  ]
         )
-                             ->toArray()
+                                        ->toArray()
         ;
         $array['headers'] = $headers;
         $array['data']    = $transformer->paginateOrder($array['data']);

@@ -31,6 +31,18 @@ return [
                 'products'     => 'Продукты',
             ],
         ],
+        'scoreValues' => [
+            'columns' => [
+                'id'           => 'ID',
+                'created_at'   => 'Дата/Время',
+                'iin'          => 'ИИН',
+                'full_name'    => 'ФИО',
+                'mobile_phone' => 'Телефон',
+                'email'        => 'email',
+                'ore'          => 'Руда',
+                'products'     => 'Продукты',
+            ],
+        ],
         'sms'         => [
             'outgoing' => [
                 'headers' => [
@@ -56,7 +68,7 @@ return [
                     'Тариф',
                     'Сумма',
                     'Текст смс',
-                ]
+                ],
             ],
         ],
     ],
