@@ -2,6 +2,7 @@
 
 namespace App\Classes\Reports\Oracle\ScoreValues\Transformer;
 
+use App\Classes\Reports\Oracle\OracleReportService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -57,23 +58,8 @@ class ScoreValuesTransformer
     {
         $columns    = __('report.reports.scoreValues.columns');
         $addColumns = [];
-        $data       = json_decode((json_encode($data)), true);
 
         foreach ($data as $key => $row) {
-            $data[$key]['category_score']      = $row['category_score'] = json_decode($row['category_score'], true);
-            $data[$key]['category']            = $row['category'] = json_decode($row['category'], true);
-            $data[$key]['category_score_map']  = $row['category_score_map'] = json_decode(
-                $row['category_score_map'], true
-            );
-            $data[$key]['available_products']  = $row['available_products'] = json_decode(
-                $row['available_products'], true
-            );
-            $data[$key]['products_score_maps'] = $row['products_score_maps'] = json_decode(
-                $row['products_score_maps'], true
-            );
-            $data[$key]['products_score']      = $row['products_score'] = json_decode($row['products_score'], true);
-            $data[$key]['user_fields']         = $row['user_fields'] = json_decode($row['user_fields'], true);
-            $data[$key]['fields']              = $row['fields'] = json_decode($row['fields'], true);
 
             if (
                 (
@@ -137,7 +123,7 @@ class ScoreValuesTransformer
         if (!isset($data['passed_products_ids'])) {
             return '';
         }
-        $products_ids = json_decode($data['passed_products_ids'], true);
+        $products_ids = $data['passed_products_ids'];
         $products     = '';
 
         if (\count($products_ids)) {
@@ -159,37 +145,5 @@ class ScoreValuesTransformer
         }
 
         return $products;
-    }
-
-    /**
-     * @param       $items
-     * @param int   $perPage
-     * @param null  $page
-     * @param array $options
-     *
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
-    public function paginate($items, $perPage = 15, $page = null, $options = [])
-    {
-        $page  = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-    }
-
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
-    public function paginateOrder(Array $array)
-    {
-        $keys = [];
-
-        for ($i = 0; $i < count($array); $i++) {
-            $keys[] = $i;
-        }
-
-        return array_combine($keys, $array);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Classes\Reports\Oracle\ScorePoints;
 
 use App\Classes\Connectors\Connectors;
+use App\Classes\Reports\Oracle\OracleReportService;
 use App\Classes\Reports\Oracle\ScorePoints\Transformer\ScorePointsTransformer;
 use App\Classes\Reports\Report;
 use Illuminate\Support\Facades\Request;
@@ -26,6 +27,7 @@ class ScorePoints extends Connectors implements Report
      */
     public function report($reportType, $page, $perPage, $from, $to)
     {
+        $service     = new OracleReportService();
         $connect     = $this->connect($reportType);
         $first       = $connect->table('score_results')
                                ->first()
@@ -42,40 +44,35 @@ class ScorePoints extends Connectors implements Report
         $keys        = array_keys($columns);
         $headers     = array_values($columns);
         $transformer = new ScorePointsTransformer();
-        $connect->table('score_results')
-                ->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59'])
-                ->orderBy('id')
-                ->chunk(
-                    500,
-                    function ($results) use ($keys, $transformer) {
-                        if ($results->isEmpty()) {
-                            return response()->json(['Нет данных за указанный период'], 500);
-                        }
-
-                        $results = $results->map(
-                            function ($item, $key) use ($keys, $transformer) {
-                                $array = $transformer->availableProducts($item, $keys);
-
-                                return $transformer->transformCommon($array);
-                            }
-                        );
-                        $data    = $results->toArray();
-                        cache(['data' => $data], 30);
-                    }
-                )
+        $query       = $connect->table('score_results')
+                               ->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59'])
+                               ->orderBy('id')
+                               ->get()
         ;
-        $data             = cache('data');
-        $data             = collect($data);
-        $array            = $transformer->paginate(
+
+        if ($query->isEmpty()) {
+            return response()->json(['Нет данных за указанный период'], 500);
+        }
+
+        $query   = $service->transformData($query->toArray());
+        $results = [];
+
+        foreach ($query as $key => $row) {
+            $array         = $transformer->availableProducts($row, $keys);
+            $results[$key] = $transformer->transformCommon($array);
+        }
+
+        $data             = collect($results);
+        $array            = $service->paginate(
             $data, $perPage, $page, [
                      'path'     => Request::url(),
                      'pageName' => 'page',
                  ]
         )
-                                        ->toArray()
+                                    ->toArray()
         ;
         $array['headers'] = $headers;
-        $array['data']    = $transformer->paginateOrder($array['data']);
+        $array['data']    = $service->paginateOrder($array['data']);
 
         return $array;
     }

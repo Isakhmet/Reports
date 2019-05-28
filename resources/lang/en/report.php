@@ -2,7 +2,7 @@
 
 return [
     'reports' => [
-        'leadEffect'  => [
+        'leadEffect'   => [
             'headers' => [
                 'Дата_отправки',
                 'Статус_отправки',
@@ -19,7 +19,7 @@ return [
                 'email',
             ],
         ],
-        'scorePoints' => [
+        'scorePoints'  => [
             'headers' => [
                 'id'           => 'ID',
                 'created_at'   => 'Дата/Время',
@@ -31,7 +31,7 @@ return [
                 'products'     => 'Продукты',
             ],
         ],
-        'scoreValues' => [
+        'scoreValues'  => [
             'columns' => [
                 'id'           => 'ID',
                 'created_at'   => 'Дата/Время',
@@ -43,7 +43,25 @@ return [
                 'products'     => 'Продукты',
             ],
         ],
-        'sms'         => [
+        'scoreClients' => [
+            'headers' => [
+                'id'                 => 'ID',
+                'created_at'         => 'Дата/Время',
+                'iin'                => 'ИИН',
+                'full_name'          => 'ФИО',
+                'mobile_phone'       => 'Телефон',
+                'email'              => 'email',
+                'gender'             => 'Пол',
+                'birthday'           => 'Дата рождения',
+                'category_score'     => 'Скор баллы',
+                'ore'                => 'Руда',
+                'pass_score'         => 'Прошел скоринг по категории',
+                'pass_score_product' => 'Прошел скоринг по продуктам',
+                'products'           => 'Продукты',
+                'gclid'              => 'Google Click ID',
+            ],
+        ],
+        'sms'          => [
             'outgoing' => [
                 'headers' => [
                     'Дата_отправки',
