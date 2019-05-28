@@ -23,8 +23,8 @@ class LeadEffectReport extends Connectors implements Report
      */
     public function report($reportType, $page, $perPage, $from = null, $to = null)
     {
-        $connect = $this->connect($reportType);
-        $query   = $connect
+        $connect           = $this->connect($reportType);
+        $query             = $connect
             ->table('crm_request_in')
             ->leftJoin('crm_request', 'crm_request.request_in_id', '=', 'crm_request_in.id')
             ->leftJoin('crm_send_product', 'crm_send_product.request_id', '=', 'crm_request.id')
@@ -42,7 +42,7 @@ class LeadEffectReport extends Connectors implements Report
             ->where('crm_request_in.send_product_date', '<=', $to . ' 23:59:59')
             ->select(
                 'crm_request_in.send_product_date',
-                'crm_send_product_status.name as status' ,
+                'crm_send_product_status.name as status',
                 'crm_request_in.name_full',
                 'crm_request_in.phone_mob',
                 'crm_request_in.document_inn',
@@ -57,7 +57,6 @@ class LeadEffectReport extends Connectors implements Report
             )
             ->paginate($perPage)
         ;
-
         $result            = json_decode(json_encode($query), true);
         $result['headers'] = __('report.reports.leadEffect.headers');
 

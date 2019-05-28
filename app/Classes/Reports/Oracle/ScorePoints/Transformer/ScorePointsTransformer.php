@@ -75,8 +75,8 @@ class ScorePointsTransformer
     public function availableProducts($data, array $columns): array
     {
         $data                        = json_decode(json_encode($data), true);
-        $availableProducts          = json_decode($data['available_products'] ?? '', true);
-        $passedProductsIds         = json_decode($data['passed_products_ids'] ?? '', true);
+        $availableProducts           = json_decode($data['available_products'] ?? '', true);
+        $passedProductsIds           = json_decode($data['passed_products_ids'] ?? '', true);
         $data['fields']              = json_decode($data['fields'] ?? '', true);
         $data['category']            = json_decode($data['category'] ?? '', true);
         $data['category_score_map']  = json_decode($data['category_score_map'] ?? '', true);
@@ -84,10 +84,7 @@ class ScorePointsTransformer
         $data['products_score_maps'] = json_decode($data['products_score_maps'] ?? '', true);
         $data['products_score']      = json_decode($data['products_score'] ?? '', true);
         $data['user_fields']         = json_decode($data['user_fields'] ?? '', true);
-
-
-        $data = $this->only($data, array_merge(['fields'], $columns));
-
+        $data                        = $this->only($data, array_merge(['fields'], $columns));
         $data['passed_products_ids'] = $passedProductsIds;
         $data['available_products']  = $availableProducts;
         $fields                      = Arr::only($data['fields'], $columns);
