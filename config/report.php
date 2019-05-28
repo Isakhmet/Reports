@@ -12,7 +12,7 @@ return [
         'alfa_bank' => App\Classes\Reports\Oracle\AlfaBank::class,
         'score_points' => App\Classes\Reports\Oracle\ScorePoints\ScorePoints::class,
         'score_values' => App\Classes\Reports\Oracle\ScoreValues\ScoreValues::class,
-        'client' => App\Classes\Reports\Oracle\ScoreValues::class,
+        'client' => App\Classes\Reports\Oracle\ScoreClients\ScoreClients::class,
     ],
     'sms' => [
         'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing::class,

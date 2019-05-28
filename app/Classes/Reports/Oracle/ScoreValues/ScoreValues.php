@@ -3,6 +3,7 @@
 namespace App\Classes\Reports\Oracle\ScoreValues;
 
 use App\Classes\Connectors\Connectors;
+use App\Classes\Reports\Oracle\OracleReportService;
 use App\Classes\Reports\Oracle\ScoreValues\Transformer\ScoreValuesTransformer;
 use App\Classes\Reports\Report;
 use Illuminate\Support\Collection;
@@ -27,6 +28,7 @@ class ScoreValues extends Connectors implements Report
     public function report($reportType, $page, $perPage, $from, $to)
     {
         $transformer  = new ScoreValuesTransformer();
+        $service      = new OracleReportService();
         $connect      = $this->connect($reportType);
         $query        = $connect->table('score_results')
                                 ->where('created_at', '>=', $from . ' 00:00:00')
@@ -45,16 +47,17 @@ class ScoreValues extends Connectors implements Report
             $fieldsTitles[$field->id]['title'] = $field->title;
         }
 
-        $iteration_array = $transformer->transformCommon($query->toArray(), $fieldsTitles);
-        $data            = $iteration_array['data'];
-        $data            = new Collection($data);
+        $data           = $service->transformData($query->toArray());
+        $iterationArray = $transformer->transformCommon($data, $fieldsTitles);
+        $data           = $iterationArray['data'];
+        $data           = new Collection($data);
 
         if ($data->isEmpty()) {
             return response()->json(['Нет данных за указанный период'], 500);
         }
 
-        $keys    = array_keys($iteration_array['columns']);
-        $headers = array_values($iteration_array['columns']);
+        $keys    = array_keys($iterationArray['columns']);
+        $headers = array_values($iterationArray['columns']);
         $chunks  = $data->chunk(70000000);
         $values  = [];
 
@@ -80,16 +83,16 @@ class ScoreValues extends Connectors implements Report
         }
 
         $data             = collect($values);
-        $array            = $transformer->paginate(
+        $array            = $service->paginate(
             $data, $perPage, $page, [
                      'path'     => Request::url(),
                      'pageName' => 'page',
                  ]
         )
-                                        ->toArray()
+                                    ->toArray()
         ;
         $array['headers'] = $headers;
-        $array['data']    = $transformer->paginateOrder($array['data']);
+        $array['data']    = $service->paginateOrder($array['data']);
 
         return $array;
     }
