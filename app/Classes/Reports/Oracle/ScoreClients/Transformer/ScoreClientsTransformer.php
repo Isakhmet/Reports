@@ -23,11 +23,11 @@ class ScoreClientsTransformer
         $row['category_score'] = $row['category_score']['score']['score'] ?? 'Нет';
         $row['created_at']     = isset($row['created_at']) ? (string)$row['created_at'] : 'Нет';
         $row['gclid']          = isset($row['fields']['gclid']) ? (string)$row['fields']['gclid'] : '';
-        $row                   = $this->transformName($row);
-        $row                   = $this->transformBooleans($row, $headers);
-        $row                   = $this->transformProducts($row);
-        $row                   = Arr::only($row, $keys);
-        $row                   = array_replace(array_flip($keys), $row);
+        $this->transformName($row);
+        $this->transformBooleans($row, $headers);
+        $this->transformProducts($row);
+        $row = Arr::only($row, $keys);
+        $row = array_replace(array_flip($keys), $row);
 
         return $row;
     }
@@ -37,15 +37,13 @@ class ScoreClientsTransformer
      *
      * @return array
      */
-    public function transformName(array $data): array
+    public function transformName(array &$data)
     {
         if (!isset($data['lastname'], $data['firstname'], $data['middlename'])) {
             return $data;
         }
 
         $data['full_name'] = trim("{$data['lastname']} {$data['firstname']} {$data['middlename']}");
-
-        return $data;
     }
 
     /**
@@ -54,15 +52,13 @@ class ScoreClientsTransformer
      *
      * @return array
      */
-    public function transformBooleans(array $data, array $headers): array
+    public function transformBooleans(array &$data, array $headers)
     {
         foreach ($headers as $key) {
             if (isset($data[$key])) {
                 $data[$key] = $data[$key] ? 'Да' : 'Нет';
             }
         }
-
-        return $data;
     }
 
     /**
@@ -70,20 +66,16 @@ class ScoreClientsTransformer
      *
      * @return array
      */
-    public function transformProducts(array $data): array
+    public function transformProducts(array &$data)
     {
-        if (!isset($data['passed_products_ids']))
-        {
+        if (!isset($data['passed_products_ids'])) {
             $data['products'] = '';
-
-            return $data;
         }
 
         $products_ids = $data['passed_products_ids'];
         $products     = '';
 
-        if (\count($products_ids))
-        {
+        if (\count($products_ids)) {
             $products = \array_map(
                 function ($product) use ($products_ids) {
                     if (\in_array((int)$product['id'], $products_ids, 1)) {
@@ -99,7 +91,5 @@ class ScoreClientsTransformer
 
         $data['products'] = $products ?: 'Нет';
         unset($data['passed_products_ids'], $data['available_products']);
-
-        return $data;
     }
 }

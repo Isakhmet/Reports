@@ -47,17 +47,17 @@ class ScoreValues extends Connectors implements Report
             $fieldsTitles[$field->id]['title'] = $field->title;
         }
 
-        $data = $service->transformData($query->toArray());
-        $iteration_array = $transformer->transformCommon($data, $fieldsTitles);
-        $data            = $iteration_array['data'];
-        $data            = new Collection($data);
+        $data           = $service->transformData($query->toArray());
+        $iterationArray = $transformer->transformCommon($data, $fieldsTitles);
+        $data           = $iterationArray['data'];
+        $data           = new Collection($data);
 
         if ($data->isEmpty()) {
             return response()->json(['Нет данных за указанный период'], 500);
         }
 
-        $keys    = array_keys($iteration_array['columns']);
-        $headers = array_values($iteration_array['columns']);
+        $keys    = array_keys($iterationArray['columns']);
+        $headers = array_values($iterationArray['columns']);
         $chunks  = $data->chunk(70000000);
         $values  = [];
 
@@ -89,7 +89,7 @@ class ScoreValues extends Connectors implements Report
                      'pageName' => 'page',
                  ]
         )
-                                        ->toArray()
+                                    ->toArray()
         ;
         $array['headers'] = $headers;
         $array['data']    = $service->paginateOrder($array['data']);

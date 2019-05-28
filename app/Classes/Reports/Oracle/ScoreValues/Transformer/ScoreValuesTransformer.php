@@ -2,11 +2,6 @@
 
 namespace App\Classes\Reports\Oracle\ScoreValues\Transformer;
 
-use App\Classes\Reports\Oracle\OracleReportService;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
-
 /**
  * Class ScoreValuesTransformer
  *
@@ -123,13 +118,13 @@ class ScoreValuesTransformer
         if (!isset($data['passed_products_ids'])) {
             return '';
         }
-        $products_ids = $data['passed_products_ids'];
-        $products     = '';
+        $productsIds = $data['passed_products_ids'];
+        $products    = '';
 
-        if (\count($products_ids)) {
+        if (\count($productsIds)) {
             $products = array_map(
-                function ($product) use ($products_ids) {
-                    if (\in_array((int)$product['id'], $products_ids, 1)) {
+                function ($product) use ($productsIds) {
+                    if (\in_array((int)$product['id'], $productsIds, 1)) {
                         return $product['name'];
                     }
 
