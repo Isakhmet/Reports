@@ -13,6 +13,8 @@ return [
         'score_points' => App\Classes\Reports\Oracle\ScorePoints\ScorePoints::class,
         'score_values' => App\Classes\Reports\Oracle\ScoreValues\ScoreValues::class,
         'client' => App\Classes\Reports\Oracle\ScoreClients\ScoreClients::class,
+        'hcb_long' => App\Classes\Reports\Oracle\Hcb\Long\HcbLong::class,
+        'hcb_short' => App\Classes\Reports\Oracle\Hcb\Short\HcbShort::class,
     ],
     'sms' => [
         'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing::class,

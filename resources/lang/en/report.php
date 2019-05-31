@@ -125,5 +125,26 @@ return [
                 ],
             ],
         ],
+        'hcb' => [
+            'columns' => [
+                'lead_id' => 'Номер в оракуле',
+                'created_at' => 'Дата',
+                'iin' => 'ИИН',
+                'firstname' => 'Имя',
+                'lastname' => 'Фамилия',
+                'middlename' => 'Отчество',
+                'mobile_phone' => 'Телефон',
+                'amount' => 'Сумма',
+                'monthly_income' => 'Доход',
+                'sales_place' => 'Индекс города',
+                'valid' => 'Прошла проверки',
+                'failed' => 'Есть ли ошибки',
+                'accepted' => 'Выдан ли кредит',
+                'send' => 'Отправлена ли заявка в ХКБ',
+                'postback' => 'Получили ли статус ответа',
+                'partner_server_info' => 'Ответ от сервера ХКБ',
+                'partner_server_postback' => 'Postback от ХКБ'
+            ],
+        ],
     ],
 ];
