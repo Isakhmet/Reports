@@ -15,7 +15,7 @@ return [
         'client'       => App\Classes\Reports\Oracle\ScoreClients\ScoreClients::class,
         'hcb_long'     => App\Classes\Reports\Oracle\Hcb\Long\HcbLong::class,
         'hcb_short'    => App\Classes\Reports\Oracle\Hcb\Short\HcbShort::class,
-        'agency'       => App\Classes\Reports\Oracle\Hcb\Short\HcbShort::class,
+        'agency'       => App\Classes\Reports\Oracle\Delayed\Okzaim::class,
     ],
     'sms' => [
         'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing::class,

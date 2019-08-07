@@ -61,8 +61,8 @@ return [
                 'gclid'              => 'Google Click ID',
             ],
         ],
-        'alfaBank' => [
-            'cities' => [
+        'alfaBank'     => [
+            'cities'   => [
                 1  => "алматы",
                 2  => "астана",
                 3  => "актау",
@@ -79,7 +79,7 @@ return [
                 14 => "шымкент",
                 15 => "караганда",
             ],
-            'columns' => [
+            'columns'  => [
                 'lead_id'    => 'Номер в оракуле',
                 'status_id'  => 'Статус',
                 'fio'        => 'ФИО',
@@ -93,7 +93,7 @@ return [
                 1 => 'new',
                 2 => 'processing',
                 3 => 'sent',
-                4 => 'failed'
+                4 => 'failed',
 
             ],
         ],
@@ -125,25 +125,49 @@ return [
                 ],
             ],
         ],
-        'hcb' => [
+        'hcb'          => [
             'columns' => [
-                'lead_id' => 'Номер в оракуле',
-                'created_at' => 'Дата',
-                'iin' => 'ИИН',
-                'firstname' => 'Имя',
-                'lastname' => 'Фамилия',
-                'middlename' => 'Отчество',
+                'lead_id'                 => 'Номер в оракуле',
+                'created_at'              => 'Дата',
+                'iin'                     => 'ИИН',
+                'firstname'               => 'Имя',
+                'lastname'                => 'Фамилия',
+                'middlename'              => 'Отчество',
+                'mobile_phone'            => 'Телефон',
+                'amount'                  => 'Сумма',
+                'monthly_income'          => 'Доход',
+                'sales_place'             => 'Индекс города',
+                'valid'                   => 'Прошла проверки',
+                'failed'                  => 'Есть ли ошибки',
+                'accepted'                => 'Выдан ли кредит',
+                'send'                    => 'Отправлена ли заявка в ХКБ',
+                'postback'                => 'Получили ли статус ответа',
+                'partner_server_info'     => 'Ответ от сервера ХКБ',
+                'partner_server_postback' => 'Postback от ХКБ',
+            ],
+        ],
+        'okzaim'       => [
+            'columns' => [
+                'lead_id'      => 'Номер в оракуле',
+                'is_double'    => 'Дубль',
+                'created_at'   => 'Дата создания',
+                'send_at'      => 'Дата отправки',
+                'status'       => 'Статус заявки',
+                'iin'          => 'ИИН',
+                'firstname'    => 'Имя',
+                'lastname'     => 'Фамилия',
+                'middlename'   => 'Отчество',
                 'mobile_phone' => 'Телефон',
-                'amount' => 'Сумма',
-                'monthly_income' => 'Доход',
-                'sales_place' => 'Индекс города',
-                'valid' => 'Прошла проверки',
-                'failed' => 'Есть ли ошибки',
-                'accepted' => 'Выдан ли кредит',
-                'send' => 'Отправлена ли заявка в ХКБ',
-                'postback' => 'Получили ли статус ответа',
-                'partner_server_info' => 'Ответ от сервера ХКБ',
-                'partner_server_postback' => 'Postback от ХКБ'
+                'email'        => 'Email',
+                'ore'          => 'Руда',
+                'response'     => 'Проблема',
+            ],
+
+            'statuses' => [
+                'new'        => 'Новая',
+                'processing' => 'В обработке',
+                'sent'       => 'Отправленно',
+                'failed'     => 'Ошибка',
             ],
         ],
     ],
