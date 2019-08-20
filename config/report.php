@@ -8,7 +8,7 @@ return [
         60     => \App\Classes\Reports\Crm\CallTasks::class
     ],
     'oracle' => [
-        'cluster'      => App\Classes\Reports\Oracle\Cluster::class,
+        'cluster'      => App\Classes\Reports\Oracle\Cluster\Cluster::class,
         'alfa_bank'    => App\Classes\Reports\Oracle\AlfaBank::class,
         'score_points' => App\Classes\Reports\Oracle\ScorePoints\ScorePoints::class,
         'score_values' => App\Classes\Reports\Oracle\ScoreValues\ScoreValues::class,

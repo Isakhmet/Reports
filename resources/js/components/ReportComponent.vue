@@ -6,7 +6,7 @@
                 v-model="date_start"
                 @click="show_start = true"
                 placeholder="Дата с"
-                :disabled="loading"
+
             >
             <datepicker @close="show_start = false"
                         v-if="show_start"
@@ -15,7 +15,7 @@
                    v-model="date_end"
                    @click="show_end = true"
                    placeholder="Дата по"
-                   :disabled="loading"
+
             >
             <datepicker @close="show_end = false"
                         v-if="show_end"

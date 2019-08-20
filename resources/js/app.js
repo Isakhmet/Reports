@@ -3,8 +3,12 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import DatePicker from 'vue-md-date-picker';
+
+import DatePicker from 'vue-md-date-picker'
 import VueRouter from 'vue-router'
+import VueThinModal from 'vue-thin-modal'
+import 'vue-thin-modal/dist/vue-thin-modal.css'
+import excel from 'vue-excel-export'
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -22,11 +26,13 @@ window.Vue = require('vue');
 export const bus = new Vue();
 
 Vue.component('report-component', require('./components/ReportComponent.vue').default);
-Vue.component('modal', require('./components/RequireModalComponent.vue').default);
 Vue.component('main-report-component', require('./components/MainReportComponent.vue').default);
 Vue.component('demo', require('./components/ReportTableComponent.vue').default);
+Vue.component('modal-new', require('./components/NewModalComponent').default);
 Vue.component('datepicker', DatePicker);
 Vue.use(VueRouter);
+Vue.use(VueThinModal);
+Vue.use(excel);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

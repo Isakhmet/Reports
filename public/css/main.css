@@ -1,0 +1,38 @@
+body {
+    height:   100%;
+    overflow: scroll;
+}
+
+.container {
+    float: left;
+}
+
+.report-title {
+    font-size: x-large;
+    font-family: sans-serif;
+}
+
+.amounts {
+    cursor: pointer !important;
+}
+
+.close-modal {
+    float: right !important;
+    margin-left: auto !important;
+}
+
+.modal-content {
+    padding: 0 !important;
+}
+
+.ui.vertical.menu .item>.menu {
+    font-size: 18px !important;
+}
+
+.ui.vertical.menu .item>.header:not(.ui) {
+    font-size: 20px !important;
+}
+
+.ui.vertical.menu .menu .item {
+
+}
