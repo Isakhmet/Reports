@@ -20,20 +20,16 @@ class OracleReportService
      */
     public function transformData($data)
     {
-        $data = json_decode(json_encode($data), true);
-
-        foreach ($data as $key => $row) {
-            $data[$key]['category']            = json_decode($row['category'], true);
-            $data[$key]['category_score_map']  = json_decode($row['category_score_map'], true);
-            $data[$key]['category_score']      = json_decode($row['category_score'], true);
-            $data[$key]['available_products']  = json_decode($row['available_products'], true);
-            $data[$key]['products_score_maps'] = json_decode($row['products_score_maps'], true);
-            $data[$key]['products_score']      = json_decode($row['products_score'], true);
-            $data[$key]['passed_products_ids'] = json_decode($row['passed_products_ids'], true);
-            $data[$key]['fields']              = json_decode($row['fields'], true);
-            $data[$key]['user_fields']         = json_decode($row['user_fields'], true);
-            $data[$key]['sended_products_ids'] = json_decode($row['sended_products_ids'], true);
-        }
+        $data['category']            = json_decode($data['category'], true);
+        $data['category_score_map']  = json_decode($data['category_score_map'], true);
+        $data['category_score']      = json_decode($data['category_score'], true);
+        $data['available_products']  = json_decode($data['available_products'], true);
+        $data['products_score_maps'] = json_decode($data['products_score_maps'], true);
+        $data['products_score']      = json_decode($data['products_score'], true);
+        $data['passed_products_ids'] = json_decode($data['passed_products_ids'], true);
+        $data['fields']              = json_decode($data['fields'], true);
+        $data['user_fields']         = json_decode($data['user_fields'], true);
+        $data['sended_products_ids'] = json_decode($data['sended_products_ids'], true);
 
         return $data;
     }

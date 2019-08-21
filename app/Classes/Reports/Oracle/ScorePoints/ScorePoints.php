@@ -47,33 +47,33 @@ class ScorePoints extends Connectors implements Report
         $query       = $connect->table('score_results')
                                ->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59'])
                                ->orderBy('id')
-                               ->get()
         ;
 
-        if ($query->isEmpty()) {
-            return response()->json(['Нет данных за указанный период'], 500);
-        }
-
-        $query   = $service->transformData($query->toArray());
+        $excelData = json_decode(
+            json_encode(
+                $query->get()
+                      ->toArray()
+            ), true
+        );
+        $result    = json_decode(json_encode($query->paginate($perPage)), true);
+        $excel = [];
         $results = [];
 
-        foreach ($query as $key => $row) {
-            $array         = $transformer->availableProducts($row, $keys);
+        foreach ($result['data'] as $key => $value) {
+            $array         = $transformer->availableProducts($service->transformData($value), $keys);
             $results[$key] = $transformer->transformCommon($array);
         }
 
-        $data             = collect($results);
-        $array            = $service->paginate(
-            $data, $perPage, $page, [
-                     'path'     => Request::url(),
-                     'pageName' => 'page',
-                 ]
-        )
-                                    ->toArray()
-        ;
-        $array['headers'] = $headers;
-        $array['data']    = $service->paginateOrder($array['data']);
+        foreach ($excelData as $id => $row) {
+            $array              = $transformer->availableProducts($service->transformData($row), $keys);
+            $excel['data'][$id] = $transformer->transformExcel($array);
+        }
 
-        return $array;
+        $excel['columns']  = array_flip($columns);
+        $result['data']    = $results;
+        $result['headers'] = $headers;
+        $result['excel']   = $excel;
+
+        return $result;
     }
 }

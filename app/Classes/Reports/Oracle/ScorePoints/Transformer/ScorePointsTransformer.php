@@ -35,6 +35,25 @@ class ScorePointsTransformer
     }
 
     /**
+     * @param array $row
+     *
+     * @return array
+     */
+    public function transformExcel(array $row): array
+    {
+        $row['products'] = $this->replaceProducts($row);
+
+        if (is_array($row['category'])) {
+            $row['category'] = $row['category']['code'];
+        }
+
+        unset($row['available_products']);
+        unset($row['passed_products_ids']);
+
+        return $row;
+    }
+
+    /**
      * @param       $data
      * @param array $columns
      *

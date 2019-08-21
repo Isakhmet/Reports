@@ -37,8 +37,7 @@ class Cluster extends Connectors implements Report
                       ->toArray()
             ), true
         );
-        $paginate     = $query->paginate($perPage);
-        $result       = json_decode(json_encode($paginate), true);
+        $result       = json_decode(json_encode($query->paginate($perPage)), true);
         $columns      = __('report.reports.cluster.columns');
         $keys         = array_keys($columns);
         $headers      = array_values($columns);

@@ -184,16 +184,19 @@
             },
             fetchData() {
                 let dataFetchUrl = `${this.url}?page=${this.currentPage}&date_start=${this.date_start}&date_end=${this.date_end}&type=${this.type}&id=${this.report_id}`;
-
+                console.log(dataFetchUrl)
                 axios.get(dataFetchUrl)
                     .then(({data}) => {
                         this.pagination  = data
                         this.tableData   = data.report
                         this.columns     = data.keys
-                        this.json_fields = data.excel.columns;
-                        this.json_data   = data.excel.data;
 
-                        console.log(data.excel.columns);
+                        if(data.excel !== null){
+                            this.json_fields = data.excel.columns;
+                            this.json_data   = data.excel.data;
+                        }
+
+                        console.log(data);
 
                         if (!this.columns.isEmpty) {
                             this.empty = true;
