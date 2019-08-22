@@ -6,7 +6,6 @@ use App\Classes\Connectors\Connectors;
 use App\Classes\Reports\Oracle\OracleReportService;
 use App\Classes\Reports\Oracle\ScoreClients\Transformer\ScoreClientsTransformer;
 use App\Classes\Reports\Report;
-use Illuminate\Support\Facades\Request;
 
 class ScoreClients extends Connectors implements Report
 {
@@ -22,41 +21,40 @@ class ScoreClients extends Connectors implements Report
      */
     public function report($reportType, $page, $perPage, $from, $to)
     {
-        $transformer = new ScoreClientsTransformer();
-        $service     = new OracleReportService();
-        $connect     = $this->connect($reportType);
-        $query       = $connect->table('score_results')
-                               ->where('created_at', '>=', $from . ' 00:00:00')
-                               ->where('created_at', '<=', $to . ' 23:59:59')
-                               ->get()
+        $transformer      = new ScoreClientsTransformer();
+        $service          = new OracleReportService();
+        $connect          = $this->connect($reportType);
+        $query            = $connect->table('score_results')
+                                    ->where('created_at', '>=', $from . ' 00:00:00')
+                                    ->where('created_at', '<=', $to . ' 23:59:59')
         ;
+        $excelData        = json_decode(
+            json_encode(
+                $query->get()
+                      ->toArray()
+            ), true
+        );
+        $headers          = __('report.reports.scoreClients.headers');
+        $excel['columns'] = array_flip($headers);
+        $keys             = array_keys($headers);
+        $headers          = array_values($headers);
+        $result           = json_decode(json_encode($query->paginate($perPage)), true);
+        $data             = [];
 
-        if ($query->isEmpty()) {
-            return response()->json(['Нет данных за указанный период'], 500);
+        foreach ($excelData as $key => $row) {
+            $row                 = $service->transformData($row);
+            $excel['data'][$key] = $transformer->transformCommon($row, $keys);
         }
 
-        $headers = __('report.reports.scoreClients.headers');
-        $keys    = array_keys($headers);
-        $headers = array_values($headers);
-        $chunks  = $query->chunk(700000);
-        $data    = $service->transformData($chunks->toArray()[0]);
-
-        foreach ($data as $key => $row) {
-            $data[$key] = $transformer->transformCommon($row, $keys);
+        foreach ($result['data'] as $key => $value) {
+            $value      = $service->transformData($value);
+            $data[$key] = $transformer->transformCommon($value, $keys);
         }
 
-        $data             = collect($data);
-        $array            = $service->paginate(
-            $data, $perPage, $page, [
-                     'path'     => Request::url(),
-                     'pageName' => 'page',
-                 ]
-        )
-                                    ->toArray()
-        ;
-        $array['headers'] = $headers;
-        $array['data']    = $service->paginateOrder($array['data']);
+        $result['data']    = $data;
+        $result['headers'] = $headers;
+        $result['excel']   = $excel;
 
-        return $array;
+        return $result;
     }
 }
