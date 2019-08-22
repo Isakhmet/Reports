@@ -6,8 +6,7 @@ use App\Classes\Connectors\Connectors;
 use App\Classes\Reports\Oracle\OracleReportService;
 use App\Classes\Reports\Oracle\ScoreValues\Transformer\ScoreValuesTransformer;
 use App\Classes\Reports\Report;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Arr;
 
 /**
  * Class ScoreValues
@@ -33,9 +32,8 @@ class ScoreValues extends Connectors implements Report
         $query        = $connect->table('score_results')
                                 ->where('created_at', '>=', $from . ' 00:00:00')
                                 ->where('created_at', '<=', $to . ' 23:59:59')
-                                ->get()
         ;
-        $fields_ids   = $transformer->getFields($query);
+        $fields_ids   = $transformer->getFields($query->get());
         $fields       = $connect->table('fields')
                                 ->whereIn('id', $fields_ids)
                                 ->get(['id', 'name', 'title'])
@@ -47,53 +45,63 @@ class ScoreValues extends Connectors implements Report
             $fieldsTitles[$field->id]['title'] = $field->title;
         }
 
-        $data           = $service->transformData($query->toArray());
-        $iterationArray = $transformer->transformCommon($data, $fieldsTitles);
-        $data           = $iterationArray['data'];
-        $data           = new Collection($data);
+        $excelData = json_decode(
+            json_encode(
+                $query->get()
+                      ->toArray()
+            ), true
+        );
+        $result    = json_decode(json_encode($query->paginate($perPage)), true);
+        $excel     = [];
 
-        if ($data->isEmpty()) {
-            return response()->json(['Нет данных за указанный период'], 500);
+        foreach ($excelData as $key => $value) {
+            $excelData[$key] = $service->transformData($value);
         }
+        $excelData        = $transformer->transformCommon($excelData, $fieldsTitles);
+        $excel['columns'] = array_flip($excelData['columns']);
+        $excelKey         = array_keys($excelData['columns']);
 
-        $keys    = array_keys($iterationArray['columns']);
-        $headers = array_values($iterationArray['columns']);
-        $chunks  = $data->chunk(70000000);
-        $values  = [];
+        foreach ($excelData['data'] as $key => $row) {
+            $row['products'] = $transformer->replaceProducts($row);
+            $row             = Arr::only($row, $excelKey);
 
-        foreach ($chunks as $key => $chunk) {
-            $data = $chunk->map(
-                function ($item, $key) use ($keys, $transformer) {
-                    $item['products'] = $transformer->replaceProducts($item);
-                    $item             = (collect($item))->only($keys);
-
-                    return $item;
-                }
-            );
-
-            foreach ($data->toArray() as $number => $item) {
-                foreach ($keys as $name) {
-                    if (isset($item[$name])) {
-                        $values[$number][$name] = $item[$name];
-                    } else {
-                        $values[$number][$name] = '';
-                    }
+            foreach ($excelKey as $name) {
+                if (isset($row[$name])) {
+                    $excel['data'][$key][$name] = $row[$name];
+                } else {
+                    $excel['data'][$key][$name] = '';
                 }
             }
         }
 
-        $data             = collect($values);
-        $array            = $service->paginate(
-            $data, $perPage, $page, [
-                     'path'     => Request::url(),
-                     'pageName' => 'page',
-                 ]
-        )
-                                    ->toArray()
-        ;
-        $array['headers'] = $headers;
-        $array['data']    = $service->paginateOrder($array['data']);
+        foreach ($result['data'] as $key => $value) {
+            $value                = json_decode(json_encode($value), true);
+            $result['data'][$key] = $service->transformData($value);
+        }
 
-        return $array;
+        $iterationArray = $transformer->transformCommon($result['data'], $fieldsTitles);
+        $data           = $iterationArray['data'];
+        $keys           = array_keys($iterationArray['columns']);
+        $headers        = array_values($iterationArray['columns']);
+        $values         = [];
+
+        foreach ($data as $key => $row) {
+            $row['products'] = $transformer->replaceProducts($row);
+            $row             = Arr::only($row, $keys);
+
+            foreach ($keys as $name) {
+                if (isset($row[$name])) {
+                    $values[$key][$name] = $row[$name];
+                } else {
+                    $values[$key][$name] = '';
+                }
+            }
+        }
+
+        $result['data']    = $values;
+        $result['headers'] = $headers;
+        $result['excel']   = $excel;
+
+        return $result;
     }
 }
