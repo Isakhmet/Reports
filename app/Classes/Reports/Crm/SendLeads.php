@@ -70,7 +70,7 @@ class SendLeads extends Connectors implements Report
 
         if(!empty($result['data'])){
             foreach ($result['data'][0] as $key => $value) {
-                $excel['column'][$key] = $key;
+                $excel['columns'][$key] = $key;
             }
             $result['headers'] = array_keys($result['data'][0]);
         }
