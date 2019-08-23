@@ -18,7 +18,7 @@ return [
         'agency'       => App\Classes\Reports\Oracle\Delayed\Okzaim::class,
     ],
     'sms' => [
-        'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing::class,
-        'incoming' => App\Classes\Reports\SmsCampaignManager\Incoming::class
+        'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing\Outgoing::class,
+        'incoming' => App\Classes\Reports\SmsCampaignManager\Incoming\Incoming::class
     ]
 ];
