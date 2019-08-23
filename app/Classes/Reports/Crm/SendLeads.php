@@ -58,9 +58,24 @@ class SendLeads extends Connectors implements Report
                 'crm_send_product.*',
                 'crm_utm_source.name as "Источник создания клиента"'
             )
-            ->paginate($perPage)
         ;
-        $result  = json_decode(json_encode($query), true);
+        $excel['data']   = json_decode(
+            json_encode(
+                $query->get()
+                      ->toArray()
+            ), true
+        );
+        $result  = json_decode(json_encode($query->paginate($perPage)), true);
+        $result['headers'] = [];
+
+        if(!empty($result['data'])){
+            foreach ($result['data'][0] as $key => $value) {
+                $excel['column'][$key] = $key;
+            }
+            $result['headers'] = array_keys($result['data'][0]);
+        }
+
+        $result['excel']   = $excel;
 
         return $result;
     }

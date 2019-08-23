@@ -128,7 +128,6 @@ return [
         'hcb'          => [
             'columns' => [
                 'lead_id'                 => 'Номер в оракуле',
-                'created_at'              => 'Дата',
                 'iin'                     => 'ИИН',
                 'firstname'               => 'Имя',
                 'lastname'                => 'Фамилия',
@@ -144,6 +143,7 @@ return [
                 'postback'                => 'Получили ли статус ответа',
                 'partner_server_info'     => 'Ответ от сервера ХКБ',
                 'partner_server_postback' => 'Postback от ХКБ',
+                'created_at'              => 'Дата',
             ],
         ],
         'okzaim'       => [
