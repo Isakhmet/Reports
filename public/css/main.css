@@ -33,6 +33,15 @@ body {
     font-size: 20px !important;
 }
 
-.ui.vertical.menu .menu .item {
-
+.download {
+    border-radius: 5px;
+    text-align: center;
+    background-color: #3490dc;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    width: 15%;
+    padding: 8px 0;
 }

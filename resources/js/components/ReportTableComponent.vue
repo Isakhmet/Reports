@@ -21,12 +21,16 @@
                                 </thead>
                                 <tbody>
                                 <tr class="" v-if="tableData.length === 0">
-                                    <td class="lead text-center" :colspan="columns.length + 1">No data found.{{tableData.length}}</td>
+                                    <td class="lead text-center" :colspan="columns.length + 1">No data
+                                        found.{{tableData.length}}
+                                    </td>
                                 </tr>
                                 <tr v-for="(data, key1) in tableData" :key="data.id" class="m-datatable__row" v-else>
                                     <td>{{ serialNumber(key1) }}</td>
                                     <td v-for="(value, key) in data" v-if="key !== 'amounts'">{{value}}</td>
-                                    <td class="amounts" @click="openModal(value)" v-else>...<modal-new :months="amounts"></modal-new></td>
+                                    <td class="amounts" @click="openModal(value)" v-else>...
+                                        <modal-new :months="amounts"></modal-new>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -50,11 +54,11 @@
                             </ul>
                         </nav>
                         <export-excel
-                            :data   = "json_data"
-                            :fields = "json_fields"
-                            worksheet = "My Worksheet"
-                            name    = "filename.xls">
-                            <button>download</button>
+                            :data="json_data"
+                            :fields="json_fields"
+                            worksheet="My Worksheet"
+                            :name="filename">
+                            <button class="download">Скачать</button>
                         </export-excel>
                     </div>
                 </div>
@@ -70,40 +74,9 @@
         },
         data() {
             return {
-                json_fields: {
-                    'Complete name': 'name',
-                    'City': 'city',
-                    'Telephone': 'phone.mobile',
-                    'Telephone 2' : {
-                        field: 'phone.landline',
-                        callback: (value) => {
-                            return `Landline Phone - ${value}`;
-                        }
-                    },
-                },
-                json_data: [
-                    {
-                        'name': 'Tony Peña',
-                        'city': 'New York',
-                        'country': 'United States',
-                        'birthdate': '1978-03-15',
-                        'phone': {
-                            'mobile': '1-541-754-3010',
-                            'landline': '(541) 754-3010'
-                        }
-                    },
-                    {
-                        'name': 'Thessaloniki',
-                        'city': 'Athens',
-                        'country': 'Greece',
-                        'birthdate': '1987-11-23',
-                        'phone': {
-                            'mobile': '+1 855 275 5071',
-                            'landline': '(2741) 2621-244'
-                        }
-                    }
-                ],
-                amounts: Object,
+                json_fields:  {},
+                json_data:    [],
+                amounts:      Object,
                 showModal:    false,
                 empty:        false,
                 columns:      [],
@@ -122,6 +95,7 @@
                 report_id:    '',
                 date_end:     '',
                 date_start:   '',
+                filename:     ''
 
             }
         },
@@ -168,35 +142,44 @@
             }
         },
         methods:  {
-            openModal: function (value) {
+            openModal:   function (value) {
                 console.log(value);
                 this.amounts = value;
                 this.$modal.push('example')
             },
-            getAmmounts: function() {
+            getAmmounts: function () {
                 return this.amounts;
             },
-            sendDate: function (dates) {
+            sendDate:    function (dates) {
 
                 this.date_start = dates[0]
                 this.date_end   = dates[1]
                 this.fetchData()
             },
             fetchData() {
-                let dataFetchUrl = `${this.url}?page=${this.currentPage}&date_start=${this.date_start}&date_end=${this.date_end}&type=${this.type}&id=${this.report_id}`;
-                console.log(dataFetchUrl)
-                axios.get(dataFetchUrl)
-                    .then(({data}) => {
-                        this.pagination  = data
-                        this.tableData   = data.report
-                        this.columns     = data.keys
 
-                        if(data.excel !== null){
+                axios.post(this.url, {
+                    page:       this.currentPage,
+                    date_start: this.date_start,
+                    date_end:   this.date_end,
+                    type:       this.type,
+                    id:         this.report_id
+
+                })
+                    .then(({data}) => {
+                        console.log(data)
+                        this.pagination = data
+                        this.tableData  = data.report
+                        this.columns    = data.keys
+
+                        if (data.excel !== null) {
                             this.json_fields = data.excel.columns;
                             this.json_data   = data.excel.data;
                         }
 
-                        console.log(data);
+                        var reportName = this.report.split(' ').join('-');
+                        this.filename  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.xlsx';
+                        console.log(this.filename);
 
                         if (!this.columns.isEmpty) {
                             this.empty = true;

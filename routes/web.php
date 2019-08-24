@@ -11,15 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('report', function (){
+Route::get('/', function (){
     return view('report');
 })->middleware('auth');
-
-Route::get('users/data-table', 'UserData@getUsers')->name('users.table');
-Route::get('reports', 'ReportController@getReport')->name('reports');
 
 Auth::routes();

@@ -9,16 +9,6 @@
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('css/semantic.min.css') }}">
     <script src="{{ secure_asset('js/jquery.min.js') }}"></script>
     <script src="{{ secure_asset('js/semantic.min.js') }}"></script>
-    <style>
-        body {
-            height:   100%;
-            overflow: scroll;
-        }
-
-        #table {
-            margin-top: 50px;
-        }
-    </style>
 </head>
 <body>
 <h3 class="ui block header">
@@ -26,7 +16,7 @@
 </h3>
 <div id="app">
     <demo
-            fetch-url="{{ secure_url('reports/') }}"
+        fetch-url="{{ url('api/reports/') }}"
     ></demo>
 </div>
 </body>
