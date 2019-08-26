@@ -16,7 +16,7 @@
 </h3>
 <div id="app">
     <demo
-        fetch-url="{{ url('api/reports/') }}"
+        fetch-url="{{ secure_url('api/reports/') }}"
     ></demo>
 </div>
 </body>
