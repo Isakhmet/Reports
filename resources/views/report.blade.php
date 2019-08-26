@@ -7,6 +7,7 @@
     <title>Laravel</title>
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('css/semantic.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ secure_asset('css/main.css') }}">
     <script src="{{ secure_asset('js/jquery.min.js') }}"></script>
     <script src="{{ secure_asset('js/semantic.min.js') }}"></script>
 </head>
