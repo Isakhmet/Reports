@@ -4,31 +4,33 @@
             <div class="row">
                 <main-report-component @submitClick="submitClick"></main-report-component>
                 <div class="col-md-9" id="table">
-                    <div class="col"><h3>{{report}}</h3></div>
+                    <div class="col report-title"><p>{{report}}</p></div>
                     <report-component @sendDate="sendDate"></report-component>
                     <div class="data-table" v-if="empty">
                         <div class="main-table">
-                            <table class="ui celled table">
+                            <table class="ui single line table">
                                 <thead>
                                 <tr>
                                     <th class="table-head">#</th>
                                     <th v-for="column in columns" :key="column"
                                         class="table-head">
                                         {{ column | columnHead }}
-                                        <span v-if="column === sortedColumn">
-                            <i v-if="order === 'asc' " class="fas fa-arrow-up"></i>
-                            <i v-else class="fas fa-arrow-down"></i>
-            </span>
+
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="" v-if="tableData.length === 0">
-                                    <td class="lead text-center" :colspan="columns.length + 1">No data found.</td>
+                                    <td class="lead text-center" :colspan="columns.length + 1">No data
+                                        found.{{tableData.length}}
+                                    </td>
                                 </tr>
                                 <tr v-for="(data, key1) in tableData" :key="data.id" class="m-datatable__row" v-else>
                                     <td>{{ serialNumber(key1) }}</td>
-                                    <td v-for="(value, key) in data">{{ value }}</td>
+                                    <td v-for="(value, key) in data" v-if="key !== 'amounts'">{{value}}</td>
+                                    <td class="amounts" @click="openModal(value)" v-else>...
+                                        <modal-new :months="amounts"></modal-new>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -51,6 +53,13 @@
                                 <span style="margin-top: 8px;"> &nbsp; <i>Displaying {{ pagination.report.length }} of {{ pagination.meta.total }} entries.</i></span>
                             </ul>
                         </nav>
+                        <export-excel
+                            :data="json_data"
+                            :fields="json_fields"
+                            worksheet="My Worksheet"
+                            :name="filename">
+                            <button class="download">Скачать</button>
+                        </export-excel>
                     </div>
                 </div>
             </div>
@@ -65,10 +74,14 @@
         },
         data() {
             return {
+                json_fields:  {},
+                json_data:    [],
+                amounts:      Object,
+                showModal:    false,
                 empty:        false,
                 columns:      [],
                 tableData:    [],
-                report:       "",
+                report:       "Выберите тип отчета",
                 url:          '',
                 pagination:   {
                     meta: {to: 1, from: 1}
@@ -82,6 +95,7 @@
                 report_id:    '',
                 date_end:     '',
                 date_start:   '',
+                filename:     ''
 
             }
         },
@@ -128,20 +142,44 @@
             }
         },
         methods:  {
-            sendDate: function (dates) {
+            openModal:   function (value) {
+                console.log(value);
+                this.amounts = value;
+                this.$modal.push('example')
+            },
+            getAmmounts: function () {
+                return this.amounts;
+            },
+            sendDate:    function (dates) {
 
                 this.date_start = dates[0]
                 this.date_end   = dates[1]
                 this.fetchData()
             },
             fetchData() {
-                let dataFetchUrl = `${this.url}?page=${this.currentPage}&date_start=${this.date_start}&date_end=${this.date_end}&type=${this.type}&id=${this.report_id}`;
 
-                axios.get(dataFetchUrl)
+                axios.post(this.url, {
+                    page:       this.currentPage,
+                    date_start: this.date_start,
+                    date_end:   this.date_end,
+                    type:       this.type,
+                    id:         this.report_id
+
+                })
                     .then(({data}) => {
+                        console.log(data)
                         this.pagination = data
                         this.tableData  = data.report
                         this.columns    = data.keys
+
+                        if (data.excel !== null) {
+                            this.json_fields = data.excel.columns;
+                            this.json_data   = data.excel.data;
+                        }
+
+                        var reportName = this.report.split(' ').join('-');
+                        this.filename  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.xlsx';
+                        console.log(this.filename);
 
                         if (!this.columns.isEmpty) {
                             this.empty = true;

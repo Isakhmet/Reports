@@ -23,8 +23,8 @@ class LeadEffectReport extends Connectors implements Report
      */
     public function report($reportType, $page, $perPage, $from = null, $to = null)
     {
-        $connect           = $this->connect($reportType);
-        $query             = $connect
+        $connect       = $this->connect($reportType);
+        $query         = $connect
             ->table('crm_request_in')
             ->leftJoin('crm_request', 'crm_request.request_in_id', '=', 'crm_request_in.id')
             ->leftJoin('crm_send_product', 'crm_send_product.request_id', '=', 'crm_request.id')
@@ -55,10 +55,26 @@ class LeadEffectReport extends Connectors implements Report
                 'crm_request_in.id',
                 'crm_request_in.email'
             )
-            ->paginate($perPage)
         ;
-        $result            = json_decode(json_encode($query), true);
+        $excel['data'] = json_decode(
+            json_encode(
+                $query->get()
+                      ->toArray()
+            ), true
+        );
+        $result        = json_decode(json_encode($query->paginate($perPage)), true);
         $result['headers'] = __('report.reports.leadEffect.headers');
+
+        if (!empty($result['data'])) {
+            $count = 0;
+
+            foreach ($result['data'][0] as $key => $value) {
+                $excel['columns'][$result['headers'][$count]] = $key;
+                $count++;
+            }
+        }
+
+        $result['excel']   = $excel;
 
         return $result;
     }

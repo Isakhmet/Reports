@@ -37,6 +37,7 @@ class ReportController extends Controller
                 ];
                 $result['keys']   = $report['headers'];
                 $result['report'] = $report['data'];
+                $result['excel']  = $report['excel'] ?? null;
             }
 
             return $result;

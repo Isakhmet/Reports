@@ -59,9 +59,24 @@ class CallTasks extends Connectors implements Report
                 'crm_company.name',
                 'crm_utm_source.name'
             )
-            ->paginate($perPage)
         ;
-        $result  = json_decode(json_encode($query), true);
+        $excel['data']   = json_decode(
+            json_encode(
+                $query->get()
+                      ->toArray()
+            ), true
+        );
+        $result  = json_decode(json_encode($query->paginate($perPage)), true);
+        $result['headers'] = [];
+
+        if(!empty($result['data'])){
+            foreach ($result['data'][0] as $key => $value) {
+                $excel['columns'][$key] = $key;
+            }
+            $result['headers'] = array_keys($result['data'][0]);
+        }
+
+        $result['excel']   = $excel;
 
         return $result;
     }
