@@ -5,6 +5,8 @@ return [
         'type' => 'db',
         34     => \App\Classes\Reports\Crm\SendLeads::class,
         35     => \App\Classes\Reports\Crm\LeadEffectReport::class,
+        36     => \App\Classes\Reports\Crm\EuBankRequests::class,
+        37     => \App\Classes\Reports\Crm\EuBankFailedTraffic::class,
         60     => \App\Classes\Reports\Crm\CallTasks::class
     ],
     'oracle' => [
