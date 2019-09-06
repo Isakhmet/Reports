@@ -18,14 +18,13 @@ class EuBankRequests extends Connectors implements Report
      */
     public function report($reportType, $page, $perPage, $from, $to)
     {
-        $connect = $this->connect($reportType);
-        $query   = $connect
+        $connect           = $this->connect($reportType);
+        $query             = $connect
             ->table('crm_request_in')
-            ->orderBy('send_product_date')
-            ->where('send_product_date', '>=', $from . ' 00:00:00')
-            ->where('send_product_date', '<=', $to . ' 23:59:59')
-            ->where('company_id', '=', '8')
+            ->orderBy('created_datetime')
             ->where('registration_utm_source_id', '=', '35')
+            ->whereBetween('created_datetime', [$from . ' 00:00:00', $to . ' 23:59:59'])
+            ->where('company_id', '=', '8')
             ->select(
                 'document_inn as "Документ ИИН"',
                 'name_full as "ФИО"',
@@ -34,23 +33,23 @@ class EuBankRequests extends Connectors implements Report
                 'address_region_name_arch as "Город"'
             )
         ;
-        $excel['data']   = json_decode(
+        $excel['data']     = json_decode(
             json_encode(
                 $query->get()
                       ->toArray()
             ), true
         );
-        $result  = json_decode(json_encode($query->paginate($perPage)), true);
+        $result            = json_decode(json_encode($query->paginate($perPage)), true);
         $result['headers'] = [];
 
-        if(!empty($result['data'])){
+        if (!empty($result['data'])) {
             foreach ($result['data'][0] as $key => $value) {
                 $excel['columns'][$key] = $key;
             }
             $result['headers'] = array_keys($result['data'][0]);
         }
 
-        $result['excel']   = $excel;
+        $result['excel'] = $excel;
 
         return $result;
     }
