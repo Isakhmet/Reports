@@ -34,13 +34,12 @@
             return {
                 'date_start': '',
                 'date_end':   '',
-                'loading':    false,
                 'show_start': false,
                 'show_end':   false,
                 'showModal': false
             }
         },
-        props:    ['path', 'name'],
+        props:    ['path', 'name', 'loading'],
         mounted() {
 
         },
@@ -51,7 +50,7 @@
                 } else {
                     return 'btn btn-primary';
                 }
-            }
+            },
         },
         methods:  {
 
@@ -65,7 +64,6 @@
                     let start = self.date_start.replace('T00:00:00.000Z', '');
                     let end   = self.date_end.replace('T00:00:00.000Z', '');
 
-                    self.loading = true;
                     this.$emit('sendDate', [self.date_start, self.date_end])
                 }
             }

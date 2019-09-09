@@ -5,7 +5,10 @@
                 <main-report-component @submitClick="submitClick"></main-report-component>
                 <div class="col-md-9" id="table">
                     <div class="col report-title"><p>{{report}}</p></div>
-                    <report-component @sendDate="sendDate"></report-component>
+                    <report-component :loading="loading" @sendDate="sendDate"></report-component>
+                        <div v-if="loading" class="ui active inverted dimmer">
+                            <div class="ui large text loader">Загрузка отчета...</div>
+                        </div>
                     <div class="data-table" v-if="empty">
                         <div class="main-table">
                             <table class="ui single line table">
@@ -50,7 +53,7 @@
                                 <li class="page-item" :class="{'disabled': currentPage === pagination.meta.last_page }">
                                     <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Next</a>
                                 </li>
-                                <span style="margin-top: 8px;"> &nbsp; <i>Displaying {{ pagination.report.length }} of {{ pagination.meta.total }} entries.</i></span>
+                                <span style="margin-top: 8px;"> &nbsp; <i>Показано {{ pagination.report.length }} из {{ pagination.meta.total }} записей.</i></span>
                             </ul>
                         </nav>
                         <export-excel
@@ -95,7 +98,8 @@
                 report_id:    '',
                 date_end:     '',
                 date_start:   '',
-                filename:     ''
+                filename:     '',
+                loading:    false
 
             }
         },
@@ -150,14 +154,15 @@
             getAmmounts: function () {
                 return this.amounts;
             },
-            sendDate:    function (dates) {
+            sendDate:   function  (dates) {
 
                 this.date_start = dates[0]
                 this.date_end   = dates[1]
+
                 this.fetchData()
             },
             fetchData() {
-
+                this.loading = true
                 axios.post(this.url, {
                     page:       this.currentPage,
                     date_start: this.date_start,
@@ -180,10 +185,10 @@
                         var reportName = this.report.split(' ').join('-');
                         this.filename  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.xlsx';
                         console.log(this.filename);
-
                         if (!this.columns.isEmpty) {
                             this.empty = true;
                         }
+                        this.loading = false
                     }).catch(error => this.tableData = [])
             },
             /**
