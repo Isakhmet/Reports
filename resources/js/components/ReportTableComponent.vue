@@ -42,7 +42,7 @@
                             <ul class="pagination">
                                 <li class="page-item" :class="{'disabled' : currentPage === 1}">
                                     <a class="page-link" href="#"
-                                       @click.prevent="changePage(currentPage - 1)">Previous</a>
+                                       @click.prevent="changePage(currentPage - 1)">Предыдущая</a>
                                 </li>
                                 <li v-for="page in pagesNumber" class="page-item"
                                     :class="{'active': page == pagination.meta.current_page}">
@@ -51,7 +51,7 @@
                                         }}</a>
                                 </li>
                                 <li class="page-item" :class="{'disabled': currentPage === pagination.meta.last_page }">
-                                    <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Next</a>
+                                    <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Следующая</a>
                                 </li>
                                 <span style="margin-top: 8px;"> &nbsp; <i>Показано {{ pagination.report.length }} из {{ pagination.meta.total }} записей.</i></span>
                             </ul>
