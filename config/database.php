@@ -114,6 +114,20 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
+
+        'monolit' => [
+            'driver' => 'pgsql',
+            'host' => env('IVR_DB_HOST', '127.0.0.1'),
+            'port' => env('IVR_DB_PORT', '5432'),
+            'database' => env('IVR_DB_DATABASE', 'monolit'),
+            'username' => env('IVR_DB_USERNAME', 'monolit'),
+            'password' => env('IVR_DB_PASSWORD', 'monolit'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
         
         'mysql' => [
             'driver' => 'mysql',
