@@ -91,7 +91,7 @@
                 },
                 offset:       4,
                 currentPage:  1,
-                perPage:      5,
+                perPage:      15,
                 sortedColumn: '',
                 order:        'asc',
                 type:         '',
