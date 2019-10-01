@@ -183,7 +183,7 @@
                         }
 
                         var reportName = this.report.split(' ').join('-');
-                        this.filename  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.xlsx';
+                        this.filename  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.xls';
                         console.log(this.filename);
                         if (!this.columns.isEmpty) {
                             this.empty = true;
