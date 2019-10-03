@@ -7,8 +7,7 @@ return [
         35     => \App\Classes\Reports\Crm\LeadEffectReport::class,
         36     => \App\Classes\Reports\Crm\EuBankRequests::class,
         37     => \App\Classes\Reports\Crm\EuBankFailedTraffic::class,
-        60     => \App\Classes\Reports\Crm\CallTasks::class,
-        38     => \App\Classes\Reports\Crm\SMS::class
+        60     => \App\Classes\Reports\Crm\CallTasks::class
     ],
     'oracle' => [
         'cluster'      => App\Classes\Reports\Oracle\Cluster\Cluster::class,
