@@ -63,6 +63,13 @@
                             :name="filename">
                             <button class="download">Скачать</button>
                         </export-excel>
+                        <export-excel
+                                :data   = "json_data"
+                                :fields = "json_fields"
+                                type    = "csv"
+                                :name    = "filenameCSV">
+                            <button class="download">Скачать CSV</button>
+                        </export-excel>
                     </div>
                 </div>
             </div>
@@ -184,6 +191,7 @@
 
                         var reportName = this.report.split(' ').join('-');
                         this.filename  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.xls';
+                        this.filenameCSV  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.csv';
                         console.log(this.filename);
                         if (!this.columns.isEmpty) {
                             this.empty = true;
