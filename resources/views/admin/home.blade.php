@@ -13,6 +13,8 @@
                         ролями</a>
                     <a type="button" class="btn btn-primary btn-lg btn-block"
                        href="{{ route('admin.permissions.index') }}">Управление доступами</a>
+                    <a type="button" class="btn btn-warning btn-lg btn-block"
+                       href="{{ route('admin.report.index') }}">Управление отчетами</a>
                 @endcan
             </div>
         </div>

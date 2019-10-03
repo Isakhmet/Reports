@@ -28,14 +28,11 @@ Route::group(
         return view('admin.home');
     })->name('home_admin');
 
-    Route::get('/', function () {
-        return view('admin.home');
-    })->name('home_admin');
-
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('permissions', 'PermissionsController');
     Route::resource('roles', 'RolesController');
     Route::resource('users', 'UsersController');
+    Route::resource('report', 'ReportController');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);

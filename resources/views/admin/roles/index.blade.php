@@ -20,9 +20,6 @@
                     <table class=" table table-bordered table-striped table-hover datatable datatable-Role">
                         <thead class="thead-dark">
                         <tr>
-                            <th width="10">
-
-                            </th>
                             <th>
                                 {{ trans('cruds.role.fields.id') }}
                             </th>
@@ -46,9 +43,6 @@
                         <tbody>
                         @foreach($roles as $key => $role)
                             <tr data-entry-id="{{ $role->id }}">
-                                <td>
-
-                                </td>
                                 <td>
                                     {{ $role->id ?? '' }}
                                 </td>

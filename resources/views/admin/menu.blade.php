@@ -53,6 +53,17 @@
                         </a>
                     </li>
                 @endcan
+                @can('report_access')
+                    <li class="nav-item">
+                        <a href="{{ route("admin.report.index") }}"
+                           class="nav-link {{ request()->is('admin/report') || request()->is('admin/report/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-file-contract nav-icon">
+
+                            </i>
+                            {{ trans('cruds.report.title') }}
+                        </a>
+                    </li>
+                @endcan
             @endcan
             <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link">
