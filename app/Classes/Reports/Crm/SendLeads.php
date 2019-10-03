@@ -38,25 +38,21 @@ class SendLeads extends Connectors implements Report
             ->where('crm_send_product.send_product_date', '<=', $to . ' 23:59:59')
             ->orderBy('crm_send_product.send_product_date')
             ->select(
-                'crm_send_product.send_product_date as "Дата отправки"',
-                'crm_send_product_status.name as "Статус отправки"',
-                'crm_user.name as "Специалист"',
-                'crm_send_product.comments_client as "Комментарий клиента"',
-                'crm_send_product.name_full as "ФИО"',
-                'crm_send_product.phone_mob as "Мобильный"',
-                'crm_company.name as "Компания"',
-                'crm_send_product.document_inn as "ИИН"',
-                'crm_product.name as "Продукт"',
-                'crm_send_product.amount_product as "Сумма"',
-                'crm_product_currency.code as "Валюта"',
-                'crm_region.name as "Регион"',
-                'crm_send_product.audit_id',
-                'crm_audit.name as "Аудит: Статус"',
-                'audit.name as "Аудит: ФИО"',
-                'crm_send_product.audit_update_count as "Аудит: Кол-во изменений"',
-                'crm_send_product.audit_lastchanged_datetime as "Аудит: Дата изменения"',
-                'crm_send_product.*',
-                'crm_utm_source.name as "Источник создания клиента"'
+                'crm_send_product.send_product_date as Дата отправки',
+                'crm_send_product_status.name as Статус отправки',
+                'crm_user.name as Специалист',
+                'crm_send_product.name_full as ФИО',
+                'crm_send_product.phone_mob as Мобильный',
+                'crm_company.name as Компания',
+                'crm_send_product.document_inn as ИИН',
+                'crm_product.name as Продукт',
+                'crm_send_product.amount_product as Сумма',
+                'crm_region.name as Регион',
+                'crm_audit.name as Аудит: Статус',
+                'audit.name as Аудит: ФИО',
+                'crm_send_product.audit_lastchanged_datetime as Аудит: Дата изменения',
+                'crm_send_product.email as Email',
+                'crm_utm_source.name as Источник создания клиента'
             )
         ;
         $excel['data']   = json_decode(
