@@ -5,7 +5,10 @@
                 <main-report-component @submitClick="submitClick"></main-report-component>
                 <div class="col-md-9" id="table">
                     <div class="col report-title"><p>{{report}}</p></div>
-                    <report-component @sendDate="sendDate"></report-component>
+                    <report-component :loading="loading" @sendDate="sendDate"></report-component>
+                        <div v-if="loading" class="ui active inverted dimmer">
+                            <div class="ui large text loader">Загрузка отчета...</div>
+                        </div>
                     <div class="data-table" v-if="empty">
                         <div class="main-table">
                             <table class="ui single line table">
@@ -39,7 +42,7 @@
                             <ul class="pagination">
                                 <li class="page-item" :class="{'disabled' : currentPage === 1}">
                                     <a class="page-link" href="#"
-                                       @click.prevent="changePage(currentPage - 1)">Previous</a>
+                                       @click.prevent="changePage(currentPage - 1)">Предыдущая</a>
                                 </li>
                                 <li v-for="page in pagesNumber" class="page-item"
                                     :class="{'active': page == pagination.meta.current_page}">
@@ -48,9 +51,9 @@
                                         }}</a>
                                 </li>
                                 <li class="page-item" :class="{'disabled': currentPage === pagination.meta.last_page }">
-                                    <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Next</a>
+                                    <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Следующая</a>
                                 </li>
-                                <span style="margin-top: 8px;"> &nbsp; <i>Displaying {{ pagination.report.length }} of {{ pagination.meta.total }} entries.</i></span>
+                                <span style="margin-top: 8px;"> &nbsp; <i>Показано {{ pagination.report.length }} из {{ pagination.meta.total }} записей.</i></span>
                             </ul>
                         </nav>
                         <export-excel
@@ -59,6 +62,13 @@
                             worksheet="My Worksheet"
                             :name="filename">
                             <button class="download">Скачать</button>
+                        </export-excel>
+                        <export-excel
+                                :data   = "json_data"
+                                :fields = "json_fields"
+                                type    = "csv"
+                                :name    = "filenameCSV">
+                            <button class="download">Скачать CSV</button>
                         </export-excel>
                     </div>
                 </div>
@@ -88,14 +98,15 @@
                 },
                 offset:       4,
                 currentPage:  1,
-                perPage:      5,
+                perPage:      15,
                 sortedColumn: '',
                 order:        'asc',
                 type:         '',
                 report_id:    '',
                 date_end:     '',
                 date_start:   '',
-                filename:     ''
+                filename:     '',
+                loading:    false
 
             }
         },
@@ -150,14 +161,15 @@
             getAmmounts: function () {
                 return this.amounts;
             },
-            sendDate:    function (dates) {
+            sendDate:   function  (dates) {
 
                 this.date_start = dates[0]
                 this.date_end   = dates[1]
+
                 this.fetchData()
             },
             fetchData() {
-
+                this.loading = true
                 axios.post(this.url, {
                     page:       this.currentPage,
                     date_start: this.date_start,
@@ -178,12 +190,13 @@
                         }
 
                         var reportName = this.report.split(' ').join('-');
-                        this.filename  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.xlsx';
+                        this.filename  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.xls';
+                        this.filenameCSV  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.csv';
                         console.log(this.filename);
-
                         if (!this.columns.isEmpty) {
                             this.empty = true;
                         }
+                        this.loading = false
                     }).catch(error => this.tableData = [])
             },
             /**

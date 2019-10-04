@@ -3,6 +3,14 @@
         <div class="col-md-3">
             <div class="ui vertical menu">
                 <div class="item">
+                    <div class="header">IVR</div>
+                    <div class="menu">
+                        <a class="item" @click="changeLink(ivr[item], 'ivr', item)"
+                           v-for="item in Object.keys(ivr).sort((a,b) => b - a) " :key="item">{{
+                            ivr[item] }}</a>
+                    </div>
+                </div>
+                <div class="item">
                     <div class="header">CRM</div>
                     <div class="menu">
                         <a class="item" @click="changeLink(crm[item], 'crm', item)"
@@ -41,6 +49,9 @@
                     60: 'Задания на обзвон (Новый, 060)',
                     34: 'Отправленные заявки (Детали 034)',
                     35: 'LeadEffect',
+                    36: 'Заявки EUBANK',
+                    37: 'Отказной трафик EUBANK',
+                    38: 'Отчет по СМС'
                 },
                 type:   '',
                 oracle: {
@@ -56,6 +67,9 @@
                 sms: {
                     outgoing: 'Исходящие СМС',
                     incoming: 'Входящие СМС'
+                },
+                ivr: {
+                    ivr_send:    'IVR отправка заявки',
                 },
             }
         },
