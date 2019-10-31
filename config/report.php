@@ -25,9 +25,6 @@ return [
         'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing\Outgoing::class,
         'incoming' => App\Classes\Reports\SmsCampaignManager\Incoming\Incoming::class,
     ],
-    'ivr'    => [
-        'ivr_send' => App\Classes\Reports\IVR\SendRequests\SendRequests::class,
-    ],
     'landings' => [
         'alfa_bank_landing' => App\Classes\Reports\Landings\AlfaBankLanding::class,
     ],

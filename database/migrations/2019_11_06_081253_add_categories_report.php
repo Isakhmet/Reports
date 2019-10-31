@@ -54,15 +54,6 @@ class AddCategoriesReport extends Migration
                   ],
                   [
                       'id'         => 4,
-                      'code'       => 'ivr',
-                      'name'       => 'IVR',
-                      'is_active'  => true,
-                      'created_at' => $date,
-                      'updated_at' => $date,
-                      'deleted_at' => null,
-                  ],
-                  [
-                      'id'         => 5,
                       'code'       => 'landings',
                       'name'       => 'Landings',
                       'is_active'  => true,
