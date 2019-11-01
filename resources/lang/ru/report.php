@@ -2,7 +2,7 @@
 
 return [
     'reports' => [
-        'leadEffect'   => [
+        'leadEffect'     => [
             'headers' => [
                 'Дата_отправки',
                 'Статус_отправки',
@@ -19,7 +19,25 @@ return [
                 'email',
             ],
         ],
-        'scorePoints'  => [
+        'EuBankRequests' => [
+            'headers' => [
+                'iin'   => 'ИИН',
+                'fio'   => 'ФИО',
+                'phone' => 'Телефон',
+                'date'  => 'Дата',
+                'city'  => 'Город',
+                'score' => 'Прошел скоринг',
+            ],
+            'helper' => [
+                'a' => 1,
+                'b' => 2,
+                'c' => 3,
+                'd' => 4,
+                'e' => 5,
+                'f' => 6,
+            ],
+        ],
+        'scorePoints'    => [
             'headers' => [
                 'id'           => 'ID',
                 'created_at'   => 'Дата/Время',
@@ -31,7 +49,7 @@ return [
                 'products'     => 'Продукты',
             ],
         ],
-        'scoreValues'  => [
+        'scoreValues'    => [
             'columns' => [
                 'id'           => 'ID',
                 'created_at'   => 'Дата/Время',
@@ -43,7 +61,7 @@ return [
                 'products'     => 'Продукты',
             ],
         ],
-        'scoreClients' => [
+        'scoreClients'   => [
             'headers' => [
                 'id'                 => 'ID',
                 'created_at'         => 'Дата/Время',
@@ -61,7 +79,7 @@ return [
                 'gclid'              => 'Google Click ID',
             ],
         ],
-        'alfaBank'     => [
+        'alfaBank'       => [
             'cities'   => [
                 1  => "алматы",
                 2  => "астана",
@@ -97,7 +115,7 @@ return [
 
             ],
         ],
-        'sms'          => [
+        'sms'            => [
             'outgoing' => [
                 'headers' => [
                     'Дата_отправки',
@@ -125,7 +143,7 @@ return [
                 ],
             ],
         ],
-        'ivr'          => [
+        'ivr'            => [
             'ivr_send' => [
                 'headers'   => [
                     1  => 'ID',
@@ -175,7 +193,7 @@ return [
                 ],
             ],
         ],
-        'hcb'          => [
+        'hcb'            => [
             'columns' => [
                 'lead_id'                 => 'Номер в оракуле',
                 'iin'                     => 'ИИН',
@@ -196,7 +214,7 @@ return [
                 'created_at'              => 'Дата',
             ],
         ],
-        'okzaim'       => [
+        'okzaim'         => [
             'columns' => [
                 'lead_id'      => 'Номер в оракуле',
                 'is_double'    => 'Дубль',
@@ -220,7 +238,7 @@ return [
                 'failed'     => 'Ошибка',
             ],
         ],
-        'cluster'      => [
+        'cluster'        => [
             'columns' => [
                 'lead_id'    => 'Номер в оракуле',
                 'iin'        => 'ИИН',
