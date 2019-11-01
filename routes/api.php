@@ -19,3 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('reports', 'ReportController@getReport');
 
+
+Route::group(
+    ['namespace' => 'API'/** , 'middleware' => ['auth'] */], function () {
+    Route::post('get/all', 'APIReportController@index');
+    Route::post('get/categories', 'APIReportController@getCategories');
+    Route::post('get/reports', 'APIReportController@getReports');
+});
+
+

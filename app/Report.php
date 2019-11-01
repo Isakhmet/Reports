@@ -22,17 +22,19 @@ class Report extends Model
         ];
 
     protected $fillable = [
-        'title',
-        'description',
+        'code',
+        'name',
         'is_active',
+    ];
+
+    protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at',
     ];
-/**
-    public function roles()
+
+    public function getCategory()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany('App\CategoriesReport', 'categories_report');
     }
- */
 }
