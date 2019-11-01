@@ -2,9 +2,13 @@
 
     <div class="ui vertical menu">
         <div class="item" v-for="item in category" :key="item.code">
-            <h2 class="menu-category__name" @click="showSubCateogry(item.code)">{{item.name}}</h2>
+            <h3 class="menu-category__name" @click="showSubCateogry(item.code)">{{item.name}}</h3>
             <div class="" v-if="item.showSub">
-               <p class="menu-subcategory__name" v-for="sub in item.subcategory" :key="sub.code">{{sub.name}}</p>
+               <p class="menu-subcategory__name"
+                  v-for="sub in item.get_reports"
+                  :key="sub.code"
+                  @click="subClick(sub)"
+               >{{sub.name}}</p>
             </div>
         </div>
 
@@ -30,7 +34,9 @@
         methods: {
             showSubCateogry(code){
                 this.$emit('showSubCategory', code)
-
+            },
+            subClick(sub){
+                this.$emit('subCategoryClick', sub)
             }
         }
     }
