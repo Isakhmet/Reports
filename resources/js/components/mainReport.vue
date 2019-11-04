@@ -1,20 +1,27 @@
 <template>
     <div class="main-report">
+
         <main-report-component  :category="getCategoryIsActive"
                                 @subCategoryClick="subCategoryClick"
                                 @showSubCategory="showSubCategory"
         ></main-report-component>
-       <div>
+       <div ref="table">
            <h3>{{CDateFormShow.name}}</h3>
            <report-component v-if="CDateFormShow" @selectedDateReporting="selectedDateReporting" ></report-component>
+           <button @click="canceling">cancel</button>
+           <report-table v-if="reports" :reports="reports" :tableWidth="$refs.table.clientWidth" />
+
+
        </div>
     </div>
 </template>
 <script>
     import axios from 'axios'
+    let CancelToken = axios.CancelToken;
+    let cancel;
     const requests = {
-        getCategory: "/api/get/all",
-        getReport: "/api/reports"
+        getCategory: "/api/reports/getCategory",
+        getReport: "/api/reports/getReports"
     }
     export default {
         data: () => ({
@@ -54,7 +61,8 @@
             sendToApiForm: {
                 page: 1,
                 per_page: 15,
-            }
+            },
+            reports: null
         }),
         computed: {
             getCategoryIsActive(){
@@ -62,6 +70,11 @@
             }
         },
         methods: {
+            canceling(){
+                cancel()
+
+
+            },
             showSubCategory(code){
                 this.category.map(item => {
                     if(item.code == code){
@@ -83,14 +96,21 @@
                 this.getReporting()
             },
             async getReporting(){
-                console.log('form', this.sendToApiForm)
-                let http = await axios.post(`${requests.getReport}`, this.sendToApiForm)
-                console.log(http)
-            }
+                this.reports = await axios.post(`${requests.getReport}`, this.sendToApiForm, {cancelToken: new CancelToken(function executor(c) { cancel = c })})
+                    .then(res => {
+                        console.log(res.data)
+                        if(res.data.length == 0) {return false}
+                        return res.data
+                    })
+                    .catch( (thrown) => {
+                    return false
+                })
+            },
+
         },
         async created() {
             let http = await axios.post(`${requests.getCategory}`)
-            console.log(http.data)
+            console.log('hello',http.data)
             http.data.map(item => {
                 item.showSub = false
             })

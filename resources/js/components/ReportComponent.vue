@@ -27,10 +27,11 @@
 </template>
 
 <script>
+    const today = () => `${new Date().getFullYear()}-${((new Date().getMonth() + 1) < 10) ? '0' + (new Date().getMonth() + 1).toString()  : (new Date().getMonth() + 1)}-${((new Date().getDate()) < 10) ? '0' + (new Date().getDate()).toString()  : (new Date().getDate())}`
     export default {
         data: () => ({
-            'date_start': '',
-            'date_end':   '',
+            'date_start': today(),
+            'date_end':   today(),
 
 
         }),

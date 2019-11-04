@@ -27,6 +27,7 @@ export const bus = new Vue();
 
 Vue.component('report-component', require('./components/ReportComponent.vue').default);
 Vue.component('main-report-component', require('./components/MainReportComponent.vue').default);
+Vue.component('report-table', require('./components/reportTable.vue').default);
 Vue.component('demo', require('./components/mainReport.vue').default);
 Vue.component('modal-new', require('./components/NewModalComponent').default);
 Vue.component('datepicker', DatePicker);
