@@ -8,11 +8,15 @@
        <div ref="table">
            <h3>{{CDateFormShow.name}}</h3>
            <report-component v-if="CDateFormShow" @selectedDateReporting="selectedDateReporting" ></report-component>
-           <button @click="canceling">cancel</button>
-           <report-table v-if="reports" :reports="reports" :tableWidth="$refs.table.clientWidth" />
+           <div v-if="reports === 'no-data'">
+               <h3>нет данных</h3>
+           </div>
 
+           <report-table v-else-if="reports" :reports="reports" :tableWidth="$refs.table.clientWidth" :formName="formName" />
 
        </div>
+        <report-loading v-if="loading" @canceling="canceling" />
+
     </div>
 </template>
 <script>
@@ -25,9 +29,10 @@
     }
     export default {
         data: () => ({
+            loading: false,
             category: [
                 {
-                    name: 'IVR',
+                    name: '...',
                     code: 'ivr',
                     showSub: false,
                     subcategory: [
@@ -42,7 +47,7 @@
                     ]
                 },
                 {
-                    name: 'oracle',
+                    name: '...',
                     code: 'ivr2',
                     showSub: false,
                     subcategory: [
@@ -66,14 +71,23 @@
         }),
         computed: {
             getCategoryIsActive(){
-                return this.category.filter(item => item.is_active)
+                return this.category.filter(item => item.is_active).map(item => {
+                    item.get_reports.filter(sub => sub.is_active)
+                    return item
+                })
+            },
+            formName(){
+                let name = this.CDateFormShow.name.replace(/ /g,"_")+ `_с_${this.sendToApiForm.date_start}_по_${this.sendToApiForm.date_end}`
+                return {
+                    xls: name + '.xls',
+                    csv: name + '.csv',
+                    xlsx: name + '.xlsx',
+                }
             }
         },
         methods: {
             canceling(){
                 cancel()
-
-
             },
             showSubCategory(code){
                 this.category.map(item => {
@@ -86,6 +100,7 @@
                 })
             },
             subCategoryClick(code){
+                this.reports = false
                 this.CDateFormShow = code
                 this.sendToApiForm.id = code.code
 
@@ -96,15 +111,19 @@
                 this.getReporting()
             },
             async getReporting(){
+                this.loading = true
                 this.reports = await axios.post(`${requests.getReport}`, this.sendToApiForm, {cancelToken: new CancelToken(function executor(c) { cancel = c })})
                     .then(res => {
-                        console.log(res.data)
-                        if(res.data.length == 0) {return false}
+                        console.log('res.data',res.data)
+                        if(res.data.length == 0) {
+                            return 'no-data'
+                        }
                         return res.data
                     })
                     .catch( (thrown) => {
                     return false
                 })
+                this.loading = false
             },
 
         },
@@ -114,7 +133,14 @@
             http.data.map(item => {
                 item.showSub = false
             })
-            this.category = http.data
+            let filterData = http.data.filter(item => item.is_active).map(item => {
+                item.get_reports.filter(sub => sub.is_active)
+                return item
+            })
+            this.sendToApiForm.type = filterData[0].code
+            filterData[0].showSub = true
+
+            this.category = filterData
         }
     }
 </script>

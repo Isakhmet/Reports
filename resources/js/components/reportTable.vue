@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="reporting" >
+
             <div class="reporting-pagination">
                 <paginate
                         :page-count="navigation"
@@ -10,9 +11,55 @@
                         :container-class="'reporting-pagination__el'"
                         :page-class="'reporting-pagination__el-item'"
                         :prev-link-class="'reporting-pagination__el-prev'"
+                        :next-link-class="'reporting-pagination__el-next'"
                 >
 
                 </paginate>
+                <div class="select-iteration">
+                    <p>Показать <span>
+                        <select v-model="iteration">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="150">150</option>
+                            <option value="200">200</option>
+
+                        </select>
+                    </span> записей на странице</p>
+                </div>
+                <div>
+                    <p>показано с {{iteration_start + 1}} по {{iteration_end}}</p>
+                </div>
+
+
+                <div>
+
+                </div>
+                <div class="download-box">
+
+                    <button class="download_button" @click="downloadSelect">скачать</button>
+                    <div class="download-box__select" v-if="downloadSelectState">
+<!--                        <export-excel-->
+<!--                                :data="reports.excel.data"-->
+<!--                                :fields="reports.excel.columns"-->
+<!--                                worksheet="My Worksheet"-->
+<!--                                :name="formName.xls">-->
+<!--                            <button class="download_button">xls</button>-->
+<!--                        </export-excel>-->
+
+                        <button @click="onexport" class="download_button">xlsx</button>
+
+                        <export-excel
+                                :data="reports.excel.data"
+                                :fields="reports.excel.columns"
+                                type    = "csv"
+                                :name    = "formName.csv">
+                            <button class="download_button">CSV</button>
+                        </export-excel>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -35,11 +82,44 @@
 
 <script>
     import Paginate from 'vuejs-paginate'
+    import XLSX from 'xlsx'
     Vue.component('paginate', Paginate)
     export default {
         data: () => ({
+            col: [
+
+                {
+                    label: "ID",
+                    field: "ID",
+                },
+                {
+                    label: "Дата отправки",
+                    field: "Дата отправки",
+                },
+                {
+                    label: "Канал",
+                    field: "Канал",
+                },
+                {
+                    label: "Статус отправки",
+                    field: "Статус отправки",
+                },
+                {
+                    label: "Текст сообщения",
+                    field: "Текст сообщения",
+                },
+                {
+                    label: "Телефон",
+                    field: "Телефон",
+                },
+                {
+                    label: "ФИО",
+                    field: "ФИО",
+                },
+            ],
             iteration_start: 0,
-            iteration: 10
+            iteration: 10,
+            downloadSelectState: false
         }),
         props: {
             reports: {
@@ -48,6 +128,10 @@
             },
             tableWidth: {
                 type: Number
+            },
+            formName: {
+                type: Object,
+                required: true
             }
         },
         computed: {
@@ -66,13 +150,27 @@
                 return Math.ceil(this.tableContentIndexations.length / this.iteration);
             },
             iteration_end(){
-                return parseInt(this.iteration_start) + this.iteration
+                return parseInt(this.iteration_start) + parseInt(this.iteration)
             }
         },
         methods: {
             paginate(a){
-                console.log(a)
                 this.iteration_start = ( (a - 1) * this.iteration )
+            },
+            downloadSelect(){
+                this.downloadSelectState = !this.downloadSelectState
+            },
+
+            onexport () { // On Click Excel download button
+
+                var animalWS = XLSX.utils.json_to_sheet(this.reports.excel.data)
+
+                var wb = XLSX.utils.book_new() // make Workbook of Excel
+
+                XLSX.utils.book_append_sheet(wb, animalWS, 'animals') // sheetAName is name of Worksheet
+
+                // export Excel file
+                XLSX.writeFile(wb, this.formName.xlsx) // name of the file is 'book.xlsx'
             }
         }
 
@@ -92,6 +190,10 @@
             top: 0;
             width: max-content;
             padding: 1rem;
+            .reporting-head{
+                color: white;
+                font-size: 1.2rem
+            }
         }
         .report-table{
             display: grid;
@@ -102,7 +204,14 @@
             p{
                 background: white;
                 margin: 0;
+                padding: .4rem;
             }
+        }
+    }
+
+    .reporting-pagination{
+        .select-iteration{
+            padding: 1rem;
         }
     }
 
@@ -110,20 +219,68 @@
         display: flex;
         align-items: center;
         list-style-type: none;
+        margin: 1rem;
         .reporting-pagination__el-item{
             /*list-style-type: none;*/
-            padding: 1rem;
-            &:hover{
-                background: gray;
+            a{
+                padding: 1rem;
+                &:hover{
+                    background: #d2d2d2;
+                }
             }
+            &.active{
+                background: #00AA46;
+                border-radius: 8px;
+                a{
+                    color: white;
+                }
+            }
+
+
 
         }
         .reporting-pagination__el-prev{
             /*list-style-type: none;*/
             padding: 1rem;
+            &:hover{
+                background: #d2d2d2;
+            }
+        }
+        .reporting-pagination__el-next{
+            /*list-style-type: none;*/
+            padding: 1rem;
+            &:hover{
+                background: #d2d2d2;
+            }
         }
 
     }
 
+
+    .download-box{
+        position: relative;
+        padding: 0 1rem;
+        .download-box__select{
+            position: absolute;
+            top: 45px;
+            left: 0;
+            z-index: 2;
+            background: #e8e8e8;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+    }
+
+    .download_button{
+        border: none;
+        border-radius: 8px;
+        background: #00AA46;
+        color: white;
+        width: 200px;
+        height: 40px;
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0.2rem 0;
+    }
 
 </style>

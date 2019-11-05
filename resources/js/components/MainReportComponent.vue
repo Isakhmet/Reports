@@ -8,6 +8,7 @@
                   v-for="sub in item.get_reports"
                   :key="sub.code"
                   @click="subClick(sub)"
+                  :class="{active: sub.id == activeSub}"
                >{{sub.name}}</p>
             </div>
         </div>
@@ -17,6 +18,9 @@
 
 <script>
     export default {
+        data: () => ({
+            activeSub: null
+        }),
         props: {
             category: {
                 type: Array
@@ -33,9 +37,11 @@
         },
         methods: {
             showSubCateogry(code){
+
                 this.$emit('showSubCategory', code)
             },
             subClick(sub){
+                this.activeSub = sub.id
                 this.$emit('subCategoryClick', sub)
             }
         }
@@ -53,6 +59,9 @@
     }
     .menu-subcategory__name{
         color: gray;
+        &.active{
+            color: black
+        }
         &:hover{
             color: black;
             cursor: pointer;

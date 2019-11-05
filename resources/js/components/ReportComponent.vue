@@ -19,7 +19,7 @@
                        required
                 >
 
-                <button >Выгрузить</button>
+                <button class="get-report_button" >Выгрузить</button>
             </form>
 
         </div>
@@ -54,5 +54,15 @@
 <style>
     .input-cal {
         margin: 0.5em 0 !important;
+    }
+
+    .get-report_button{
+        border:none;
+        border-radius: 8px;
+        padding: .8rem 1rem;
+        background: darkgreen;
+        color: white;
+        
+
     }
 </style>
