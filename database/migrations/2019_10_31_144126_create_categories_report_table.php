@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,14 +15,20 @@ class CreateCategoriesReportTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories_report', function (Blueprint $table) {
+        Schema::create(
+            'categories_report', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code', 255);
-            $table->string('title', 255);
-            $table->boolean('is_active')->default(true);
+            $table->string('name', 255);
+            $table->boolean('is_active')
+                  ->default(true)
+            ;
             $table->timestamps();
-            $table->softDeletes()->default(null);
-        });
+            $table->softDeletes()
+                  ->default(null)
+            ;
+        }
+        );
     }
 
     /**

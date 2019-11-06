@@ -16,7 +16,7 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code', 255);
-            $table->string('title', 255);
+            $table->string('name', 255);
             $table->integer('category_id');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
