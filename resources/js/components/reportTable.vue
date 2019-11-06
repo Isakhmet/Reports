@@ -28,8 +28,8 @@
                         </select>
                     </span> записей на странице</p>
                 </div>
-                <div>
-                    <p>показано с {{iteration_start + 1}} по {{iteration_end}}</p>
+                <div class="report-table-info">
+                    <p>показано с {{iteration_start + 1}} по {{iteration_end}} из {{reports.excel.data.length}}</p>
                 </div>
 
 
@@ -86,37 +86,7 @@
     Vue.component('paginate', Paginate)
     export default {
         data: () => ({
-            col: [
 
-                {
-                    label: "ID",
-                    field: "ID",
-                },
-                {
-                    label: "Дата отправки",
-                    field: "Дата отправки",
-                },
-                {
-                    label: "Канал",
-                    field: "Канал",
-                },
-                {
-                    label: "Статус отправки",
-                    field: "Статус отправки",
-                },
-                {
-                    label: "Текст сообщения",
-                    field: "Текст сообщения",
-                },
-                {
-                    label: "Телефон",
-                    field: "Телефон",
-                },
-                {
-                    label: "ФИО",
-                    field: "ФИО",
-                },
-            ],
             iteration_start: 0,
             iteration: 10,
             downloadSelectState: false
@@ -276,11 +246,14 @@
         border-radius: 8px;
         background: #00AA46;
         color: white;
-        width: 200px;
-        height: 40px;
-        font-size: 24px;
+        width: 164px;
+        height: 24px;
+        font-size: 13px;
         font-weight: 700;
         margin: 0.2rem 0;
+    }
+    .report-table-info{
+        padding: 1rem ;
     }
 
 </style>
