@@ -64,6 +64,15 @@ class UsersTableSeeder extends Seeder
                       'updated_at' => $date,
                       'deleted_at' => null,
                   ],
+                  [
+                      'id'         => 6,
+                      'name'       => 'Reat Khabukhayev',
+                      'email'      => 'r.khabukhayev@prodengi.kz',
+                      'password'   => bcrypt('adminreport'),
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
+                  ],
               ]
           )
         ;
