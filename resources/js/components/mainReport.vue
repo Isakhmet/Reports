@@ -134,9 +134,11 @@
                 item.showSub = false
             })
             let filterData = http.data.filter(item => item.is_active).map(item => {
-                item.get_reports.filter(sub => sub.is_active)
+                // console.log(item.get_reports)
+                item.get_reports = item['get_reports'].filter(sub => sub.is_active)
                 return item
             })
+            console.log('filter',filterData)
             this.sendToApiForm.type = filterData[0].code
             filterData[0].showSub = true
 
