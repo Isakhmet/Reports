@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\CategoriesReport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReportRequest;
 use App\Http\Requests\UpdateReportRequest;
@@ -13,6 +14,7 @@ class ReportController extends Controller
     public function index()
     {
         $reports = Report::all();
+
         return view('admin.report.index', compact('reports'));
     }
 
@@ -30,12 +32,23 @@ class ReportController extends Controller
 
     public function edit(Report $report)
     {
-        return view('admin.report.edit', compact( 'report'));
+        $category = CategoriesReport::all()
+                                    ->pluck('code', 'id')
+        ;
+        $report->load('category');
+
+        return view('admin.report.edit', compact('report', 'category'));
     }
 
     public function update(UpdateReportRequest $request, Report $report)
     {
-        $report->update($request->all());
+        $report = Report::find($request->input('id'));
+
+        $report->code        = $request->input('code');
+        $report->name        = $request->input('name');
+        $report->category_id = $request->input('category_id');
+        $report->is_active   = $request->input('is_active');
+        $report->save();
 
         return redirect()->route('admin.report.index');
     }

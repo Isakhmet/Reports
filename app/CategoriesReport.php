@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
 
 class CategoriesReport extends Model
 {
@@ -31,4 +30,8 @@ class CategoriesReport extends Model
         return $this->hasMany('App\Report', 'category_id', 'id');
     }
 
+    public function reports()
+    {
+        return $this->hasMany('App\Report', 'category_id', 'id');
+    }
 }

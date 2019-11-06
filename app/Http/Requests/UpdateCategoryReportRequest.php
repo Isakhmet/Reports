@@ -6,27 +6,23 @@ use App\Report;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreReportRequest extends FormRequest
+class UpdateCategoryReportRequest extends FormRequest
 {
     public function authorize()
     {
-
         return true;
     }
 
     public function rules()
     {
         return [
-            'code'     => [
+            'code'    => [
                 'required',
             ],
-            'name'    => [
+            'name'   => [
                 'required',
             ],
-            'category'  => [
-                'integer',
-            ],
-            'is_active'  => [
+            'is_active' => [
                 'integer',
             ],
         ];
