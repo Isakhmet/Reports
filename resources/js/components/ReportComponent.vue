@@ -1,71 +1,51 @@
 <template>
     <div class="card">
         <div class="card-body">
-            <input
-                class="form-control form-date input-cal"
-                v-model="date_start"
-                @click="show_start = true"
-                placeholder="Дата с"
+            <form @submit.prevent="selectedDateReporting">
+                <input
+                        class="form-control form-date input-cal"
+                        type="date"
+                        v-model="date_start"
+                        placeholder="Дата с"
+                        :max="maxMinDate"
+                        required
+                >
 
-            >
-            <datepicker @close="show_start = false"
-                        v-if="show_start"
-                        v-model="date_start"></datepicker>
-            <input class="form-control form-date input-cal"
-                   v-model="date_end"
-                   @click="show_end = true"
-                   placeholder="Дата по"
+                <input class="form-control form-date input-cal"
+                       v-model="date_end"
+                       placeholder="Дата по"
+                       type="date"
+                       :min="date_start"
+                       required
+                >
 
-            >
-            <datepicker @close="show_end = false"
-                        v-if="show_end"
-                        v-model="date_end"></datepicker>
-            <button @click="goToScoreController()" :class="isLoading">Выгрузить</button>
-            <modal v-if="showModal" @close="showModal = false">
-                <h4 class="required" slot="header">Заполните обе даты</h4>
-            </modal>
+                <button class="get-report_button" >Выгрузить</button>
+            </form>
+
         </div>
     </div>
 </template>
 
 <script>
+    const today = () => `${new Date().getFullYear()}-${((new Date().getMonth() + 1) < 10) ? '0' + (new Date().getMonth() + 1).toString()  : (new Date().getMonth() + 1)}-${((new Date().getDate()) < 10) ? '0' + (new Date().getDate()).toString()  : (new Date().getDate())}`
     export default {
-        data:     function () {
-            return {
-                'date_start': '',
-                'date_end':   '',
-                'show_start': false,
-                'show_end':   false,
-                'showModal': false
-            }
-        },
-        props:    ['path', 'name', 'loading'],
-        mounted() {
+        data: () => ({
+            'date_start': today(),
+            'date_end':   today(),
 
-        },
+
+        }),
         computed: {
-            isLoading: function () {
-                if (this.loading) {
-                    return 'btn btn-primary m-progress';
-                } else {
-                    return 'btn btn-primary';
-                }
-            },
+          maxMinDate() {
+              return `${new Date().getFullYear()}-${((new Date().getMonth() + 1) < 10) ? '0' + (new Date().getMonth() + 1).toString()  : (new Date().getMonth() + 1)}-${((new Date().getDate()) < 10) ? '0' + (new Date().getDate()).toString()  : (new Date().getDate())}`
+          }
         },
+
+
         methods:  {
 
-            goToScoreController: function () {
-                var self = this;
-
-                if (self.date_start == '' || self.date_end == '') {
-                    self.showModal = true;
-                    console.log(self.showModal);
-                } else {
-                    let start = self.date_start.replace('T00:00:00.000Z', '');
-                    let end   = self.date_end.replace('T00:00:00.000Z', '');
-
-                    this.$emit('sendDate', [self.date_start, self.date_end])
-                }
+            selectedDateReporting() {
+                this.$emit('selectedDateReporting', {date_start: this.date_start, date_end: this.date_end})
             }
         }
     }
@@ -74,5 +54,15 @@
 <style>
     .input-cal {
         margin: 0.5em 0 !important;
+    }
+
+    .get-report_button{
+        border:none;
+        border-radius: 8px;
+        padding: .8rem 1rem;
+        background: darkgreen;
+        color: white;
+        
+
     }
 </style>
