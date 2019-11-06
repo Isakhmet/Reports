@@ -22,6 +22,7 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <link href="//gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link href="{{ secure_asset('css/custom.css') }}" rel="stylesheet" />
+    <link href="{{ secure_asset('css/main.css') }}" rel="stylesheet" />
     @yield('styles')
 </head>
 

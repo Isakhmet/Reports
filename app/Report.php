@@ -2,12 +2,8 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
 
 class Report extends Model
 {
@@ -22,17 +18,24 @@ class Report extends Model
         ];
 
     protected $fillable = [
-        'title',
-        'description',
+        'code',
+        'name',
         'is_active',
+    ];
+
+    protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at',
     ];
-/**
-    public function roles()
+
+    public function getCategory()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany('App\CategoriesReport', 'categories_report');
     }
- */
+
+    public function category()
+    {
+        return $this->belongsToMany('App\CategoriesReport', 'reports', 'id', 'category_id');
+    }
 }
