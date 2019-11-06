@@ -13,8 +13,8 @@ class ReportMenuController extends Controller
      *
      * @return array
      * @api                 {post}
-     * @apiSampleRequest    https://reporting.prodengi.kz/load/reports
-     * @apiName             loadReports
+     * @apiSampleRequest    https://reporting.prodengi.kz/api/reports/getCategory
+     * @apiName             getCategory
      * @apiDescription      Запрос выгружает категории с их отчетами.
      *                      P.S. Запрос не содержит параметров.
      *
