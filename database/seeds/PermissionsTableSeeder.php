@@ -173,6 +173,41 @@ class PermissionsTableSeeder extends Seeder
                       'updated_at' => $date,
                       'deleted_at' => null,
                   ],
+                  [
+                      'id'         => 23,
+                      'title'      => 'category_access',
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
+                  ],
+                  [
+                      'id'         => 24,
+                      'title'      => 'category_create',
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
+                  ],
+                  [
+                      'id'         => 25,
+                      'title'      => 'category_show',
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
+                  ],
+                  [
+                      'id'         => 26,
+                      'title'      => 'category_edit',
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
+                  ],
+                  [
+                      'id'         => 27,
+                      'title'      => 'category_delete',
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
+                  ],
               ]
           )
         ;
