@@ -21,7 +21,7 @@ Route::post('reports/getReports', 'ReportController@getReport');
 
 
 Route::group(
-    ['namespace' => 'API'], function () {
+    ['namespace' => 'API', 'middleware' => ['auth']], function () {
 
     Route::post('reports/getCategory', 'ReportMenuController@index');
 });
