@@ -1,8 +1,0 @@
-[01-Nov-2019 14:59:36 Asia/Almaty] PHP Warning:  require(/home/ab/reporting/public/../vendor/autoload.php): failed to open stream: No such file or directory in /home/ab/reporting/public/index.php on line 24
-[01-Nov-2019 14:59:36 Asia/Almaty] PHP Fatal error:  require(): Failed opening required '/home/ab/reporting/public/../vendor/autoload.php' (include_path='.:/usr/share/php') in /home/ab/reporting/public/index.php on line 24
-[01-Nov-2019 14:59:36 Asia/Almaty] PHP Warning:  require(/home/ab/reporting/public/../vendor/autoload.php): failed to open stream: No such file or directory in /home/ab/reporting/public/index.php on line 24
-[01-Nov-2019 14:59:36 Asia/Almaty] PHP Fatal error:  require(): Failed opening required '/home/ab/reporting/public/../vendor/autoload.php' (include_path='.:/usr/share/php') in /home/ab/reporting/public/index.php on line 24
-[01-Nov-2019 14:59:37 Asia/Almaty] PHP Warning:  require(/home/ab/reporting/public/../vendor/autoload.php): failed to open stream: No such file or directory in /home/ab/reporting/public/index.php on line 24
-[01-Nov-2019 14:59:37 Asia/Almaty] PHP Fatal error:  require(): Failed opening required '/home/ab/reporting/public/../vendor/autoload.php' (include_path='.:/usr/share/php') in /home/ab/reporting/public/index.php on line 24
-[01-Nov-2019 14:59:37 Asia/Almaty] PHP Warning:  require(/home/ab/reporting/public/../vendor/autoload.php): failed to open stream: No such file or directory in /home/ab/reporting/public/index.php on line 24
-[01-Nov-2019 14:59:37 Asia/Almaty] PHP Fatal error:  require(): Failed opening required '/home/ab/reporting/public/../vendor/autoload.php' (include_path='.:/usr/share/php') in /home/ab/reporting/public/index.php on line 24
