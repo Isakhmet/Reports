@@ -20,7 +20,6 @@ class ReportsTableSeeder extends Seeder
           ->insert(
               [
                   [
-                      'id'          => 1,
                       'code'        => 'ivr_send',
                       'name'        => 'Отправка заявки',
                       'category_id' => 4,
@@ -30,7 +29,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 2,
                       'code'        => '60',
                       'name'        => 'Задания на обзвон',
                       'category_id' => 1,
@@ -40,7 +38,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 3,
                       'code'        => '38',
                       'name'        => 'Отчет по СМС',
                       'category_id' => 1,
@@ -50,7 +47,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 4,
                       'code'        => '37',
                       'name'        => 'Отказной трафик по Евразийскому банку',
                       'category_id' => 1,
@@ -60,7 +56,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 5,
                       'code'        => '36',
                       'name'        => 'Заявки в Евразийский банк',
                       'category_id' => 1,
@@ -70,7 +65,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 6,
                       'code'        => '35',
                       'name'        => 'Отчет LeadEffect',
                       'category_id' => 1,
@@ -80,7 +74,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 7,
                       'code'        => '34',
                       'name'        => 'Отправленные заявки (Детали 034)',
                       'category_id' => 1,
@@ -90,7 +83,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 8,
                       'code'        => 'score_values',
                       'name'        => 'Скоринг данные',
                       'category_id' => 2,
@@ -100,7 +92,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 9,
                       'code'        => 'score_points',
                       'name'        => 'Баллы скоринга',
                       'category_id' => 2,
@@ -110,7 +101,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 10,
                       'code'        => 'client',
                       'name'        => 'Данные по клиентам',
                       'category_id' => 2,
@@ -120,7 +110,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 11,
                       'code'        => 'cluster',
                       'name'        => 'Кластер',
                       'category_id' => 2,
@@ -130,7 +119,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 12,
                       'code'        => 'alfa_bank',
                       'name'        => 'AlfaBank',
                       'category_id' => 2,
@@ -140,7 +128,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 13,
                       'code'        => 'hcb_short',
                       'name'        => 'ХКБ лиды короткие',
                       'category_id' => 2,
@@ -150,7 +137,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 14,
                       'code'        => 'hcb_long',
                       'name'        => 'ХКБ лиды длинные',
                       'category_id' => 2,
@@ -160,7 +146,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 15,
                       'code'        => 'agency',
                       'name'        => '123Agency',
                       'category_id' => 2,
@@ -170,7 +155,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 16,
                       'code'        => 'incoming',
                       'name'        => 'Исходящие СМС',
                       'category_id' => 3,
@@ -180,7 +164,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 17,
                       'code'        => 'outgoing',
                       'name'        => 'Входящие СМС',
                       'category_id' => 3,
@@ -190,7 +173,6 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'id'          => 18,
                       'code'        => '39',
                       'name'        => 'AlfaBank Landing',
                       'category_id' => 1,

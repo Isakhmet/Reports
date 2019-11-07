@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
 
@@ -18,28 +19,47 @@ class AddCategoriesReport extends Migration
      */
     public function up()
     {
+        $date = Carbon::now()
+                      ->format('Y-m-d H:i:s')
+        ;
         DB::table('categories_report')
           ->insert(
               [
                   [
-                      'id'   => 1,
-                      'code' => 'crm',
-                      'name' => 'CRM',
+                      'id'         => 1,
+                      'code'       => 'crm',
+                      'name'       => 'CRM',
+                      'is_active'  => true,
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
                   ],
                   [
-                      'id'   => 2,
-                      'code' => 'oracle',
-                      'name' => 'ORACLE',
+                      'id'         => 2,
+                      'code'       => 'oracle',
+                      'name'       => 'ORACLE',
+                      'is_active'  => true,
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
                   ],
                   [
-                      'id'   => 3,
-                      'code' => 'smscm',
-                      'name' => 'SMS Campaign Manager',
+                      'id'         => 3,
+                      'code'       => 'smscm',
+                      'name'       => 'SMS Campaign Manager',
+                      'is_active'  => true,
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
                   ],
                   [
-                      'id'   => 4,
-                      'code' => 'ivr',
-                      'name' => 'IVR',
+                      'id'         => 4,
+                      'code'       => 'ivr',
+                      'name'       => 'IVR',
+                      'is_active'  => true,
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
                   ],
               ]
           )

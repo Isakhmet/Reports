@@ -20,7 +20,6 @@ class RolesTableSeeder extends Seeder
           ->insert(
               [
                   [
-                      'id'         => 1,
                       'title'      => 'Администратор',
                       'badge_role' => 'badge-danger',
                       'created_at' => $date,
@@ -28,7 +27,6 @@ class RolesTableSeeder extends Seeder
                       'deleted_at' => null,
                   ],
                   [
-                      'id'         => 2,
                       'title'      => 'Заблокированные',
                       'badge_role' => 'badge-secondary',
                       'created_at' => $date,
@@ -36,7 +34,6 @@ class RolesTableSeeder extends Seeder
                       'deleted_at' => null,
                   ],
                   [
-                      'id'         => 3,
                       'title'      => 'Отчетник',
                       'badge_role' => 'badge-primary',
                       'created_at' => $date,
@@ -44,7 +41,6 @@ class RolesTableSeeder extends Seeder
                       'deleted_at' => null,
                   ],
                   [
-                      'id'         => 4,
                       'title'      => 'Телемаркетолог',
                       'badge_role' => 'badge-warning',
                       'created_at' => $date,
@@ -52,7 +48,6 @@ class RolesTableSeeder extends Seeder
                       'deleted_at' => null,
                   ],
                   [
-                      'id'         => 5,
                       'title'      => 'Аналитик',
                       'badge_role' => 'badge-warning',
                       'created_at' => $date,
@@ -60,7 +55,6 @@ class RolesTableSeeder extends Seeder
                       'deleted_at' => null,
                   ],
                   [
-                      'id'         => 6,
                       'title'      => 'Редактор',
                       'badge_role' => 'badge-warning',
                       'created_at' => $date,
@@ -68,7 +62,6 @@ class RolesTableSeeder extends Seeder
                       'deleted_at' => null,
                   ],
                   [
-                      'id'         => 7,
                       'title'      => 'Root',
                       'badge_role' => 'badge-dark',
                       'created_at' => $date,

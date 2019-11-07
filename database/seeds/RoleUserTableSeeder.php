@@ -12,7 +12,7 @@ class RoleUserTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')
+        DB::table('role_user')
           ->insert(
               [
                   [

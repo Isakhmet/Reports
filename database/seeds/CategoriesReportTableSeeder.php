@@ -20,7 +20,6 @@ class CategoriesReportTableSeeder extends Seeder
           ->insert(
               [
                   [
-                      'id'         => 1,
                       'code'       => 'crm',
                       'name'       => 'CRM',
                       'is_active'  => true,
@@ -29,7 +28,6 @@ class CategoriesReportTableSeeder extends Seeder
                       'deleted_at' => null,
                   ],
                   [
-                      'id'         => 2,
                       'code'       => 'oracle',
                       'name'       => 'ORACLE',
                       'is_active'  => true,
@@ -38,7 +36,6 @@ class CategoriesReportTableSeeder extends Seeder
                       'deleted_at' => null,
                   ],
                   [
-                      'id'         => 3,
                       'code'       => 'smscm',
                       'name'       => 'SMS Campaign Manager',
                       'is_active'  => true,
@@ -47,7 +44,6 @@ class CategoriesReportTableSeeder extends Seeder
                       'deleted_at' => null,
                   ],
                   [
-                      'id'         => 4,
                       'code'       => 'ivr',
                       'name'       => 'IVR',
                       'is_active'  => true,
