@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Report;
+use App\CategoriesReport;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreReportRequest extends FormRequest
+class StoreCategoryReportRequest extends FormRequest
 {
     public function authorize()
     {
@@ -22,9 +22,6 @@ class StoreReportRequest extends FormRequest
             ],
             'name'    => [
                 'required',
-            ],
-            'category'  => [
-                'integer',
             ],
             'is_active'  => [
                 'integer',

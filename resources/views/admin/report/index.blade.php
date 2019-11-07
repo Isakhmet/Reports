@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-    @can('report_create')
-        <div style="margin-bottom: 10px;" class="row">
-            <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route("admin.report.create") }}">
-                    {{ trans('global.add') }} {{ trans('cruds.report.title_single') }}
-                </a>
-            </div>
-        </div>
-    @endcan
     @can('report_access')
+        @can('report_create')
+            <div style="margin-bottom: 10px;" class="row">
+                <div class="col-lg-12">
+                    <a class="btn btn-success" href="{{ route("admin.report.create") }}">
+                        {{ trans('global.add') }} {{ trans('cruds.report.title_single') }}
+                    </a>
+                </div>
+            </div>
+        @endcan
         <div class="card">
             <div class="card-header">
                 {{ trans('global.list') }} {{ trans('cruds.report.title_singular') }}
@@ -20,46 +20,52 @@
                     <table id="myTable"
                            class=" table table-bordered table-striped table-hover datatable datatable-User">
                         <thead class="thead-dark">
-                        <tr>
+                        <tr style="text-align: center;">
                             <th>
                                 {{ trans('cruds.report.fields.id') }}
                             </th>
                             <th>
-                                {{ trans('cruds.report.fields.title') }}
+                                {{ trans('cruds.report.fields.code') }}
                             </th>
                             <th>
-                                {{ trans('cruds.report.fields.description') }}
+                                {{ trans('cruds.report.fields.name') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.report.fields.category') }}
                             </th>
                             <th>
                                 {{ trans('cruds.report.fields.is_active') }}
                             </th>
-                            @can('root')
-                                <th>
-                                    {{ trans('cruds.report.fields.created_at') }}
-                                </th>
-
-                                <th>
-                                    {{ trans('cruds.manage') }}
-                                </th>
-                            @endcan
+                            <th>
+                                {{ trans('cruds.report.fields.created_at') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.manage') }}
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($reports as $key => $report)
                             <tr data-entry-id="{{ $report->id }}" data-sort="{{ $report->id }}">
-                                <td>
+                                <td style="text-align: center;">
                                     {{ $report->id ?? '' }}
                                 </td>
-                                <td>
-                                    {{ $report->title ?? '' }}
+                                <td style="text-align: center;">
+                                    {{ $report->code ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $report->description ?? '' }}
+                                    {{ $report->name ?? '' }}
                                 </td>
-                                <td>
+                                <td style="text-align: center;">
+                                    <h4>
+                                        @foreach($report->category as $key => $item)
+                                           <span class="badge badge-warning">{{ $item->name }}</span>
+                                        @endforeach
+                                    </h4>
+                                </td>
+                                <td style="text-align: center;">
                                     {{ $report->is_active == 1 ? 'Да' : 'Нет' }}
                                 </td>
-                                @can('root')
                                     <td>
                                         {{ $report->created_at ?? '' }}
                                     </td>
@@ -90,7 +96,6 @@
                                             </form>
                                         @endcan
                                     </td>
-                                @endcan
                             </tr>
                         @endforeach
                         </tbody>
@@ -109,7 +114,7 @@
 
             $.extend(true, $.fn.dataTable.defaults, {
                 order:      [[0, 'asc']],
-                pageLength: 10,
+                pageLength: 25,
             });
             $('.datatable-User:not(.ajaxTable)').DataTable({buttons: dtButtons})
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
