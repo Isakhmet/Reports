@@ -1,14 +1,15 @@
 <?php
 
 return [
-    'crm' => [
-        'type' => 'db',
-        34     => \App\Classes\Reports\Crm\SendLeads::class,
-        35     => \App\Classes\Reports\Crm\LeadEffectReport::class,
-        36     => \App\Classes\Reports\Crm\EuBankRequests::class,
-        37     => \App\Classes\Reports\Crm\EuBankFailedTraffic::class,
-        60     => \App\Classes\Reports\Crm\CallTasks::class,
-        38     => \App\Classes\Reports\Crm\SMS::class
+    'crm'    => [
+        'type'        => 'db',
+        34            => \App\Classes\Reports\Crm\SendLeads::class,
+        35            => \App\Classes\Reports\Crm\LeadEffectReport::class,
+        36            => \App\Classes\Reports\Crm\EuBankRequests::class,
+        37            => \App\Classes\Reports\Crm\EuBankFailedTraffic::class,
+        60            => \App\Classes\Reports\Crm\CallTasks::class,
+        38            => \App\Classes\Reports\Crm\SMS::class,
+        'AlfaLanding' => \App\Classes\Reports\Crm\AlfaBankLanding::class,
     ],
     'oracle' => [
         'cluster'      => App\Classes\Reports\Oracle\Cluster\Cluster::class,
@@ -20,11 +21,11 @@ return [
         'hcb_short'    => App\Classes\Reports\Oracle\Hcb\Short\HcbShort::class,
         'agency'       => App\Classes\Reports\Oracle\Delayed\Okzaim::class,
     ],
-    'sms' => [
+    'sms'    => [
         'outgoing' => App\Classes\Reports\SmsCampaignManager\Outgoing\Outgoing::class,
-        'incoming' => App\Classes\Reports\SmsCampaignManager\Incoming\Incoming::class
+        'incoming' => App\Classes\Reports\SmsCampaignManager\Incoming\Incoming::class,
     ],
-    'ivr' => [
+    'ivr'    => [
         'ivr_send' => App\Classes\Reports\IVR\SendRequests\SendRequests::class,
-    ]
+    ],
 ];

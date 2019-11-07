@@ -24,15 +24,13 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::group(
     ['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
-    Route::get('/', function () {
-        return view('admin.home');
-    })->name('home_admin');
 
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index')->name('home_admin');
     Route::resource('permissions', 'PermissionsController');
     Route::resource('roles', 'RolesController');
     Route::resource('users', 'UsersController');
     Route::resource('report', 'ReportController');
+    Route::resource('category', 'CategoryReportController');
 });
 
 Auth::routes(['register' => false]);

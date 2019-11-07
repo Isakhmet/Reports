@@ -1,16 +1,22 @@
 <?php
 
-use Illuminate\Database\Seeder;
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class PermissionRoleTableSeeder extends Seeder
+/**
+ * Class AddPermissionRole
+ *
+ * Класс добавляет стандартные
+ * доступы к ролям для админ-панели.
+ */
+class AddPermissionRole extends Migration
 {
     /**
-     * Run the database seeds.
+     * Run the migrations.
      *
      * @return void
      */
-    public function run()
+    public function up()
     {
         DB::table('permission_role')
           ->insert(
@@ -309,6 +315,19 @@ class PermissionRoleTableSeeder extends Seeder
                   ],
               ]
           )
+        ;
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        DB::table('permission_role')
+          ->where('role_id', '<=', 7)
+          ->delete()
         ;
     }
 }

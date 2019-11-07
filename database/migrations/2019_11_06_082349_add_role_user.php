@@ -1,18 +1,24 @@
 <?php
 
-use Illuminate\Database\Seeder;
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class RoleUserTableSeeder extends Seeder
+/**
+ * Class AddRoleUser
+ *
+ * Класс добавляет стандартные
+ * роли к пользователям для админ-панели.
+ */
+class AddRoleUser extends Migration
 {
     /**
-     * Run the database seeds.
+     * Run the migrations.
      *
      * @return void
      */
-    public function run()
+    public function up()
     {
-        DB::table('roles')
+        DB::table('role_user')
           ->insert(
               [
                   [
@@ -37,10 +43,27 @@ class RoleUserTableSeeder extends Seeder
                   ],
                   [
                       'user_id' => 6,
+                      'role_id' => 1,
+                  ],
+                  [
+                      'user_id' => 6,
                       'role_id' => 6,
                   ],
               ]
           )
+        ;
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        DB::table('role_user')
+          ->where('user_id', '<=', 6)
+          ->delete()
         ;
     }
 }

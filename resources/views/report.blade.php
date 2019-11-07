@@ -26,7 +26,7 @@
 @can('report_access')
     <div id="app">
         <demo
-                fetch-url="{{ secure_url('api/reports/') }}"
+                fetch-url="{{ secure_url('api/reports/getReports') }}"
         ></demo>
     </div>
 @endcan

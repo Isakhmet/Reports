@@ -16,13 +16,19 @@ class UpdateReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'    => [
+            'id' => [
+                'required'
+            ],
+            'code'    => [
                 'required',
             ],
-            'description'   => [
+            'name'   => [
                 'required',
             ],
             'is_active' => [
+                'boolean',
+            ],
+            'category_id' => [
                 'integer',
             ],
         ];
