@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReportsTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code', 255);
-            $table->string('name', 255);
-            $table->boolean('is_active')->default(true);
-            $table->string('category_id', 100);
+            $table->string('title', 255);
+            $table->string('badge_role', 255)->default('badge-info');
             $table->timestamps();
             $table->softDeletes()->default(null);
         });
@@ -31,6 +29,6 @@ class CreateReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('roles');
     }
 }

@@ -1,23 +1,21 @@
 <?php
 
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Migrations\Migration;
 
-/**
- * Class AddReports
- *
- * Класс добавляет стандартные
- * отчеты в отчетную систему
- */
-class AddReports extends Migration
+class ReportsTableSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      *
      * @return void
      */
-    public function up()
+    public function run()
     {
+        $date = Carbon::now()
+                      ->format('Y-m-d H:i:s')
+        ;
         DB::table('reports')
           ->insert(
               [
@@ -27,6 +25,9 @@ class AddReports extends Migration
                       'name'        => 'Отправка заявки',
                       'category_id' => 4,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 2,
@@ -34,6 +35,9 @@ class AddReports extends Migration
                       'name'        => 'Задания на обзвон',
                       'category_id' => 1,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 3,
@@ -41,6 +45,9 @@ class AddReports extends Migration
                       'name'        => 'Отчет по СМС',
                       'category_id' => 1,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 4,
@@ -48,6 +55,9 @@ class AddReports extends Migration
                       'name'        => 'Отказной трафик по Евразийскому банку',
                       'category_id' => 1,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 5,
@@ -55,6 +65,9 @@ class AddReports extends Migration
                       'name'        => 'Заявки в Евразийский банк',
                       'category_id' => 1,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 6,
@@ -62,6 +75,9 @@ class AddReports extends Migration
                       'name'        => 'Отчет LeadEffect',
                       'category_id' => 1,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 7,
@@ -69,6 +85,9 @@ class AddReports extends Migration
                       'name'        => 'Отправленные заявки (Детали 034)',
                       'category_id' => 1,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 8,
@@ -76,6 +95,9 @@ class AddReports extends Migration
                       'name'        => 'Скоринг данные',
                       'category_id' => 2,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 9,
@@ -83,6 +105,9 @@ class AddReports extends Migration
                       'name'        => 'Баллы скоринга',
                       'category_id' => 2,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 10,
@@ -90,6 +115,9 @@ class AddReports extends Migration
                       'name'        => 'Данные по клиентам',
                       'category_id' => 2,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 11,
@@ -97,6 +125,9 @@ class AddReports extends Migration
                       'name'        => 'Кластер',
                       'category_id' => 2,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 12,
@@ -104,6 +135,9 @@ class AddReports extends Migration
                       'name'        => 'AlfaBank',
                       'category_id' => 2,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 13,
@@ -111,6 +145,9 @@ class AddReports extends Migration
                       'name'        => 'ХКБ лиды короткие',
                       'category_id' => 2,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 14,
@@ -118,6 +155,9 @@ class AddReports extends Migration
                       'name'        => 'ХКБ лиды длинные',
                       'category_id' => 2,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 15,
@@ -125,6 +165,9 @@ class AddReports extends Migration
                       'name'        => '123Agency',
                       'category_id' => 2,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 16,
@@ -132,6 +175,9 @@ class AddReports extends Migration
                       'name'        => 'Исходящие СМС',
                       'category_id' => 3,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 17,
@@ -139,6 +185,9 @@ class AddReports extends Migration
                       'name'        => 'Входящие СМС',
                       'category_id' => 3,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
                   [
                       'id'          => 18,
@@ -146,22 +195,12 @@ class AddReports extends Migration
                       'name'        => 'AlfaBank Landing',
                       'category_id' => 1,
                       'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
                   ],
               ]
           )
-        ;
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        DB::table('reports')
-          ->where('id', '<=', 17)
-          ->delete()
         ;
     }
 }
