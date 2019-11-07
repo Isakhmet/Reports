@@ -9,7 +9,7 @@ return [
         37            => \App\Classes\Reports\Crm\EuBankFailedTraffic::class,
         60            => \App\Classes\Reports\Crm\CallTasks::class,
         38            => \App\Classes\Reports\Crm\SMS::class,
-        'AlfaLanding' => \App\Classes\Reports\Crm\AlfaBankLanding::class,
+        39            => \App\Classes\Reports\Crm\AlfaBankLanding::class,
     ],
     'oracle' => [
         'cluster'      => App\Classes\Reports\Oracle\Cluster\Cluster::class,
