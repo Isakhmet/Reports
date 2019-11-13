@@ -61,6 +61,15 @@ class AddCategoriesReport extends Migration
                       'updated_at' => $date,
                       'deleted_at' => null,
                   ],
+                  [
+                      'id'         => 5,
+                      'code'       => 'landings',
+                      'name'       => 'Landings',
+                      'is_active'  => true,
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
+                  ],
               ]
           )
         ;
