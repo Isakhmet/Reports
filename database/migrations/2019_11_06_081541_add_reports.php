@@ -197,7 +197,7 @@ class AddReports extends Migration
                   ],
                   [
                       'id'          => 18,
-                      'code'        => '39',
+                      'code'        => 'alfa_bank_landing',
                       'name'        => 'AlfaBank Landing',
                       'category_id' => 1,
                       'is_active'   => true,
