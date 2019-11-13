@@ -173,7 +173,7 @@ class ReportsTableSeeder extends Seeder
                       'deleted_at'  => null,
                   ],
                   [
-                      'code'        => '39',
+                      'code'        => 'alfa_bank_landing',
                       'name'        => 'AlfaBank Landing',
                       'category_id' => 1,
                       'is_active'   => true,
