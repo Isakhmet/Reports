@@ -51,6 +51,14 @@ class CategoriesReportTableSeeder extends Seeder
                       'updated_at' => $date,
                       'deleted_at' => null,
                   ],
+                  [
+                      'code'       => 'landings',
+                      'name'       => 'Landings',
+                      'is_active'  => true,
+                      'created_at' => $date,
+                      'updated_at' => $date,
+                      'deleted_at' => null,
+                  ],
               ]
           )
         ;
