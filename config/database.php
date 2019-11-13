@@ -128,6 +128,20 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
+
+        'landings' => [
+            'driver' => 'pgsql',
+            'host' => env('LND_DB_HOST', '10.10.11.24'),
+            'port' => env('LND_DB_PORT', '9032'),
+            'database' => env('LND_DB_DATABASE', 'landings'),
+            'username' => env('LND_DB_USERNAME', 'reporting'),
+            'password' => env('LND_DB_PASSWORD', 'm{1!cp$t6[-]]'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
         
         'mysql' => [
             'driver' => 'mysql',
