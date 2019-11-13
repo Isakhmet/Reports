@@ -9,7 +9,6 @@ return [
         37            => \App\Classes\Reports\Crm\EuBankFailedTraffic::class,
         60            => \App\Classes\Reports\Crm\CallTasks::class,
         38            => \App\Classes\Reports\Crm\SMS::class,
-        39            => \App\Classes\Reports\Crm\AlfaBankLanding::class,
     ],
     'oracle' => [
         'cluster'      => App\Classes\Reports\Oracle\Cluster\Cluster::class,
@@ -27,5 +26,8 @@ return [
     ],
     'ivr'    => [
         'ivr_send' => App\Classes\Reports\IVR\SendRequests\SendRequests::class,
+    ],
+    'landings' => [
+        'alfa_bank_landing' => App\Classes\Reports\Crm\AlfaBankLanding::class,
     ],
 ];
