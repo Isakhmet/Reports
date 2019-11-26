@@ -4,6 +4,8 @@ namespace App\Classes\Reports\Crm;
 
 use App\Classes\Connectors\Connectors;
 use App\Classes\Reports\Report;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use Illuminate\Support\Facades\Request;
 
 class SendLeads extends Connectors implements Report
 {
@@ -33,6 +35,7 @@ class SendLeads extends Connectors implements Report
             ->leftJoin('crm_region', 'crm_region.id', '=', 'crm_send_product.address_region_id')
             ->leftJoin('crm_audit', 'crm_audit.id', '=', 'crm_send_product.audit_id')
             ->leftJoin('crm_user as audit', 'audit.id', '=', 'crm_send_product.audit_lastchanged_user_id')
+            ->leftJoin('crm_request', 'crm_send_product.request_id', '=', 'crm_request.id')
             ->whereNotNull('crm_send_product.send_product_date')
             ->where('crm_send_product.send_product_date', '>=', $from . ' 00:00:00')
             ->where('crm_send_product.send_product_date', '<=', $to . ' 23:59:59')
@@ -52,26 +55,69 @@ class SendLeads extends Connectors implements Report
                 'audit.name as Аудит: ФИО',
                 'crm_send_product.audit_lastchanged_datetime as Аудит: Дата изменения',
                 'crm_send_product.email as Email',
-                'crm_utm_source.name as Источник создания клиента'
+                'crm_utm_source.name as Источник создания клиента',
+                'crm_request.request_in_id as request_in'
             )
         ;
-        $excel['data']   = json_decode(
+
+        $data = json_decode(
             json_encode(
                 $query->get()
                       ->toArray()
             ), true
         );
-        $result  = json_decode(json_encode($query->paginate($perPage)), true);
+
+        $requestIds = [];
+
+        foreach ($data as $value) {
+            if ($value['request_in'] !== null) {
+                $requestIds[] = $value['request_in'];
+            }
+        }
+
+        $gaArray = $connect
+            ->table('google_client_ids')
+            ->whereIn('request_in_id', $requestIds)
+            ->select('request_in_id', 'ga')
+            ->get()
+            ->keyBy('request_in_id')
+            ->toArray()
+        ;
+
+        $gaArray = json_decode(json_encode($gaArray), true);
+
+        if (count($gaArray) > 0) {
+            $data = array_map(
+                function ($item) use ($gaArray) {
+                    $tempArray = $item;
+                    $tempArray['Google Client Id'] = array_key_exists($item['request_in'], $gaArray) ? $gaArray[$item['request_in']]['ga'] : '';
+                    unset($tempArray['request_in']);
+                    return $tempArray;
+                }, $data
+            );
+        }
+
+        $excel['data'] = $data;
+
+        $currentPage      = Paginator::resolveCurrentPage();
+        $col              = collect($data);
+        $currentPageItems = $col->slice(($currentPage - 1) * $perPage, $perPage)
+                                ->all()
+        ;
+        $result           = new Paginator($currentPageItems, count($col), $perPage);
+        $result->setPath(Request::url());
+        $result = json_decode(json_encode($result), true);
+
         $result['headers'] = [];
 
-        if(!empty($result['data'])){
+        if (!empty($result['data'])) {
             foreach ($result['data'][0] as $key => $value) {
                 $excel['columns'][$key] = $key;
             }
             $result['headers'] = array_keys($result['data'][0]);
         }
 
-        $result['excel']   = $excel;
+        $result['excel'] = $excel;
 
         return $result;
     }
