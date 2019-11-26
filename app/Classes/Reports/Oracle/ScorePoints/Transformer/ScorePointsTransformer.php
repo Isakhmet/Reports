@@ -15,31 +15,34 @@ use Illuminate\Support\Arr;
 class ScorePointsTransformer
 {
     /**
-     * @param array $row
-     *
-     * @return array
+     *  fields for unset
      */
-    public function transformCommon(array $row): array
-    {
-        $row['products'] = $this->replaceProducts($row);
+    const EXTRA_FIELDS = [
+        'browser_locale',
+        'iss_date',
+        'exp_date',
+        'id_card',
+        'home_phone',
+        'economical_status_code',
+        'birth_place',
+        'iss_by',
+        'citizenship',
+        'document_type',
+        'actual_residence',
+        'marital_status',
+        'education',
+        'type_company_activity',
+        'gclid',
 
-        if (is_array($row['category'])) {
-            $row['category'] = $row['category']['code'];
-        }
-
-        unset($row['available_products']);
-        unset($row['passed_products_ids']);
-        $row = array_values($row);
-
-        return $row;
-    }
+    ];
 
     /**
      * @param array $row
+     * @param array $keys
      *
      * @return array
      */
-    public function transformExcel(array $row): array
+    public function transformCommon(array $row, array $keys): array
     {
         $row['products'] = $this->replaceProducts($row);
 
@@ -50,7 +53,9 @@ class ScorePointsTransformer
         unset($row['available_products']);
         unset($row['passed_products_ids']);
 
-        return $row;
+        $result = array_combine($keys, $row);
+
+        return $result;
     }
 
     /**
@@ -123,4 +128,10 @@ class ScorePointsTransformer
 
         return $products;
     }
+
+    public function exclusionOfExtraFields(array $fields): array
+    {
+        return array_diff_key($fields, array_flip(self::EXTRA_FIELDS));
+    }
+
 }

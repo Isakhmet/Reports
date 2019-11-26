@@ -28,6 +28,6 @@ return [
         'ivr_send' => App\Classes\Reports\IVR\SendRequests\SendRequests::class,
     ],
     'landings' => [
-        'alfa_bank_landing' => App\Classes\Reports\Crm\AlfaBankLanding::class,
+        'alfa_bank_landing' => App\Classes\Reports\Landings\AlfaBankLanding::class,
     ],
 ];

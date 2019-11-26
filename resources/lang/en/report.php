@@ -29,6 +29,7 @@ return [
                 'email'        => 'email',
                 'ore'          => 'Руда',
                 'products'     => 'Продукты',
+                'ga'           => 'Google Client Id',
             ],
         ],
         'scoreValues'  => [
