@@ -181,6 +181,15 @@ class ReportsTableSeeder extends Seeder
                       'updated_at'  => $date,
                       'deleted_at'  => null,
                   ],
+                  [
+                      'code'        => '40',
+                      'name'        => 'Ручная отправка',
+                      'category_id' => 1,
+                      'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
+                  ],
               ]
           )
         ;

@@ -9,6 +9,7 @@ return [
         37            => \App\Classes\Reports\Crm\EuBankFailedTraffic::class,
         60            => \App\Classes\Reports\Crm\CallTasks::class,
         38            => \App\Classes\Reports\Crm\SMS::class,
+        40            => \App\Classes\Reports\Crm\HandJobLeads::class,
     ],
     'oracle' => [
         'cluster'      => App\Classes\Reports\Oracle\Cluster\Cluster::class,
