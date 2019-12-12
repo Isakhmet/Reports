@@ -263,5 +263,18 @@ return [
                 "12" => "Декабрь",
             ],
         ],
+        'handJobLeads'   => [
+            'columns' => [
+                'created_at'      => 'Дата отправки',
+                'fio'             => 'ФИО',
+                'mobile_phone'    => 'Телефон',
+                'company_name'    => 'Компания',
+                'iin'             => 'ИИН',
+                'product'         => 'Продукт',
+                'credit_amount'   => 'Сумма',
+                'delivery_town'   => 'Регион',
+                'utm_source_name' => 'Источник',
+            ],
+        ],
     ],
 ];

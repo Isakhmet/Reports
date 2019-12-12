@@ -19,7 +19,8 @@ class HandJobLeads extends Connectors implements Report
     public function report($reportType, $page, $perPage, $from, $to)
     {
         $connect = $this->connect($reportType);
-        $query   = $connect
+
+        $query = $connect
             ->table('crm_request_in')
             ->leftJoin('crm_company', 'crm_company.id', '=', 'crm_request_in.company_id')
             ->leftJoin('crm_product', 'crm_product.id', '=', 'crm_request_in.product_id')
@@ -29,35 +30,79 @@ class HandJobLeads extends Connectors implements Report
             ->where('crm_request_in.registration_date', '<=', $to . ' 23:59:59')
             ->orderBy('crm_request_in.registration_date')
             ->select(
-                'crm_request_in.id as ID заявки',
-                'crm_request_in.registration_date as Дата отправки',
-                'crm_request_in.name_full as ФИО',
-                'crm_request_in.phone_mob as Мобильный',
-                'crm_company.name as Компания',
-                'crm_request_in.document_inn as ИИН',
-                'crm_product.name as Продукт',
-                'crm_request_in.amount_product as Сумма',
-                'crm_request_in.address_region_name_arch as Регион',
-                'crm_utm_source.name as Источник создания клиента'
+                'crm_request_in.registration_date as created_at',
+                'crm_request_in.name_full as fio',
+                'crm_request_in.phone_mob as mobile_phone',
+                'crm_company.name as company_name',
+                'crm_request_in.document_inn as iin',
+                'crm_product.name as product',
+                'crm_request_in.amount_product as credit_amount',
+                'crm_request_in.address_region_name_arch as delivery_town',
+                'crm_utm_source.name as utm_source_name'
             )
         ;
 
-        $excel['data']   = json_decode(
+        $requestLeads = json_decode(
             json_encode(
                 $query->get()
                       ->toArray()
             ), true
         );
-        $result  = json_decode(json_encode($query->paginate($perPage)), true);
-        $result['headers'] = [];
 
-        if(!empty($result['data'])){
-            foreach ($result['data'][0] as $key => $value) {
-                $excel['columns'][$key] = $key;
+        $queryForSberLeads = $connect
+            ->table('sber_leads')
+            ->where('sber_leads.created_at', '>=', $from . ' 00:00:00')
+            ->where('sber_leads.created_at', '<=', $to . ' 23:59:59')
+            ->orderBy('sber_leads.created_at')
+            ->select(
+                'sber_leads.created_at',
+                'sber_leads.firstname',
+                'sber_leads.lastname',
+                'sber_leads.middlename',
+                'sber_leads.mobile_phone',
+                'sber_leads.iin',
+                'sber_leads.product',
+                'sber_leads.credit_amount',
+                'sber_leads.delivery_town'
+            )
+        ;
+        $sberLeads         = json_decode(
+            json_encode(
+                $queryForSberLeads->get()
+                                  ->toArray()
+            ), true
+        );
+
+        foreach ($sberLeads as $lead) {
+            $temp['created_at'] = $lead['created_at'];
+            if ($lead['firstname'] === $lead['lastname'] && $lead['firstname'] === $lead['middlename'] && $lead['lastname'] === $lead['middlename']) {
+                $temp['fio'] = $lead['firstname'];
+            } else {
+                $temp['fio'] = $lead['firstname'] . ' ' . $lead['lastname'] . ' ' . $lead['middlename'];
             }
-            $result['headers'] = array_keys($result['data'][0]);
+            $temp['mobile_phone']    = $lead['mobile_phone'];
+            $temp['company_name']    = 'Сбербанк';
+            $temp['iin']             = $lead['iin'];
+            $temp['product']         = $lead['product'];
+            $temp['credit_amount']   = $lead['credit_amount'];
+            $temp['delivery_town']   = $lead['delivery_town'];
+            $temp['utm_source_name'] = 'ручная отправка';
+
+
+            $reportData[] = $temp;
         }
 
+        $data = array_merge_recursive($requestLeads, $reportData);
+
+        $excel['data']     = json_decode(
+            json_encode(
+                $data
+            ), true
+        );
+        $columns           = __('report.reports.handJobLeads.columns');
+        $result            = json_decode(json_encode($query->paginate($perPage)), true);
+        $result['headers'] = array_values($columns);
+        $excel['columns']  = $columns;
         $result['excel']   = $excel;
 
         return $result;
