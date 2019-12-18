@@ -265,7 +265,8 @@ return [
         ],
         'handJobLeads'   => [
             'columns' => [
-                'created_at'      => 'Дата отправки',
+                'created_at'      => 'Дата регистрации',
+                'updated_at'      => 'Дата отправки',
                 'fio'             => 'ФИО',
                 'mobile_phone'    => 'Телефон',
                 'company_name'    => 'Компания',
