@@ -36,9 +36,11 @@ class HandJobLeads implements Report
     {
         $querySberLeads    = $this->queryService->getSberLeads($from, $to);
         $queryBccLeads     = $this->queryService->getBccLeads($from, $to);
+        $queryHcbLeads     = $this->queryService->getHcbLeads($from, $to);
         $sberLeads         = $this->transformerService->transformSberLeads($querySberLeads);
         $bccLeads          = $this->transformerService->transformBccLeads($queryBccLeads);
-        $data              = $this->transformerService->generate($sberLeads, $bccLeads);
+        $hcbLeads          = $this->transformerService->transformHcbLeads($queryHcbLeads);
+        $data              = $this->transformerService->generate($sberLeads, $bccLeads, $hcbLeads);
         $paginatedData     = $this->transformerService->paginate($data, 15);
         $result            = json_decode(json_encode($paginatedData), true);
         $excel['data']     = json_decode(json_encode($data), true);

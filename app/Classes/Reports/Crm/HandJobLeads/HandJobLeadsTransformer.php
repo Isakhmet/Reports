@@ -30,6 +30,13 @@ class HandJobLeadsTransformer
     const companyNameSberbank = 'Сбербанк';
 
     /**
+     * Название компании ХКБ
+     *
+     * @var string
+     */
+    const companyNameHCB = 'Банк Хоум Кредит';
+
+    /**
      * Название компании БЦК
      *
      * @var string
@@ -106,16 +113,50 @@ class HandJobLeadsTransformer
     }
 
     /**
-     * Соединение двух массивов (лидов со Сбера и БЦК)
+     * Трансформирование лидов с ХКБ
      *
-     * @param $bccLeads
-     * @param $sberLeads
+     * @param $leads
      *
      * @return array
      */
-    public function generate($bccLeads, $sberLeads)
+    public function transformHcbLeads($leads)
     {
-        $data = array_merge_recursive($bccLeads, $sberLeads);
+        $reportDataHcb = [];
+
+        foreach ($leads as $lead) {
+            $temp['created_at'] = $lead['created_at'];
+            $temp['updated_at'] = $lead['updated_at'];
+            if ($lead['firstname'] === $lead['lastname'] && $lead['firstname'] === $lead['middlename'] && $lead['lastname'] === $lead['middlename']) {
+                $temp['fio'] = $lead['firstname'];
+            } else {
+                $temp['fio'] = $lead['firstname'] . ' ' . $lead['lastname'] . ' ' . $lead['middlename'];
+            }
+            $temp['mobile_phone']    = $lead['mobile_phone'];
+            $temp['company_name']    = self::companyNameHCB;
+            $temp['iin']             = $lead['iin'];
+            $temp['product']         = $lead['product'];
+            $temp['credit_amount']   = '';
+            $temp['delivery_town']   = $lead['city'];
+            $temp['utm_source_name'] = self::utmSourceName;
+
+            $reportDataHcb[] = $temp;
+        }
+
+        return $reportDataHcb;
+    }
+
+    /**
+     * Соединение трех массивов (лидов со Сбера, БЦК и ХКЮ)
+     *
+     * @param $bccLeads
+     * @param $sberLeads
+     * @param $hcbLeads
+     *
+     * @return array
+     */
+    public function generate($bccLeads, $sberLeads, $hcbLeads)
+    {
+        $data = array_merge_recursive($bccLeads, $sberLeads, $hcbLeads);
         $this->arraySortByColumn($data, self::columnForSorting);
 
         return $data;
