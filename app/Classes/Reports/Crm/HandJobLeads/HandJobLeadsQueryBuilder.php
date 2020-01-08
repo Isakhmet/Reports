@@ -126,4 +126,38 @@ class HandJobLeadsQueryBuilder extends Connectors
 
         return $hcbLeads;
     }
+
+    /**
+     * Выборка из БД лидов, отправленных в Альфа Банк
+     *
+     * @param $from
+     * @param $to
+     *
+     * @return mixed
+     */
+    public function getAlfaLeads($from, $to)
+    {
+        $queryForAlfaLeads = $this->connect
+            ->table('alfa_leads')
+            ->where('updated_at', '>=', $from . ' 00:00:00')
+            ->where('updated_at', '<=', $to . ' 23:59:59')
+            ->orderBy('updated_at')
+            ->select(
+                'created_at',
+                'updated_at',
+                'name',
+                'phone',
+                'iin',
+                'town'
+            )
+        ;
+        $alfaLeads         = json_decode(
+            json_encode(
+                $queryForAlfaLeads->get()
+                                  ->toArray()
+            ), true
+        );
+
+        return $alfaLeads;
+    }
 }

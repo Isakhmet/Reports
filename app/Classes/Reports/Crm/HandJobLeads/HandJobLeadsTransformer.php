@@ -51,6 +51,13 @@ class HandJobLeadsTransformer
     const creditAmountBCCDefault = '600000';
 
     /**
+     * Название компании БЦК
+     *
+     * @var string
+     */
+    const companyNameAlfa = 'Альфа Банк';
+
+    /**
      * Трансформирование лидов со Сбербанка
      *
      * @param $leads
@@ -146,17 +153,47 @@ class HandJobLeadsTransformer
     }
 
     /**
-     * Соединение трех массивов (лидов со Сбера, БЦК и ХКЮ)
+     * Трансформирование лидов с Альфы
+     *
+     * @param $leads
+     *
+     * @return array
+     */
+    public function transformAlfaLeads($leads)
+    {
+        $reportDataAlfa = [];
+
+        foreach ($leads as $lead) {
+            $temp['created_at']      = $lead['created_at'];
+            $temp['updated_at']      = $lead['updated_at'];
+            $temp['fio']             = $lead['name'];
+            $temp['mobile_phone']    = $lead['phone'];
+            $temp['company_name']    = self::companyNameAlfa;
+            $temp['iin']             = $lead['iin'];
+            $temp['product']         = '-';
+            $temp['credit_amount']   = '-';
+            $temp['delivery_town']   = $lead['town'] === '' ? '-' : $lead['town'];
+            $temp['utm_source_name'] = self::utmSourceName;
+
+            $reportDataAlfa[] = $temp;
+        }
+
+        return $reportDataAlfa;
+    }
+
+    /**
+     * Соединение всех полученных массивов
      *
      * @param $bccLeads
      * @param $sberLeads
      * @param $hcbLeads
+     * @param $alfaLeads
      *
      * @return array
      */
-    public function generate($bccLeads, $sberLeads, $hcbLeads)
+    public function generate($bccLeads, $sberLeads, $hcbLeads, $alfaLeads)
     {
-        $data = array_merge_recursive($bccLeads, $sberLeads, $hcbLeads);
+        $data = array_merge_recursive($bccLeads, $sberLeads, $hcbLeads, $alfaLeads);
         $this->arraySortByColumn($data, self::columnForSorting);
 
         return $data;
