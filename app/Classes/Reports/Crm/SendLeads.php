@@ -18,8 +18,8 @@ class SendLeads extends Connectors implements Report
      */
     public function report($reportType, $page, $perPage, $from, $to)
     {
-        $connect = $this->connect($reportType);
-        $query   = $connect
+        $connect           = $this->connect($reportType);
+        $query             = $connect
             ->table('crm_send_product')
             ->leftJoin(
                 'crm_send_product_status', 'crm_send_product_status.id', '=', 'crm_send_product.send_product_status_id'
@@ -33,6 +33,8 @@ class SendLeads extends Connectors implements Report
             ->leftJoin('crm_region', 'crm_region.id', '=', 'crm_send_product.address_region_id')
             ->leftJoin('crm_audit', 'crm_audit.id', '=', 'crm_send_product.audit_id')
             ->leftJoin('crm_user as audit', 'audit.id', '=', 'crm_send_product.audit_lastchanged_user_id')
+            ->leftJoin('crm_request', 'crm_request.id', '=', 'crm_send_product.request_id')
+            ->leftJoin('google_client_ids', 'google_client_ids.request_in_id', '=', 'crm_request.request_in_id')
             ->whereNotNull('crm_send_product.send_product_date')
             ->where('crm_send_product.send_product_date', '>=', $from . ' 00:00:00')
             ->where('crm_send_product.send_product_date', '<=', $to . ' 23:59:59')
@@ -52,26 +54,27 @@ class SendLeads extends Connectors implements Report
                 'audit.name as Аудит: ФИО',
                 'crm_send_product.audit_lastchanged_datetime as Аудит: Дата изменения',
                 'crm_send_product.email as Email',
-                'crm_utm_source.name as Источник создания клиента'
+                'crm_utm_source.name as Источник создания клиента',
+                'google_client_ids.ga as Google Client Id'
             )
         ;
-        $excel['data']   = json_decode(
+        $excel['data']     = json_decode(
             json_encode(
                 $query->get()
                       ->toArray()
             ), true
         );
-        $result  = json_decode(json_encode($query->paginate($perPage)), true);
+        $result            = json_decode(json_encode($query->paginate($perPage)), true);
         $result['headers'] = [];
 
-        if(!empty($result['data'])){
+        if (!empty($result['data'])) {
             foreach ($result['data'][0] as $key => $value) {
                 $excel['columns'][$key] = $key;
             }
             $result['headers'] = array_keys($result['data'][0]);
         }
 
-        $result['excel']   = $excel;
+        $result['excel'] = $excel;
 
         return $result;
     }

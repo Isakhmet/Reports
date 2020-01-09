@@ -28,7 +28,7 @@ return [
                 'city'  => 'Город',
                 'score' => 'Прошел скоринг',
             ],
-            'helper' => [
+            'helper'  => [
                 'a' => 1,
                 'b' => 2,
                 'c' => 3,
@@ -47,6 +47,7 @@ return [
                 'email'        => 'email',
                 'ore'          => 'Руда',
                 'products'     => 'Продукты',
+                'ga'           => 'Google Client Id',
             ],
         ],
         'scoreValues'    => [
