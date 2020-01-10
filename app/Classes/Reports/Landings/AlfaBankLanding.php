@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\Reports\Landings;
+namespace App\Classes\Reports\Crm;
 
 use App\Classes\Connectors\Connectors;
 use App\Classes\Reports\Report;
