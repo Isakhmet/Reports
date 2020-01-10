@@ -26,17 +26,17 @@ class SendLeads extends Connectors implements Report
             ->leftJoin(
                 'crm_send_product_status', 'crm_send_product_status.id', '=', 'crm_send_product.send_product_status_id'
             )
-            ->leftJoin('crm_client', 'crm_client.id', '=', 'crm_send_product.client_id')
+            ->leftJoin('crm_request', 'crm_send_product.request_id', '=', 'crm_request.id')
             ->leftJoin('crm_product', 'crm_product.id', '=', 'crm_send_product.product_id')
             ->leftJoin('crm_company', 'crm_company.id', '=', 'crm_send_product.company_id')
-            ->leftJoin('crm_utm_source', 'crm_utm_source.id', '=', 'crm_client.registration_utm_source_id')
+            ->leftJoin('crm_utm_source', 'crm_utm_source.id', '=', 'crm_request.registration_utm_source_id')
             ->leftJoin('crm_user', 'crm_user.id', '=', 'crm_send_product.send_product_user_id')
             ->leftJoin('crm_product_currency', 'crm_product_currency.id', '=', 'crm_send_product.product_currency_id')
             ->leftJoin('crm_region', 'crm_region.id', '=', 'crm_send_product.address_region_id')
             ->leftJoin('crm_audit', 'crm_audit.id', '=', 'crm_send_product.audit_id')
             ->leftJoin('crm_user as audit', 'audit.id', '=', 'crm_send_product.audit_lastchanged_user_id')
-            ->leftJoin('crm_request', 'crm_send_product.request_id', '=', 'crm_request.id')
             ->whereNotNull('crm_send_product.send_product_date')
+            ->whereNotNull('crm_send_product.request_id')
             ->where('crm_send_product.send_product_date', '>=', $from . ' 00:00:00')
             ->where('crm_send_product.send_product_date', '<=', $to . ' 23:59:59')
             ->orderBy('crm_send_product.send_product_date')
@@ -89,9 +89,12 @@ class SendLeads extends Connectors implements Report
         if (count($gaArray) > 0) {
             $data = array_map(
                 function ($item) use ($gaArray) {
-                    $tempArray = $item;
-                    $tempArray['Google Client Id'] = array_key_exists($item['request_in'], $gaArray) ? $gaArray[$item['request_in']]['ga'] : '';
+                    $tempArray                     = $item;
+                    $tempArray['Google Client Id'] = array_key_exists(
+                        $item['request_in'], $gaArray
+                    ) ? $gaArray[$item['request_in']]['ga'] : '';
                     unset($tempArray['request_in']);
+
                     return $tempArray;
                 }, $data
             );
