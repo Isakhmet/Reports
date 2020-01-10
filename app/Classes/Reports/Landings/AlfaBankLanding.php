@@ -31,8 +31,7 @@ class AlfaBankLanding extends Connectors implements Report
                 'status as "Статус"',
                 'description as "Описание"',
                 'created_at as "Дата подачи"',
-                'created_at as "Дата подачи"',
-                'ga as "Google Client ID"'
+                'ga as "Google Client Id"'
             )
         ;
 
