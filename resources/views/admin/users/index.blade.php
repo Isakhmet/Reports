@@ -6,11 +6,6 @@
                 <a class="btn btn-success" href="{{ route("admin.users.create") }}">
                     {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
                 </a>
-                @can('root')
-                    <a class="btn btn-success" href="{{ route("admin.users.create") }}">
-                        {{ trans('cruds.root.users_view') }}
-                    </a>
-                @endcan
             </div>
         </div>
     @endcan

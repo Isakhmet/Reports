@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\Reports\Crm;
+namespace App\Classes\Reports\Landings;
 
 use App\Classes\Connectors\Connectors;
 use App\Classes\Reports\Report;
@@ -31,7 +31,7 @@ class AlfaBankLanding extends Connectors implements Report
                 'status as "Статус"',
                 'description as "Описание"',
                 'created_at as "Дата подачи"',
-                'ga as "Google Client ID"'
+                'ga as "Google Client Id"'
             )
         ;
 

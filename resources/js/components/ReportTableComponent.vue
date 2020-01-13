@@ -51,24 +51,53 @@
                                         }}</a>
                                 </li>
                                 <li class="page-item" :class="{'disabled': currentPage === pagination.meta.last_page }">
-                                    <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Следующая</a>
+                                    <a class="page-link" href="#"
+                                       @click.prevent="changePage(currentPage + 1)">Следующая</a>
                                 </li>
                                 <span style="margin-top: 8px;"> &nbsp; <i>Показано {{ pagination.report.length }} из {{ pagination.meta.total }} записей.</i></span>
                             </ul>
                         </nav>
                         <export-excel
-                            :data="json_data"
-                            :fields="json_fields"
-                            worksheet="My Worksheet"
-                            :name="filename">
-                            <button class="download">Скачать</button>
+                                :data="json_data"
+                                :fields="json_fields"
+                                worksheet="My Worksheet"
+                                :name="filenameXLS">
+                            <button class="download">Скачать XLS</button>
                         </export-excel>
                         <export-excel
-                                :data   = "json_data"
-                                :fields = "json_fields"
-                                type    = "csv"
-                                :name    = "filenameCSV">
+                                :data="json_data"
+                                :fields="json_fields"
+                                worksheet="My Worksheet"
+                                :name="filenameXLSX">
+                            <button class="download">Скачать XLSX</button>
+                        </export-excel>
+                        <export-excel
+                                :data="json_data"
+                                :fields="json_fields"
+                                type="csv"
+                                :name="filenameCSV">
                             <button class="download">Скачать CSV</button>
+                        </export-excel>
+                        <export-excel
+                                :data="json_data"
+                                :fields="json_fields"
+                                worksheet="My Worksheet"
+                                :name="filenameXML">
+                            <button class="download">Скачать XML</button>
+                        </export-excel>
+                        <export-excel
+                                :data="json_data"
+                                :fields="json_fields"
+                                worksheet="My Worksheet"
+                                :name="filenameODS">
+                            <button class="download">Скачать ODS</button>
+                        </export-excel>
+                        <export-excel
+                                :data="json_data"
+                                :fields="json_fields"
+                                worksheet="My Worksheet"
+                                :name="filenameHTML">
+                            <button class="download">Скачать HTML</button>
                         </export-excel>
                     </div>
                 </div>
@@ -105,8 +134,13 @@
                 report_id:    '',
                 date_end:     '',
                 date_start:   '',
-                filename:     '',
-                loading:    false
+                filenameXLS:  '',
+                filenameXLSX: '',
+                filenameCSV:  '',
+                filenameXML:  '',
+                filenameODS:  '',
+                filenameHTML:  '',
+                loading:      false
 
             }
         },
@@ -189,9 +223,14 @@
                             this.json_data   = data.excel.data;
                         }
 
-                        var reportName = this.report.split(' ').join('-');
-                        this.filename  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.xls';
-                        this.filenameCSV  = reportName + '-c-' + this.date_start + '-по-' + this.date_end + '.csv';
+                        var reportName        = this.report.split(' ').join('-');
+                        var nameExcelDocument = reportName + '-c-' + this.date_start + '-по-' + this.date_end;
+                        this.filename         = nameExcelDocument + '.xls';
+                        this.filenameCSV      = nameExcelDocument + '.csv';
+                        this.filenameXLSX     = nameExcelDocument + '.xlsx';
+                        this.filenameXML      = nameExcelDocument + '.xml';
+                        this.filenameODS      = nameExcelDocument + '.ods';
+                        this.filenameHTML      = nameExcelDocument + '.html';
                         console.log(this.filename);
                         if (!this.columns.isEmpty) {
                             this.empty = true;
