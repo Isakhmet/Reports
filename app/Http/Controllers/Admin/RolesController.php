@@ -40,7 +40,7 @@ class RolesController extends Controller
 
     public function edit(Role $role)
     {
-        if ($role['id'] == 7) {
+        if ($role['id'] == 1) {
             return back();
         } else {
             $permissions = Permission::all()
@@ -64,7 +64,7 @@ class RolesController extends Controller
 
     public function show(Role $role)
     {
-        if ($role['id'] == 7) {
+        if ($role['id'] == 1) {
             return back();
         } else {
             $role->load('permissions');
@@ -75,7 +75,7 @@ class RolesController extends Controller
 
     public function destroy(Role $role)
     {
-        if ($role['id'] == 7) {
+        if ($role['id'] == 1) {
             return back();
         } else {
             $role->delete();
