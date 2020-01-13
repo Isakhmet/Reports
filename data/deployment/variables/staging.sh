@@ -2,5 +2,5 @@
 
 USER_REMOTE=www-data
 PATH_REMOTE="/var/www/reporting.dev.pdn.kz"
-HOST_REMOTE="94.247.131.18"
-HOST_PORT="10622"
+HOST_REMOTE="10.10.11.17"
+HOST_PORT="22"
