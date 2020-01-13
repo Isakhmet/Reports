@@ -6,7 +6,7 @@ use App\Classes\Connectors\Connectors;
 
 class HandJobLeadsQueryBuilder extends Connectors
 {
-    /** @var \Illuminate\Database\ConnectionInterface  */
+    /** @var \Illuminate\Database\ConnectionInterface */
     public $connect;
 
     /**
@@ -87,5 +87,77 @@ class HandJobLeadsQueryBuilder extends Connectors
         );
 
         return $bccLeads;
+    }
+
+    /**
+     * Выборка из БД лидов, отправленных в ХКБ
+     *
+     * @param $from
+     * @param $to
+     *
+     * @return mixed
+     */
+    public function getHcbLeads($from, $to)
+    {
+        $queryForHcbLeads = $this->connect
+            ->table('hcb_leads')
+            ->leftJoin('crm_product', 'hcb_leads.product_id', '=', 'crm_product.id')
+            ->where('hcb_leads.updated_at', '>=', $from . ' 00:00:00')
+            ->where('hcb_leads.updated_at', '<=', $to . ' 23:59:59')
+            ->orderBy('hcb_leads.updated_at')
+            ->select(
+                'hcb_leads.created_at',
+                'hcb_leads.updated_at',
+                'hcb_leads.firstname',
+                'hcb_leads.lastname',
+                'hcb_leads.middlename',
+                'hcb_leads.mobile_phone',
+                'hcb_leads.iin',
+                'crm_product.name as product',
+                'hcb_leads.city'
+            )
+        ;
+        $hcbLeads         = json_decode(
+            json_encode(
+                $queryForHcbLeads->get()
+                                 ->toArray()
+            ), true
+        );
+
+        return $hcbLeads;
+    }
+
+    /**
+     * Выборка из БД лидов, отправленных в Альфа Банк
+     *
+     * @param $from
+     * @param $to
+     *
+     * @return mixed
+     */
+    public function getAlfaLeads($from, $to)
+    {
+        $queryForAlfaLeads = $this->connect
+            ->table('alfa_leads')
+            ->where('updated_at', '>=', $from . ' 00:00:00')
+            ->where('updated_at', '<=', $to . ' 23:59:59')
+            ->orderBy('updated_at')
+            ->select(
+                'created_at',
+                'updated_at',
+                'name',
+                'phone',
+                'iin',
+                'town'
+            )
+        ;
+        $alfaLeads         = json_decode(
+            json_encode(
+                $queryForAlfaLeads->get()
+                                  ->toArray()
+            ), true
+        );
+
+        return $alfaLeads;
     }
 }
