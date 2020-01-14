@@ -87,20 +87,6 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'ivr' => [
-            'driver' => 'pgsql',
-            'host' => env('IVR_DB_HOST', '127.0.0.1'),
-            'port' => env('IVR_DB_PORT', '5432'),
-            'database' => env('IVR_DB_DATABASE', 'ivr'),
-            'username' => env('IVR_DB_USERNAME', 'ivr'),
-            'password' => env('IVR_DB_PASSWORD', '123456'),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'schema' => 'public',
-            'sslmode' => 'prefer',
-        ],
-
         'aster' => [
             'driver' => 'mysql',
             'host' => env('ASTER_DB_HOST', '10.8.0.190'),
@@ -117,11 +103,11 @@ return [
 
         'monolit' => [
             'driver' => 'pgsql',
-            'host' => env('IVR_DB_HOST', '127.0.0.1'),
-            'port' => env('IVR_DB_PORT', '5432'),
-            'database' => env('IVR_DB_DATABASE', 'monolit'),
-            'username' => env('IVR_DB_USERNAME', 'monolit'),
-            'password' => env('IVR_DB_PASSWORD', 'monolit'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'monolit'),
+            'username' => env('DB_USERNAME', 'monolit'),
+            'password' => env('DB_PASSWORD', 'monolit'),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,

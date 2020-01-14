@@ -30,38 +30,7 @@
     export default {
         data: () => ({
             loading: false,
-            category: [
-                {
-                    name: '...',
-                    code: 'ivr',
-                    showSub: false,
-                    subcategory: [
-                        {
-                            name: 'bla bla',
-                            code: "code"
-                        },
-                        {
-                            name: 'bla bla',
-                            code: "code2"
-                        }
-                    ]
-                },
-                {
-                    name: '...',
-                    code: 'ivr2',
-                    showSub: false,
-                    subcategory: [
-                        {
-                            name: 'bla bla',
-                            code: "code"
-                        },
-                        {
-                            name: 'bla bla',
-                            code: "code2"
-                        }
-                    ]
-                }
-            ],
+            category: [ ],
             CDateFormShow: false,
             sendToApiForm: {
                 page: 1,

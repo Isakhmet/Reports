@@ -20,15 +20,6 @@ class ReportsTableSeeder extends Seeder
           ->insert(
               [
                   [
-                      'code'        => 'ivr_send',
-                      'name'        => 'Отправка заявки',
-                      'category_id' => 4,
-                      'is_active'   => true,
-                      'created_at'  => $date,
-                      'updated_at'  => $date,
-                      'deleted_at'  => null,
-                  ],
-                  [
                       'code'        => '60',
                       'name'        => 'Задания на обзвон',
                       'category_id' => 1,
@@ -175,7 +166,7 @@ class ReportsTableSeeder extends Seeder
                   [
                       'code'        => 'alfa_bank_landing',
                       'name'        => 'AlfaBank Landing',
-                      'category_id' => 5,
+                      'category_id' => 4,
                       'is_active'   => true,
                       'created_at'  => $date,
                       'updated_at'  => $date,
