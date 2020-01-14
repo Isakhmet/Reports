@@ -53,7 +53,7 @@
                             <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
                         <select name="roles[]" id="roles" class="form-control select2" required>
                             @foreach($roles as $id => $roles)
-                                @if ($id == 7)
+                                @if ($id == 1)
                                 @else
                                     <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || isset($user) && $user->roles->contains($id)) ? 'selected' : '' }}>
                                         {{ $roles }}

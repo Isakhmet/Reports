@@ -60,7 +60,7 @@
                                 </td>
                                 <td>
                                     @can('role_show')
-                                        @if ($role->id == 7)
+                                        @if ($role->id == 1)
                                             <a class="btn btn-sm btn-outline-primary disabled"
                                                href="{{ route('admin.roles.show', $role->id) }}">
                                                 {{ trans('global.view') }}
@@ -75,7 +75,7 @@
                                 </td>
                                 <td>
                                     @can('role_edit')
-                                        @if ($role->id == 7)
+                                        @if ($role->id == 1)
                                             <a class="btn btn-sm btn-outline-info disabled"
                                                href="{{ route('admin.roles.edit', $role->id) }}">
                                                 {{ trans('global.edit') }}
@@ -90,7 +90,7 @@
                                 </td>
                                 <td>
                                     @can('role_delete')
-                                        @if ($role->id == 7)
+                                        @if ($role->id == 1)
                                             <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST"
                                                   onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
                                                   style="display: inline-block;">

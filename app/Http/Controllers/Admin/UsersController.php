@@ -37,7 +37,7 @@ class UsersController extends Controller
         $user->roles()
              ->sync($request->input('roles', []))
         ;
-        if ($user['roles'][0]['id'] == 7) {
+        if ($user['roles'][0]['id'] == 1) {
             return back();
         } else {
             return redirect()->route('admin.users.index');
@@ -50,7 +50,7 @@ class UsersController extends Controller
                      ->pluck('title', 'id')
         ;
         $user->load('roles');
-        if ($user['roles'][0]['id'] == 7) {
+        if ($user['roles'][0]['id'] == 1) {
             return back();
         } else {
 
@@ -60,14 +60,14 @@ class UsersController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        if ($request['roles'][0] == 7) {
+        if ($request['roles'][0] == 1) {
             return back();
         } else {
             $user->update($request->all());
             $user->roles()
                  ->sync($request->input('roles', []))
             ;
-            if ($user['roles'][0]['id'] == 7) {
+            if ($user['roles'][0]['id'] == 1) {
                 return back();
             } else {
 
@@ -79,7 +79,7 @@ class UsersController extends Controller
     public function show(User $user)
     {
         $user->load('roles');
-        if ($user['roles'][0]['id'] == 7) {
+        if ($user['roles'][0]['id'] == 1) {
             return back();
         } else {
             return view('admin.users.show', compact('user'));
@@ -88,7 +88,7 @@ class UsersController extends Controller
 
     public function destroy(User $user)
     {
-        if ($user['roles'][0]['id'] == 7) {
+        if ($user['roles'][0]['id'] == 1) {
             return back();
         } else {
             $user->delete();

@@ -66,7 +66,7 @@
                                 </td>
                                 <td>
                                     @can('user_show')
-                                        @if ($item->id == 7)
+                                        @if ($item->id == 1)
                                                 <a class="btn btn-xs btn-primary disabled"
                                                    href="#">
                                                     {{ trans('global.view') }}
@@ -80,7 +80,7 @@
                                     @endcan
 
                                     @can('user_edit')
-                                            @if ($item->id == 7)
+                                            @if ($item->id == 1)
                                                     <a class="btn btn-xs btn-info disabled"
                                                        href="#">
                                                         {{ trans('global.edit') }}
@@ -95,7 +95,7 @@
                                     @endcan
 
                                     @can('user_delete')
-                                        @if ($item->id == 7)
+                                        @if ($item->id == 1)
                                                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display: inline-block;">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
