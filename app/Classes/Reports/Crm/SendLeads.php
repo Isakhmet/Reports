@@ -36,7 +36,6 @@ class SendLeads extends Connectors implements Report
             ->leftJoin('crm_audit', 'crm_audit.id', '=', 'crm_send_product.audit_id')
             ->leftJoin('crm_user as audit', 'audit.id', '=', 'crm_send_product.audit_lastchanged_user_id')
             ->whereNotNull('crm_send_product.send_product_date')
-            ->whereNotNull('crm_send_product.request_id')
             ->where('crm_send_product.send_product_date', '>=', $from . ' 00:00:00')
             ->where('crm_send_product.send_product_date', '<=', $to . ' 23:59:59')
             ->orderBy('crm_send_product.send_product_date')
