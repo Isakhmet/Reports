@@ -74,6 +74,12 @@ class SendLeads extends Connectors implements Report
             }
         }
 
+        foreach ($data as $key => $value) {
+            if ($value['utm_source'] === null) {
+                $data[$key]['utm_source'] = __('report.reports.sendLeads.utmSourceDefault');
+            }
+        }
+
         $gaArray = $connect
             ->table('google_client_ids')
             ->whereIn('request_in_id', $requestIds)
@@ -116,7 +122,6 @@ class SendLeads extends Connectors implements Report
             foreach ($result['data'][0] as $key => $value) {
                 $excel['columns'][$key] = $key;
             }
-            $result['headers'] = array_keys($result['data'][0]);
         }
 
         $result['excel'] = $excel;
