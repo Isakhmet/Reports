@@ -40,21 +40,21 @@ class SendLeads extends Connectors implements Report
             ->where('crm_send_product.send_product_date', '<=', $to . ' 23:59:59')
             ->orderBy('crm_send_product.send_product_date')
             ->select(
-                'crm_send_product.send_product_date as Дата отправки',
-                'crm_send_product_status.name as Статус отправки',
-                'crm_user.name as Специалист',
-                'crm_send_product.name_full as ФИО',
-                'crm_send_product.phone_mob as Мобильный',
-                'crm_company.name as Компания',
-                'crm_send_product.document_inn as ИИН',
-                'crm_product.name as Продукт',
-                'crm_send_product.amount_product as Сумма',
-                'crm_region.name as Регион',
-                'crm_audit.name as Аудит: Статус',
-                'audit.name as Аудит: ФИО',
-                'crm_send_product.audit_lastchanged_datetime as Аудит: Дата изменения',
-                'crm_send_product.email as Email',
-                'crm_utm_source.name as Источник создания клиента',
+                'crm_send_product.send_product_date',
+                'crm_send_product_status.name as status',
+                'crm_user.name as specialist',
+                'crm_send_product.name_full',
+                'crm_send_product.phone_mob',
+                'crm_company.name as company',
+                'crm_send_product.document_inn',
+                'crm_product.name as product',
+                'crm_send_product.amount_product',
+                'crm_region.name as region',
+                'crm_audit.name as audit_status',
+                'audit.name as audit_name',
+                'crm_send_product.audit_lastchanged_datetime as audit_date',
+                'crm_send_product.email as email',
+                'crm_utm_source.name as utm_source',
                 'crm_request.request_in_id as request_in'
             )
         ;
@@ -95,7 +95,7 @@ class SendLeads extends Connectors implements Report
             $data = array_map(
                 function ($item) use ($gaArray) {
                     $tempArray                     = $item;
-                    $tempArray['Google Client Id'] = array_key_exists(
+                    $tempArray['ga'] = array_key_exists(
                         $item['request_in'], $gaArray
                     ) ? $gaArray[$item['request_in']]['ga'] : '';
                     unset($tempArray['request_in']);
@@ -119,8 +119,10 @@ class SendLeads extends Connectors implements Report
         $result['headers'] = [];
 
         if (!empty($result['data'])) {
-            foreach ($result['data'][0] as $key => $value) {
-                $excel['columns'][$key] = $key;
+            $result['headers'] = __('report.reports.sendLeads.columns');
+
+            foreach ($result['headers'] as $key => $value) {
+                $excel['columns'][$value] = $value;
             }
         }
 
