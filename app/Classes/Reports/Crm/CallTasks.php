@@ -38,26 +38,22 @@ class CallTasks extends Connectors implements Report
                 'crm_task.id',
                 'crm_task.client_id',
                 'crm_task.request_id',
-                'crm_task.send_product_id',
                 'crm_task.created_datetime',
                 'crm_client.name_full',
-                'crm_client.name_surname',
-                'crm_client.name_first',
-                'crm_client.name_patronymic',
                 'crm_client.document_inn',
                 'crm_client.phone_mob',
-                'crm_region.name',
+                'crm_region.name as region',
                 'operator.name as operator',
-                'create.name as creater',
-                'crm_task_type.name',
-                'crm_task_status.name',
+                'create.name as creator',
+                'crm_task_type.name as type',
+                'crm_task_status.name as status',
                 'crm_task.call_back',
                 'crm_task.closed_datetime',
-                'crm_yesno.name',
+                'crm_yesno.name as is_promise',
                 'crm_task.comments',
-                'crm_product.name',
-                'crm_company.name',
-                'crm_utm_source.name'
+                'crm_product.name as product',
+                'crm_company.name as company',
+                'crm_utm_source.name as utm_source'
             )
         ;
         $excel['data']   = json_decode(
@@ -67,13 +63,12 @@ class CallTasks extends Connectors implements Report
             ), true
         );
         $result  = json_decode(json_encode($query->paginate($perPage)), true);
-        $result['headers'] = [];
+        $result['headers'] = __('report.reports.callTask.columns');
 
         if(!empty($result['data'])){
-            foreach ($result['data'][0] as $key => $value) {
-                $excel['columns'][$key] = $key;
+            foreach ($result['headers'] as $key => $value) {
+                $excel['columns'][$value] = $value;
             }
-            $result['headers'] = array_keys($result['data'][0]);
         }
 
         $result['excel']   = $excel;
