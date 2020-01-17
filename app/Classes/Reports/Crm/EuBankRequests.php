@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Request;
 class EuBankRequests extends Connectors implements Report
 {
     const TASK_TYPE = 31;
+
     /**
      * @param     $reportType
      * @param int $page
@@ -47,29 +48,29 @@ class EuBankRequests extends Connectors implements Report
             ), true
         );
 
-        $doubling  = [];
-        $new_users = [];
+        $doubling = [];
+        $newUsers = [];
         foreach ($data as $user) {
             if (
                 !in_array($user['document_inn'], array_column($doubling, 'iin')) ||
                 !in_array($user['registration_date'], array_column($doubling, 'date'))
             ) {
-                $temp['iin']                  = $user['document_inn'];
-                $temp['date']                 = $user['registration_date'];
-                $tempUser['ИИН']              = $user['document_inn'];
-                $tempUser['ФИО']              = $user['name_full'];
-                $tempUser['Телефон']          = $user['phone_mob'];
-                $tempUser['Дата']             = $user['registration_date'];
-                $tempUser['Город']            = $user['address_region_name_arch'];
-                $tempUser['ga']               = $user['ga'];
-                $tempUser['Прошел скоринг']   = (intval($user['param_create_task_type']) === self::TASK_TYPE) ?
+                $temp['iin']                = $user['document_inn'];
+                $temp['date']               = $user['registration_date'];
+                $tempUser['ИИН']            = $user['document_inn'];
+                $tempUser['ФИО']            = $user['name_full'];
+                $tempUser['Телефон']        = $user['phone_mob'];
+                $tempUser['Дата']           = $user['registration_date'];
+                $tempUser['Город']          = $user['address_region_name_arch'];
+                $tempUser['ga']             = $user['ga'];
+                $tempUser['Прошел скоринг'] = (intval($user['param_create_task_type']) === self::TASK_TYPE) ?
                     'Да' : 'Нет';
-                $doubling[]                   = $temp;
-                $new_users[]                  = $tempUser;
+                $doubling[]                 = $temp;
+                $newUsers[]                 = $tempUser;
             }
         }
 
-        $excel['data'] = $new_users;
+        $excel['data'] = $newUsers;
 
         $currentPage      = Paginator::resolveCurrentPage();
         $col              = collect($data);
