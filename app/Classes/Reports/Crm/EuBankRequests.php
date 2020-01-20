@@ -25,7 +25,7 @@ class EuBankRequests extends Connectors implements Report
         $connect = $this->connect($reportType);
         $query   = $connect
             ->table('crm_request_in')
-            ->leftJoin('google_client_ids', 'crm_request_in.id', '=', 'google_client_ids.request_in_id')
+            ->join('google_client_ids', 'crm_request_in.id', '=', 'google_client_ids.request_in_id')
             ->orderBy('created_datetime')
             ->where('registration_utm_source_id', '=', '35')
             ->whereBetween('created_datetime', [$from . ' 00:00:00', $to . ' 23:59:59'])
