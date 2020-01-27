@@ -26,7 +26,6 @@ return [
                 'phone' => 'Телефон',
                 'date'  => 'Дата',
                 'city'  => 'Город',
-                'ga'    => 'Google Client Id',
                 'score' => 'Прошел скоринг',
             ],
             'helper'  => [
