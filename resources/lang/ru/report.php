@@ -37,6 +37,16 @@ return [
                 'f' => 6,
             ],
         ],
+        'LandingProdengi' => [
+            'headers' => [
+                'iin'   => 'ИИН',
+                'fio'   => 'ФИО',
+                'phone' => 'Телефон',
+                'date'  => 'Дата',
+                'city'  => 'Город',
+                'score' => 'Прошел скоринг',
+            ],
+        ],
         'scorePoints'    => [
             'headers' => [
                 'id'           => 'ID',

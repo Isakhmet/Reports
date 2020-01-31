@@ -205,6 +205,16 @@ class AddReports extends Migration
                       'updated_at'  => $date,
                       'deleted_at'  => null,
                   ],
+                  [
+                      'id'          => 19,
+                      'code'        => '41',
+                      'name'        => 'Лэндинг Проденьги',
+                      'category_id' => 1,
+                      'is_active'   => true,
+                      'created_at'  => $date,
+                      'updated_at'  => $date,
+                      'deleted_at'  => null,
+                  ],
               ]
           )
         ;
