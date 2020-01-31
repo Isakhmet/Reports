@@ -25,17 +25,19 @@ class EuBankRequests extends Connectors implements Report
         $connect = $this->connect($reportType);
         $query   = $connect
             ->table('crm_request_in')
+            ->join('google_client_ids', 'crm_request_in.id', '=', 'google_client_ids.request_in_id')
             ->orderBy('created_datetime')
             ->where('registration_utm_source_id', '=', '35')
             ->whereBetween('created_datetime', [$from . ' 00:00:00', $to . ' 23:59:59'])
             ->select(
-                'id',
-                'document_inn',
-                'name_full',
-                'phone_mob',
-                'registration_date',
-                'address_region_name_arch',
-                'param_create_task_type'
+                'crm_request_in.id',
+                'crm_request_in.document_inn',
+                'crm_request_in.name_full',
+                'crm_request_in.phone_mob',
+                'crm_request_in.registration_date',
+                'crm_request_in.address_region_name_arch',
+                'crm_request_in.param_create_task_type',
+                'google_client_ids.ga'
             )
         ;
 
@@ -60,6 +62,7 @@ class EuBankRequests extends Connectors implements Report
                 $tempUser['Телефон']        = $user['phone_mob'];
                 $tempUser['Дата']           = $user['registration_date'];
                 $tempUser['Город']          = $user['address_region_name_arch'];
+                $tempUser['ga']             = $user['ga'];
                 $tempUser['Прошел скоринг'] = (intval($user['param_create_task_type']) === self::TASK_TYPE) ?
                     'Да' : 'Нет';
                 $doubling[]                 = $temp;
