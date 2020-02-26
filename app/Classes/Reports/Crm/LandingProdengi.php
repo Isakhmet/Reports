@@ -45,9 +45,16 @@ class LandingProdengi extends Connectors implements Report
                       ->toArray()
             ), true
         );
+        
+        $doubling = [];
         $newUsers = [];
-
         foreach ($data as $user) {
+            if (
+                !in_array($user['document_inn'], array_column($doubling, 'iin')) ||
+                !in_array($user['registration_date'], array_column($doubling, 'date'))
+            ) {
+                $temp['iin']                = $user['document_inn'];
+                $temp['date']               = $user['registration_date'];
                 $tempUser['ИИН']            = $user['document_inn'];
                 $tempUser['ФИО']            = $user['name_full'];
                 $tempUser['Телефон']        = $user['phone_mob'];
@@ -55,7 +62,9 @@ class LandingProdengi extends Connectors implements Report
                 $tempUser['Город']          = $user['address_region_name_arch'];
                 $tempUser['Прошел скоринг'] = (intval($user['param_create_task_type']) === self::TASK_TYPE) ?
                     'Да' : 'Нет';
+                $doubling[]                 = $temp;
                 $newUsers[]                 = $tempUser;
+            }
         }
 
         $excel['data'] = $newUsers;
