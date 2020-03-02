@@ -26,7 +26,6 @@ return [
                 'phone' => 'Телефон',
                 'date'  => 'Дата',
                 'city'  => 'Город',
-                'ga'    => 'Google Client Id',
                 'score' => 'Прошел скоринг',
             ],
             'helper'  => [
@@ -37,6 +36,51 @@ return [
                 'e' => 5,
                 'f' => 6,
             ],
+        ],
+        'LandingProdengi' => [
+            'headers' => [
+                'id'   => 'id ScoreGate',
+                'name' => 'Имя клиента',
+                'iin' => 'ИИН',
+                'phone' => 'Телефон',
+                'city' => 'Город',
+                'created_at' => 'Дата создания лида',
+                'updated_at' => 'Дата обновления лида',
+                'source'  => 'Куда ушло',
+                'sender'  => 'Отправщик',
+                'status_lead_gate' => 'Статус',
+            ],
+            'translator' => [
+                'status' => [
+                    'gate-accepted' => 'Лид принят',
+                    'gate-refused' => 'Лид отклонен системой',
+                    'gate-save-lead' => 'Сохранение лида',
+                    'gate-pending' => 'В ожидании',
+                    'gate-send' => 'Ошибка отправки',
+                    'gate-send_fail' => 'Ошибка отправки лида',
+                    'partner-accept-lead' => 'Партнер принял заявку',
+                    'partner-refuse-lead' => 'Партнер отказал',
+                    'partner-send-lead-fail' => 'Ошибка отправки заявки партнеру',
+                    'partner-process-lead-fail' => 'Сбой процесса у партнера',
+                    'partner-confirm' => 'Партнер принял',
+                    'partner-complete' => 'Партнер завершил',
+                    'partner-close-lead' => 'Партнер закрыл заявку',
+                    'client-refuse-lead' => 'Клиент отказался',
+                ],
+                'source' => [
+                    'approval traffic' => 'Подтвержденный трафик',
+                    'rejected traffic' => 'Отказной трафик',
+                ],
+                'sender' => [
+                    'expressSberbankXmlSender' => 'Сбербанк по XML',
+                    'expressAlfabankJsonSender' => 'Альфабанк по JSON',
+                    'eurasianMailSender' => 'Евразийский по Email',
+                    'forteMailSender' => 'Фортебанк по EMail',
+                    'expressBCCJsonSender' => 'БЦК по JSON',
+                    'expressHCBXmlSender' => 'ХКБ по XML',
+                    'nurbankMailSender' => 'Нурбанк по EMail',
+                ]
+            ]
         ],
         'scorePoints'    => [
             'headers' => [

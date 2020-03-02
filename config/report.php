@@ -10,6 +10,7 @@ return [
         60            => \App\Classes\Reports\Crm\CallTasks::class,
         38            => \App\Classes\Reports\Crm\SMS::class,
         40            => \App\Classes\Reports\Crm\HandJobLeads\HandJobLeads::class,
+        41            => \App\Classes\Reports\Crm\LandingProdengi\LandingProdengi::class,
     ],
     'oracle' => [
         'cluster'      => App\Classes\Reports\Oracle\Cluster\Cluster::class,
