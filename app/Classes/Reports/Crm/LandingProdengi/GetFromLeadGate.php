@@ -44,7 +44,7 @@ class GetFromLeadGate extends Connectors
             ->select(
                 'src.name as source',
                 'snd.name as sender',
-                'sts.name as status_lead_gate'
+                'sts.name as statusRequest'
             )
         ;
 

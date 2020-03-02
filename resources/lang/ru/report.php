@@ -2,7 +2,7 @@
 
 return [
     'reports' => [
-        'leadEffect'     => [
+        'leadEffect'      => [
             'headers' => [
                 'Дата_отправки',
                 'Статус_отправки',
@@ -19,7 +19,7 @@ return [
                 'email',
             ],
         ],
-        'EuBankRequests' => [
+        'EuBankRequests'  => [
             'headers' => [
                 'iin'   => 'ИИН',
                 'fio'   => 'ФИО',
@@ -38,51 +38,91 @@ return [
             ],
         ],
         'LandingProdengi' => [
-            'headers' => [
-                'id'   => 'id ScoreGate',
-                'name' => 'Имя клиента',
-                'iin' => 'ИИН',
-                'phone' => 'Телефон',
-                'city' => 'Город',
-                'created_at' => 'Дата создания лида',
-                'updated_at' => 'Дата обновления лида',
-                'source'  => 'Куда ушло',
-                'sender'  => 'Отправщик',
-                'status_lead_gate' => 'Статус',
+            'headers'    => [
+                'name'          => 'Имя клиента',
+                'iin'           => 'ИИН',
+                'phone'         => 'Телефон',
+                'city'          => 'Город',
+                'status'        => 'Статус заявки',
+                'created_at'    => 'Дата создания лида',
+                'updated_at'    => 'Дата обновления лида',
+                'source'        => 'Куда ушло',
+                'sender'        => 'Отправщик',
+                'statusRequest' => 'Статус отправки',
             ],
             'translator' => [
-                'status' => [
-                    'gate-accepted' => 'Лид принят',
-                    'gate-refused' => 'Лид отклонен системой',
-                    'gate-save-lead' => 'Сохранение лида',
-                    'gate-pending' => 'В ожидании',
-                    'gate-send' => 'Ошибка отправки',
-                    'gate-send_fail' => 'Ошибка отправки лида',
-                    'partner-accept-lead' => 'Партнер принял заявку',
-                    'partner-refuse-lead' => 'Партнер отказал',
-                    'partner-send-lead-fail' => 'Ошибка отправки заявки партнеру',
+                'status'                  => [
+                    'gate-accepted'             => 'Лид принят',
+                    'gate-refused'              => 'Лид отклонен системой',
+                    'gate-save-lead'            => 'Сохранение лида',
+                    'gate-pending'              => 'В ожидании',
+                    'gate-send'                 => 'Ошибка отправки',
+                    'gate-send_fail'            => 'Ошибка отправки лида',
+                    'partner-accept-lead'       => 'Партнер принял заявку',
+                    'partner-refuse-lead'       => 'Партнер отказал',
+                    'partner-send-lead-fail'    => 'Ошибка отправки заявки партнеру',
                     'partner-process-lead-fail' => 'Сбой процесса у партнера',
-                    'partner-confirm' => 'Партнер принял',
-                    'partner-complete' => 'Партнер завершил',
-                    'partner-close-lead' => 'Партнер закрыл заявку',
-                    'client-refuse-lead' => 'Клиент отказался',
+                    'partner-confirm'           => 'Партнер принял',
+                    'partner-complete'          => 'Партнер завершил',
+                    'partner-close-lead'        => 'Партнер закрыл заявку',
+                    'client-refuse-lead'        => 'Клиент отказался',
                 ],
-                'source' => [
+                'source'                  => [
                     'approval traffic' => 'Подтвержденный трафик',
                     'rejected traffic' => 'Отказной трафик',
                 ],
-                'sender' => [
-                    'expressSberbankXmlSender' => 'Сбербанк по XML',
+                'sender'                  => [
+                    'expressSberbankXmlSender'  => 'Сбербанк по XML',
                     'expressAlfabankJsonSender' => 'Альфабанк по JSON',
-                    'eurasianMailSender' => 'Евразийский по Email',
-                    'forteMailSender' => 'Фортебанк по EMail',
-                    'expressBCCJsonSender' => 'БЦК по JSON',
-                    'expressHCBXmlSender' => 'ХКБ по XML',
-                    'nurbankMailSender' => 'Нурбанк по EMail',
-                ]
-            ]
+                    'eurasianMailSender'        => 'Евразийский по Email',
+                    'forteMailSender'           => 'Фортебанк по EMail',
+                    'expressBCCJsonSender'      => 'БЦК по JSON',
+                    'expressHCBXmlSender'       => 'ХКБ по XML',
+                    'nurbankMailSender'         => 'Нурбанк по EMail',
+                ],
+                'statusScoreGate'         => [
+                    0  => 'Новый лид',
+                    1  => 'Дубликат',
+                    2  => 'Обработка в кластере',
+                    3  => 'Ошибка в кластере',
+                    4  => 'Кластер пройден',
+                    5  => 'Скоринг в ТенгеДа',
+                    6  => 'Провал скоринга в ТенгеДа',
+                    7  => 'Успешно прошел скоринг в ТенгеДа',
+                    8  => 'Отправка положительной заявки в банк',
+                    9  => 'Положительная заявка в банк',
+                    10 => 'Отправлено в банк по положительному трафику',
+                    11 => 'Отправка отказной заявки в банк',
+                    12 => 'Отказная заявка в банк',
+                    13 => 'Отправлено в банк по отказному трафику',
+                    14 => 'Отправлено в ТМ',
+                    15 => 'Клиент принят ТМ',
+                    16 => 'Клиент отклонен ТМ',
+                    17 => 'КК принял заявку',
+                    18 => 'КК отказал',
+                    19 => 'Срок действия заявки истёк',
+                    20 => 'Уже есть займ в КК',
+                ],
+                'sendersSourcesScoreGate' => [
+                    14 => [
+                        'source'        => 'TM',
+                        'sender'        => 'ScoreGate',
+                        'statusRequest' => 'Отправлено',
+                    ],
+                    17 => [
+                        'source'        => 'KK',
+                        'sender'        => 'ScoreGate',
+                        'statusRequest' => 'Принята',
+                    ],
+                    18 => [
+                        'source'        => 'KK',
+                        'sender'        => 'ScoreGate',
+                        'statusRequest' => 'Отказ',
+                    ],
+                ],
+            ],
         ],
-        'scorePoints'    => [
+        'scorePoints'     => [
             'headers' => [
                 'id'           => 'ID',
                 'created_at'   => 'Дата/Время',
@@ -95,7 +135,7 @@ return [
                 'ga'           => 'Google Client Id',
             ],
         ],
-        'scoreValues'    => [
+        'scoreValues'     => [
             'columns' => [
                 'id'           => 'ID',
                 'created_at'   => 'Дата/Время',
@@ -107,7 +147,7 @@ return [
                 'products'     => 'Продукты',
             ],
         ],
-        'scoreClients'   => [
+        'scoreClients'    => [
             'headers' => [
                 'id'                 => 'ID',
                 'created_at'         => 'Дата/Время',
@@ -125,7 +165,7 @@ return [
                 'gclid'              => 'Google Click ID',
             ],
         ],
-        'alfaBank'       => [
+        'alfaBank'        => [
             'cities'   => [
                 1  => "алматы",
                 2  => "астана",
@@ -161,7 +201,7 @@ return [
 
             ],
         ],
-        'sms'            => [
+        'sms'             => [
             'outgoing' => [
                 'headers' => [
                     'Дата_отправки',
@@ -189,7 +229,7 @@ return [
                 ],
             ],
         ],
-        'hcb'            => [
+        'hcb'             => [
             'columns' => [
                 'lead_id'                 => 'Номер в оракуле',
                 'iin'                     => 'ИИН',
@@ -210,7 +250,7 @@ return [
                 'created_at'              => 'Дата',
             ],
         ],
-        'okzaim'         => [
+        'okzaim'          => [
             'columns' => [
                 'lead_id'      => 'Номер в оракуле',
                 'is_double'    => 'Дубль',
@@ -234,7 +274,7 @@ return [
                 'failed'     => 'Ошибка',
             ],
         ],
-        'cluster'        => [
+        'cluster'         => [
             'columns' => [
                 'lead_id'    => 'Номер в оракуле',
                 'iin'        => 'ИИН',
@@ -258,7 +298,7 @@ return [
                 "12" => "Декабрь",
             ],
         ],
-        'handJobLeads'   => [
+        'handJobLeads'    => [
             'columns' => [
                 'created_at'      => 'Дата регистрации',
                 'updated_at'      => 'Дата отправки',
@@ -272,7 +312,7 @@ return [
                 'utm_source_name' => 'Источник',
             ],
         ],
-        'sendLeads'      => [
+        'sendLeads'       => [
             'columns'          => [
                 'send_product_date' => 'Дата отправки',
                 'status'            => 'Статус отправки',
@@ -293,7 +333,7 @@ return [
             ],
             'utmSourceDefault' => 'Входящий звонок',
         ],
-        'callTask'       => [
+        'callTask'        => [
             'columns' => [
                 'id'               => 'id звонка',
                 'client_id'        => 'id клиента',
