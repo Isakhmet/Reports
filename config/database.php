@@ -128,7 +128,35 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
-        
+
+        'score_gate' => [
+            'driver' => 'pgsql',
+            'host' => env('SG_DB_HOST', '10.10.11.11'),
+            'port' => env('SG_DB_PORT', '5432'),
+            'database' => env('SG_DB_DATABASE', 'score_gate'),
+            'username' => env('SG_DB_USERNAME', 'report'),
+            'password' => env('SG_DB_PASSWORD', 'fQ5dnAWK0iyu'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
+        'lead_gate' => [
+            'driver' => 'pgsql',
+            'host' => env('LG_DB_HOST', '10.10.11.11'),
+            'port' => env('LG_DB_PORT', '5432'),
+            'database' => env('LG_DB_DATABASE', 'lead_gate'),
+            'username' => env('LG_DB_USERNAME', 'report'),
+            'password' => env('LG_DB_PASSWORD', 'fQ5dnAWK0iyu'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
