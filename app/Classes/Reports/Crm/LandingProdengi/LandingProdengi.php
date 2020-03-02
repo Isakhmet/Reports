@@ -24,6 +24,7 @@ class LandingProdengi extends Connectors implements Report
     {
         $this->scoreGateClass = new GetFromScoreGate;
         $excel['data']        = $this->scoreGateClass->getData($from, $to);
+        $this->arraySortByColumn($excel['data'], 'created_at');
         $currentPage          = Paginator::resolveCurrentPage();
         $col                  = collect($excel['data']);
         $currentPageItems     = $col->slice(($currentPage - 1) * $perPage, $perPage)
@@ -43,5 +44,23 @@ class LandingProdengi extends Connectors implements Report
         $result['excel'] = $excel;
 
         return $result;
+    }
+
+    /**
+     * Сортировка массива по колонке
+     *
+     * @param     $array
+     * @param     $column
+     * @param int $direction
+     */
+    public function arraySortByColumn(&$array, $column, $direction = SORT_DESC)
+    {
+        $reference_array = [];
+
+        foreach ($array as $key => $row) {
+            $reference_array[$key] = $row[$column];
+        }
+
+        array_multisort($reference_array, $direction, $array);
     }
 }
