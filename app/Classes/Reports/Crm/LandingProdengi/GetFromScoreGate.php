@@ -15,22 +15,27 @@ class GetFromScoreGate extends Connectors
 
     public $leadGateClass;
 
+    public $translator;
+
+    public $approvedStatuses = [8, 9, 10];
+
+    public $rejectedStatuses = [11, 12, 13];
+
+    public $anotherStatuses = [0, 1, 2, 3, 4, 5, 6, 7, 14, 15, 16, 17, 18, 19, 20];
+
     /**
      * GetFromScoreGate constructor.
      */
     public function __construct()
     {
         $this->leadGateClass = new GetFromLeadGate();
+        $this->translator    = new LandingProdengiTranslator();
         $this->connection    = $this->connect('score_gate');
     }
 
 
     /**
      * Получение заявок с базы ScoreGate
-     * по статусам =>
-     * "SEND_POSITIVE_LEAD_TO_BANK_FINISH" => 10 => approved traffic
-     * "SEND_NEGATIVE_LEAD_TO_BANK_FINISH" => 13 => rejected traffic
-     * "KK_APPROVED"                       => 17 => KK Выдал займ
      *
      * @param $from
      * @param $to
@@ -39,9 +44,11 @@ class GetFromScoreGate extends Connectors
      */
     public function getData($from, $to)
     {
-        $leads           = [];
-        $leadResult      = [];
-        $approvedTraffic = $this->queryToLeadsTable([8, 9, 10], $from, $to);
+        $leads      = [];
+        $newLeads   = [];
+        $leadResult = [];
+
+        $approvedTraffic = $this->queryToLeadsTable($this->approvedStatuses, $from, $to);
 
         if ($approvedTraffic != null) {
             foreach ($approvedTraffic as $traffic) {
@@ -51,7 +58,7 @@ class GetFromScoreGate extends Connectors
             $approvedTraffic = [];
         }
 
-        $rejectedTraffic = $this->queryToLeadsTable([11, 12, 13], $from, $to);
+        $rejectedTraffic = $this->queryToLeadsTable($this->rejectedStatuses, $from, $to);
 
         if ($rejectedTraffic != null) {
             foreach ($rejectedTraffic as $traffic) {
@@ -61,22 +68,37 @@ class GetFromScoreGate extends Connectors
 
         foreach ($leads as $key => $value) {
             foreach ($value as $lead) {
-                array_push($leadResult, $lead);
+                if (isset($lead['source']) && isset($lead['sender'])) {
+                    array_push($leadResult, $lead);
+                } else {
+                    $value['source']           = '---';
+                    $value['sender']           = '---';
+                    $value['status_lead_gate'] = 'Обрабатывается';
+                    array_push($leadResult, $value);
+                }
             }
         }
 
-        $KKTraffic = $this->queryToLeadsTable([17], $from, $to);
-        if ($KKTraffic != null) {
-            foreach ($KKTraffic as $traffic) {
-                $traffic['status_lead_gate'] = null;
-                $traffic['source']           = null;
-                $traffic['sender']           = null;
-                $leads[]                     = $traffic;
-                array_push($leadResult, $leads);
+        $anotherLeads = $this->queryToLeadsTable($this->anotherStatuses, $from, $to);
+        if ($anotherLeads != null) {
+
+            foreach ($anotherLeads as $leads) {
+                $leads['source']        = '-';
+                $leads['sender']        = '-';
+                $leads['statusRequest'] = '-';
+
+                $newLeads[] = $leads;
             }
         } else {
-            $KKTraffic = [];
+            $anotherLeads = [];
         }
+
+        foreach ($newLeads as $key => $value) {
+            array_push($leadResult, $value);
+        }
+
+        $translate  = $this->translator->translateScoreGateStatus($leadResult);
+        $leadResult = $translate;
 
         return $leadResult;
     }
@@ -102,6 +124,7 @@ class GetFromScoreGate extends Connectors
                 'iin',
                 'phone',
                 'city',
+                'status',
                 'created_at',
                 'updated_at'
             )
