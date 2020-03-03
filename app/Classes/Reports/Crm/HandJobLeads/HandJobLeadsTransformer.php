@@ -58,6 +58,13 @@ class HandJobLeadsTransformer
     const companyNameAlfa = 'Альфа Банк';
 
     /**
+     * Название компании Фортебанк
+     *
+     * @var string
+     */
+    const companyNameFortebank = 'Форте Банк';
+
+    /**
      * Трансформирование лидов со Сбербанка
      *
      * @param $leads
@@ -182,18 +189,52 @@ class HandJobLeadsTransformer
     }
 
     /**
+     * Трансформирование лидов со Сбербанка
+     *
+     * @param $leads
+     *
+     * @return array
+     */
+    public function transformForteLeads($leads)
+    {
+        $reportDataForte = [];
+
+        foreach ($leads as $lead) {
+            $temp['created_at'] = $lead['created_at'];
+            $temp['updated_at'] = $lead['updated_at'];
+            if ($lead['first_name'] === $lead['last_name'] && $lead['first_name'] === $lead['middle_name'] && $lead['last_name'] === $lead['middle_name']) {
+                $temp['fio'] = $lead['first_name'];
+            } else {
+                $temp['fio'] = $lead['first_name'] . ' ' . $lead['last_name'] . ' ' . $lead['middle_name'];
+            }
+            $temp['mobile_phone']    = $lead['phone'];
+            $temp['company_name']    = self::companyNameFortebank;
+            $temp['iin']             = $lead['iin'];
+            $temp['product']         = $lead['product'];
+            $temp['credit_amount']   = $lead['amount'];
+            $temp['delivery_town']   = $lead['region'];
+            $temp['utm_source_name'] = self::utmSourceName;
+
+            $reportDataForte[] = $temp;
+        }
+
+        return $reportDataForte;
+    }
+
+    /**
      * Соединение всех полученных массивов
      *
      * @param $bccLeads
      * @param $sberLeads
      * @param $hcbLeads
      * @param $alfaLeads
+     * @param $forteLeads
      *
      * @return array
      */
-    public function generate($bccLeads, $sberLeads, $hcbLeads, $alfaLeads)
+    public function generate($bccLeads, $sberLeads, $hcbLeads, $alfaLeads, $forteLeads)
     {
-        $data = array_merge_recursive($bccLeads, $sberLeads, $hcbLeads, $alfaLeads);
+        $data = array_merge_recursive($bccLeads, $sberLeads, $hcbLeads, $alfaLeads, $forteLeads);
         $this->arraySortByColumn($data, self::columnForSorting);
 
         return $data;
