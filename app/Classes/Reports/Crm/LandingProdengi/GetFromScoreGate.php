@@ -17,11 +17,8 @@ class GetFromScoreGate extends Connectors
 
     public $translator;
 
-    public $approvedStatuses = [8, 9, 10];
+    public $statusesLeads = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
-    public $rejectedStatuses = [11, 12, 13];
-
-    public $anotherStatuses = [0, 1, 2, 3, 4, 5, 6, 7, 14, 15, 16, 17, 18, 19, 20];
 
     /**
      * GetFromScoreGate constructor.
@@ -44,57 +41,43 @@ class GetFromScoreGate extends Connectors
      */
     public function getData($from, $to)
     {
-        $leads      = [];
-        $newLeads   = [];
-        $leadResult = [];
+        $leadResult           = [];
+        $leadGateLeads     = [];
+        $anotherStatusesLeads = [];
 
-        $approvedTraffic = $this->queryToLeadsTable($this->approvedStatuses, $from, $to);
-
-        if ($approvedTraffic != null) {
-            foreach ($approvedTraffic as $traffic) {
-                $leads[] = $this->leadGateClass->getData($traffic, $from, $to);
-            }
-        } else {
-            $approvedTraffic = [];
-        }
-
-        $rejectedTraffic = $this->queryToLeadsTable($this->rejectedStatuses, $from, $to);
-
-        if ($rejectedTraffic != null) {
-            foreach ($rejectedTraffic as $traffic) {
-                $leads[] = $this->leadGateClass->getData($traffic, $from, $to);
+        $leads = $this->queryToLeadsTable($this->statusesLeads, $from, $to);
+        foreach ($leads as $lead) {
+            if ($lead['status'] === "8" || $lead['status'] === "9" || $lead['status'] === "10" || $lead['status'] === "11" || $lead['status'] === "12" || $lead['status'] === "13") {
+                $leadGateLeads[] = $lead;
+            } else {
+                $anotherStatusesLeads[] = $lead;
             }
         }
 
-        foreach ($leads as $key => $value) {
-            foreach ($value as $lead) {
-                if (isset($lead['source']) && isset($lead['sender'])) {
-                    array_push($leadResult, $lead);
-                } else {
-                    $value['source']           = '---';
-                    $value['sender']           = '---';
-                    $value['status_lead_gate'] = 'Обрабатывается';
-                    array_push($leadResult, $value);
-                }
+        $readyLeadGateLeads = $this->leadGateClass->getData($leadGateLeads);
+
+        foreach ($readyLeadGateLeads as $key => $value) {
+            if (isset($value['source']) && isset($value['sender'])) {
+                unset($value['id'], $value['lead_id']);
+                array_push($leadResult, $value);
+            } else {
+                unset($value['id'], $value['lead_id']);
+                $value['source']           = '---';
+                $value['sender']           = '---';
+                $value['status_lead_gate'] = 'Обрабатывается';
+                array_push($leadResult, $value);
             }
         }
 
-        $anotherLeads = $this->queryToLeadsTable($this->anotherStatuses, $from, $to);
-        if ($anotherLeads != null) {
+        if (!empty($anotherStatusesLeads)) {
 
-            foreach ($anotherLeads as $leads) {
-                $leads['source']        = '-';
-                $leads['sender']        = '-';
-                $leads['statusRequest'] = '-';
-
-                $newLeads[] = $leads;
+            foreach ($anotherStatusesLeads as $key => $value) {
+                unset($value['id']);
+                $value['source']        = '-';
+                $value['sender']        = '-';
+                $value['statusRequest'] = '-';
+                array_push($leadResult, $value);
             }
-        } else {
-            $anotherLeads = [];
-        }
-
-        foreach ($newLeads as $key => $value) {
-            array_push($leadResult, $value);
         }
 
         $translate  = $this->translator->translateScoreGateStatus($leadResult);

@@ -46,7 +46,7 @@ return [
                 'status'        => 'Статус заявки',
                 'created_at'    => 'Дата создания лида',
                 'updated_at'    => 'Дата обновления лида',
-                'source'        => 'Куда ушло',
+                'source'        => 'Источник',
                 'sender'        => 'Отправщик',
                 'statusRequest' => 'Статус отправки',
             ],
@@ -68,8 +68,11 @@ return [
                     'client-refuse-lead'        => 'Клиент отказался',
                 ],
                 'source'                  => [
-                    'approval traffic' => 'Подтвержденный трафик',
-                    'rejected traffic' => 'Отказной трафик',
+                    'crm'               => 'Заявка CRM',
+                    'eurasian-approval' => 'Посадка Евраза (Подтверждённый трафик)',
+                    'eurasian-rejected' => 'Посадка Евраза (Отказой трафик)',
+                    'credit-approval'   => 'Лэндинг Проденьги (Подтверждённый трафик)',
+                    'credit-rejected'   => 'Лэндинг Проденьги (Отказой трафик)',
                 ],
                 'sender'                  => [
                     'expressSberbankXmlSender'  => 'Сбербанк по XML',
