@@ -18,6 +18,7 @@ class LandingProdengiTranslator
     public function translate($data)
     {
         $leads = [];
+
         foreach ($data as $lead) {
             foreach ($this->translator['status'] as $key => $value) {
                 if ($lead['statusRequest'] === $key) {

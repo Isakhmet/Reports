@@ -25,14 +25,21 @@ class GetFromLeadGate extends Connectors
     }
 
     /**
-     * @param $lead
+     * @param $leads
      * @param $from
      * @param $to
      *
      * @return array
      */
-    public function getData($lead, $from, $to)
+    public function getData($leads)
     {
+        $leadsIds = [];
+        $leadGateLeads = [];
+
+        foreach ($leads as $lead) {
+            $leadsIds[] = $lead['id'];
+        }
+
         $query = $this->connection
             ->table('income_requests as ir')
             ->leftJoin('income_request_fields as irf', 'irf.request_id', '=', 'ir.id')
@@ -40,8 +47,9 @@ class GetFromLeadGate extends Connectors
             ->leftJoin('sources as src', 'src.id', '=', 'ir.source_id')
             ->leftJoin('statuses as sts', 'sts.id', '=', 'ir.status_id')
             ->where('irf.field_id', '=', 1)
-            ->where('irf.value', '=', $lead['id'])
+            ->whereIn('irf.value', $leadsIds)
             ->select(
+                'irf.value as lead_id',
                 'src.name as source',
                 'snd.name as sender',
                 'sts.name as statusRequest'
@@ -54,20 +62,23 @@ class GetFromLeadGate extends Connectors
                       ->toArray()
             ), true
         );
-        $leads     = [];
-
         if (!empty($queryData)) {
-
-            foreach ($queryData as $leadGateData) {
-                $leads[] = array_merge_recursive($lead, $leadGateData);
+            foreach ($queryData as $leadGateLead) {
+                $leadGateLead['lead_id'] = intval($leadGateLead['lead_id']);
+                foreach ($leads as $scoreGateLead) {
+                    if ($leadGateLead['lead_id'] === $scoreGateLead['id']) {
+                        $leadGateLeads[] = array_merge($scoreGateLead, $leadGateLead);
+                    }
+                }
             }
-            $translate = $this->translator->translate($leads);
-            $leads     = $translate;
-
-        } else {
-            $leads = $lead;
         }
 
-        return $leads;
+        $translatedLeads = [];
+
+        if (!empty($leadGateLeads)) {
+            $translatedLeads = $this->translator->translate($leadGateLeads);
+            }
+
+        return $translatedLeads;
     }
 }
