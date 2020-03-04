@@ -34,6 +34,7 @@ class HandJobLeadsQueryBuilder extends Connectors
             ->table('sber_leads')
             ->where('updated_at', '>=', $from . ' 00:00:00')
             ->where('updated_at', '<=', $to . ' 23:59:59')
+            ->where('status_id', '=', self::SUCCESS_STATUS)
             ->orderBy('updated_at')
             ->select(
                 'created_at',
@@ -72,6 +73,7 @@ class HandJobLeadsQueryBuilder extends Connectors
             ->table('bcc_leads')
             ->where('updated_at', '>=', $from . ' 00:00:00')
             ->where('updated_at', '<=', $to . ' 23:59:59')
+            ->where('status_id', '=', self::SUCCESS_STATUS)
             ->orderBy('updated_at')
             ->select(
                 'created_at',
@@ -107,6 +109,7 @@ class HandJobLeadsQueryBuilder extends Connectors
             ->leftJoin('crm_product', 'hcb_leads.product_id', '=', 'crm_product.id')
             ->where('hcb_leads.updated_at', '>=', $from . ' 00:00:00')
             ->where('hcb_leads.updated_at', '<=', $to . ' 23:59:59')
+            ->where('hcb_leads.status_id', '=', self::SUCCESS_STATUS)
             ->orderBy('hcb_leads.updated_at')
             ->select(
                 'hcb_leads.created_at',
@@ -144,6 +147,7 @@ class HandJobLeadsQueryBuilder extends Connectors
             ->table('alfa_leads')
             ->where('updated_at', '>=', $from . ' 00:00:00')
             ->where('updated_at', '<=', $to . ' 23:59:59')
+            ->where('status_id', '=', self::SUCCESS_STATUS)
             ->orderBy('updated_at')
             ->select(
                 'created_at',
@@ -162,44 +166,5 @@ class HandJobLeadsQueryBuilder extends Connectors
         );
 
         return $alfaLeads;
-    }
-
-    /**
-     * Выборка из БД лидов, отправленных в Форте Банк
-     *
-     * @param $from
-     * @param $to
-     *
-     * @return mixed
-     */
-    public function getForteLeads($from, $to)
-    {
-        $queryForForteLeads = $this->connect
-            ->table('forte_leads')
-            ->where('updated_at', '>=', $from . ' 00:00:00')
-            ->where('updated_at', '<=', $to . ' 23:59:59')
-            ->where('status_id', '=', self::SUCCESS_STATUS)
-            ->orderBy('updated_at')
-            ->select(
-                'created_at',
-                'updated_at',
-                'first_name',
-                'last_name',
-                'middle_name',
-                'phone',
-                'iin',
-                'product',
-                'amount',
-                'region'
-            )
-        ;
-        $forteLeads         = json_decode(
-            json_encode(
-                $queryForForteLeads->get()
-                                  ->toArray()
-            ), true
-        );
-
-        return $forteLeads;
     }
 }
