@@ -33,11 +33,7 @@
                             <th>
                                 {{ trans('cruds.category.fields.is_active') }}
                             </th>
-                            <th>
-                                {{ trans('cruds.category.fields.created_at') }}
-                            </th>
-
-                            <th>
+                            <th colspan="3">
                                 {{ trans('cruds.manage') }}
                             </th>
                         </tr>
@@ -58,23 +54,22 @@
                                     {{ $category->is_active == 1 ? 'Да' : 'Нет' }}
                                 </td>
                                 <td>
-                                    {{ $category->created_at ?? '' }}
-                                </td>
-                                <td>
                                     @can('category_show')
                                         <a class="btn btn-xs btn-primary"
                                            href="{{ route('admin.category.show', $category->id) }}">
                                             {{ trans('global.view') }}
                                         </a>
                                     @endcan
-
+                                </td>
+                                <td>
                                     @can('category_edit')
                                         <a class="btn btn-xs btn-info"
                                            href="{{ route('admin.category.edit', $category->id) }}">
                                             {{ trans('global.edit') }}
                                         </a>
                                     @endcan
-
+                                </td>
+                                <td class="table-danger">
                                     @can('category_delete')
                                         <form action="{{ route('admin.category.destroy', $category->id) }}"
                                               method="POST"

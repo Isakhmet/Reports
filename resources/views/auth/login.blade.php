@@ -3,14 +3,14 @@
     <div class="login-box">
         <div class="login-logo">
             <div class="login-logo">
-                <a href="#">
+                <a href="/">
                     {{ trans('panel.site_title') }}
                 </a>
             </div>
         </div>
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Войдите, чтобы просматривать отчеты</p>
+                <p class="login-box-msg">Введите данные для авторизации</p>
                 @if(\Session::has('message'))
                     <p class="alert alert-info">
                         {{ \Session::get('message') }}

@@ -4,7 +4,7 @@
 
         <div class="card">
             <div class="card-header">
-                {{ trans('global.show') }} {{ trans('cruds.user.title') }}
+                {{ trans('global.show') }} {{ trans('cruds.user.title_singular_one') }}
             </div>
             <div class="card-body">
                 <div class="mb-2">
@@ -55,7 +55,7 @@
                         </tbody>
                     </table>
                     <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
-                        {{ trans('global.back_to_list') }}
+                        {{ trans('global.back_to_list') }} {{ trans('cruds.user.title_singular') }}
                     </a>
                 </div>
 

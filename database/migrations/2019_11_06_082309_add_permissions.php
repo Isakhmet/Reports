@@ -27,6 +27,7 @@ class AddPermissions extends Migration
               [
                   [
                       'id'         => 1,
+                      'code'       => 'user_management_access',
                       'title'      => 'user_management_access',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -34,6 +35,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 2,
+                      'code'       => 'permission_create',
                       'title'      => 'permission_create',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -41,6 +43,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 3,
+                      'code'       => 'permission_edit',
                       'title'      => 'permission_edit',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -48,6 +51,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 4,
+                      'code'       => 'permission_show',
                       'title'      => 'permission_show',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -55,6 +59,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 5,
+                      'code'       => 'permission_delete',
                       'title'      => 'permission_delete',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -62,6 +67,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 6,
+                      'code'       => 'permission_access',
                       'title'      => 'permission_access',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -69,6 +75,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 7,
+                      'code'       => 'role_create',
                       'title'      => 'role_create',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -76,6 +83,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 8,
+                      'code'       => 'role_edit',
                       'title'      => 'role_edit',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -83,6 +91,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 9,
+                      'code'       => 'role_show',
                       'title'      => 'role_show',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -90,6 +99,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 10,
+                      'code'       => 'role_delete',
                       'title'      => 'role_delete',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -97,6 +107,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 11,
+                      'code'       => 'role_access',
                       'title'      => 'role_access',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -104,6 +115,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 12,
+                      'code'       => 'user_create',
                       'title'      => 'user_create',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -111,6 +123,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 13,
+                      'code'       => 'user_edit',
                       'title'      => 'user_edit',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -118,6 +131,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 14,
+                      'code'       => 'user_show',
                       'title'      => 'user_show',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -125,6 +139,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 15,
+                      'code'       => 'user_delete',
                       'title'      => 'user_delete',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -132,6 +147,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 16,
+                      'code'       => 'user_access',
                       'title'      => 'user_access',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -139,6 +155,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 17,
+                      'code'       => 'report_access',
                       'title'      => 'report_access',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -146,6 +163,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 18,
+                      'code'       => 'root',
                       'title'      => 'root',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -153,6 +171,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 19,
+                      'code'       => 'report_show',
                       'title'      => 'report_show',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -160,6 +179,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 20,
+                      'code'       => 'report_create',
                       'title'      => 'report_create',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -167,6 +187,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 21,
+                      'code'       => 'report_edit',
                       'title'      => 'report_edit',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -174,6 +195,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 22,
+                      'code'       => 'report_delete',
                       'title'      => 'report_delete',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -181,6 +203,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 23,
+                      'code'       => 'category_access',
                       'title'      => 'category_access',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -188,6 +211,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 24,
+                      'code'       => 'category_create',
                       'title'      => 'category_create',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -195,6 +219,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 25,
+                      'code'       => 'category_show',
                       'title'      => 'category_show',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -202,6 +227,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 26,
+                      'code'       => 'category_edit',
                       'title'      => 'category_edit',
                       'created_at' => $date,
                       'updated_at' => $date,
@@ -209,6 +235,7 @@ class AddPermissions extends Migration
                   ],
                   [
                       'id'         => 27,
+                      'code'       => 'category_delete',
                       'title'      => 'category_delete',
                       'created_at' => $date,
                       'updated_at' => $date,

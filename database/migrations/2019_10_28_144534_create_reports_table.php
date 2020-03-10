@@ -18,7 +18,7 @@ class CreateReportsTable extends Migration
             $table->string('code', 255);
             $table->string('name', 255);
             $table->boolean('is_active')->default(true);
-            $table->string('category_id', 100);
+            $table->integer('category_id');
             $table->timestamps();
             $table->softDeletes()->default(null);
         });
