@@ -202,4 +202,43 @@ class HandJobLeadsQueryBuilder extends Connectors
 
         return $forteLeads;
     }
+
+    /**
+     * Выборка из БД лидов, отправленных в Евразийский Банк
+     *
+     * @param $from
+     * @param $to
+     *
+     * @return mixed
+     */
+    public function getEubankLeads($from, $to)
+    {
+        $queryForEubankLeads = $this->connect
+            ->table('evraz_leads')
+            ->where('updated_at', '>=', $from . ' 00:00:00')
+            ->where('updated_at', '<=', $to . ' 23:59:59')
+            ->where('status_id', '=', self::SUCCESS_STATUS)
+            ->orderBy('updated_at')
+            ->select(
+                'created_at',
+                'updated_at',
+                'first_name',
+                'last_name',
+                'middle_name',
+                'phone',
+                'iin',
+                'product',
+                'amount',
+                'region'
+            )
+        ;
+        $eubankLeads         = json_decode(
+            json_encode(
+                $queryForEubankLeads->get()
+                                   ->toArray()
+            ), true
+        );
+
+        return $eubankLeads;
+    }
 }
