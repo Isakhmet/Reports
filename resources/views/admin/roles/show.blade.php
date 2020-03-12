@@ -4,7 +4,7 @@
 
         <div class="card">
             <div class="card-header">
-                {{ trans('global.show') }} {{ trans('cruds.role.title_singular_one') }}
+                {{ trans('global.show') }} {{ trans('cruds.role.title') }}
             </div>
 
             <div class="card-body">
@@ -29,42 +29,18 @@
                         </tr>
                         <tr>
                             <th>
-                                {{ trans('cruds.role.fields.badge_role') }}
-                            </th>
-                            <td>
-                                <span class="badge badge-pill {{ $role->badge_role }}">{{ $role->badge_role }}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {{ trans('cruds.role.fields.permissions') }}
+                                Permissions
                             </th>
                             <td>
                                 @foreach($role->permissions as $id => $permissions)
-                                    <span class="label label-success label-many" style="font-size: large">{{ $permissions->title }}<br></span>
+                                    <span class="label label-info label-many">{{ $permissions->title }}</span>
                                 @endforeach
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {{ trans('cruds.role.fields.created_at') }}
-                            </th>
-                            <td>
-                                {{ $role->created_at }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {{ trans('cruds.role.fields.updated_at') }}
-                            </th>
-                            <td>
-                                {{ $role->updated_at }}
                             </td>
                         </tr>
                         </tbody>
                     </table>
                     <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
-                        {{ trans('global.back_to_list') }} {{ trans('cruds.role.title_singular') }}
+                        {{ trans('global.back_to_list') }}
                     </a>
                 </div>
 

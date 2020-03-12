@@ -23,7 +23,7 @@ class StoreReportRequest extends FormRequest
             'name'    => [
                 'required',
             ],
-            'category_id'  => [
+            'category'  => [
                 'integer',
             ],
             'is_active'  => [

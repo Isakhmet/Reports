@@ -4,7 +4,7 @@
         @can('category_create')
             <div class="card">
                 <div class="card-header">
-                    {{ trans('global.create') }} {{ trans('cruds.category.title_singular_one') }}
+                    {{ trans('global.create') }} {{ trans('cruds.category.title_singular') }}
                 </div>
 
                 <div class="card-body">

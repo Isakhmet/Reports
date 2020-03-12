@@ -42,26 +42,10 @@
                                     {{ $category->is_active == 1 ? 'Да' : 'Нет' }}
                                 </td>
                             </tr>
-                            <tr>
-                                <th>
-                                    {{ trans('cruds.category.fields.created_at') }}
-                                </th>
-                                <td>
-                                    {{ $category->created_at }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    {{ trans('cruds.category.fields.updated_at') }}
-                                </th>
-                                <td>
-                                    {{ $category->updated_at }}
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
                         <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
-                            {{ trans('global.back_to_list') }} {{ trans('cruds.category.title_singular_many') }}
+                            {{ trans('global.back_to_list') }}
                         </a>
                     </div>
 

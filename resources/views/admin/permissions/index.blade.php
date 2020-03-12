@@ -4,7 +4,7 @@
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ route("admin.permissions.create") }}">
-                    {{ trans('global.add') }} {{ trans('cruds.permission.title_singular_one') }}
+                    {{ trans('global.add') }} {{ trans('cruds.permission.title_singular') }}
                 </a>
             </div>
         </div>
@@ -13,7 +13,7 @@
     @can('permission_access')
         <div class="card">
             <div class="card-header">
-                {{ trans('global.list') }} {{ trans('cruds.permission.title_singular') }}
+                {{ trans('cruds.permission.title_singular') }} {{ trans('global.list') }}
             </div>
 
             <div class="card-body">
@@ -25,9 +25,6 @@
                                 {{ trans('cruds.permission.fields.title') }}
                             </th>
                             <th>
-                                {{ trans('cruds.permission.fields.code') }}
-                            </th>
-                            <th colspan="3" style="text-align: center;">
                                 {{ trans('cruds.manage') }}
                             </th>
                         </tr>
@@ -37,30 +34,25 @@
                             @if ($permission->id == 18)
                                 @else
 
-                            <tr data-entry-id="{{ $permission->id }}" data-sort="{{ $permission->id }}">
+                            <tr data-entry-id="{{ $permission->id }}">
                                 <td>
                                     {{ $permission->title ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $permission->code ?? '' }}
-                                </td>
-                                <td>
                                     @can('permission_show')
-                                        <a class="btn btn-sm btn-primary"
+                                        <a class="btn btn-xs btn-primary"
                                            href="{{ route('admin.permissions.show', $permission->id) }}">
                                             {{ trans('global.view') }}
                                         </a>
                                     @endcan
-                                </td>
-                                <td class="align-content-center">
+
                                     @can('permission_edit')
-                                        <a class="btn btn-sm btn-info "
+                                        <a class="btn btn-xs btn-info"
                                            href="{{ route('admin.permissions.edit', $permission->id) }}">
                                             {{ trans('global.edit') }}
                                         </a>
                                     @endcan
-                                </td>
-                                <td class="table-danger">
+
                                     @can('permission_delete')
                                         <form action="{{ route('admin.permissions.destroy', $permission->id) }}"
                                               method="POST"
@@ -68,7 +60,7 @@
                                               style="display: inline-block;">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="submit" class="btn btn-sm btn-danger"
+                                            <input type="submit" class="btn btn-xs btn-danger"
                                                    value="{{ trans('global.delete') }}">
                                         </form>
                                     @endcan
@@ -92,10 +84,10 @@
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
             $.extend(true, $.fn.dataTable.defaults, {
-                order:      [[0, 'asc']],
-                pageLength: 25,
+                order:      [[1, 'asc']],
+                pageLength: 10,
             });
-            $('.datatable-User:not(.ajaxTable)').DataTable({buttons: dtButtons})
+
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 $($.fn.dataTable.tables(true)).DataTable()
                     .columns.adjust();

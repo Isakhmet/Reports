@@ -23,6 +23,7 @@ class StoreRoleRequest extends FormRequest
                 'integer',
             ],
             'permissions'   => [
+                'required',
                 'array',
             ],
         ];
