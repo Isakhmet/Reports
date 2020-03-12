@@ -16,7 +16,7 @@ class UpdatePermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => [
+            'code' => [
                 'required',
             ],
         ];

@@ -39,7 +39,7 @@
                             <th>
                                 {{ trans('cruds.report.fields.created_at') }}
                             </th>
-                            <th>
+                            <th colspan="3">
                                 {{ trans('cruds.manage') }}
                             </th>
                         </tr>
@@ -59,43 +59,45 @@
                                 <td style="text-align: center;">
                                     <h4>
                                         @foreach($report->category as $key => $item)
-                                           <span class="badge badge-warning">{{ $item->name }}</span>
+                                            <span class="badge badge-warning">{{ $item->name }}</span>
                                         @endforeach
                                     </h4>
                                 </td>
                                 <td style="text-align: center;">
                                     {{ $report->is_active == 1 ? 'Да' : 'Нет' }}
                                 </td>
-                                    <td>
-                                        {{ $report->created_at ?? '' }}
-                                    </td>
-                                    <td>
-                                        @can('report_show')
-                                            <a class="btn btn-xs btn-primary"
-                                               href="{{ route('admin.report.show', $report->id) }}">
-                                                {{ trans('global.view') }}
-                                            </a>
-                                        @endcan
-
-                                        @can('report_edit')
-                                            <a class="btn btn-xs btn-info"
-                                               href="{{ route('admin.report.edit', $report->id) }}">
-                                                {{ trans('global.edit') }}
-                                            </a>
-                                        @endcan
-
-                                        @can('report_delete')
-                                            <form action="{{ route('admin.report.destroy', $report->id) }}"
-                                                  method="POST"
-                                                  onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
-                                                  style="display: inline-block;">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                <input type="submit" class="btn btn-xs btn-danger"
-                                                       value="{{ trans('global.delete') }}">
-                                            </form>
-                                        @endcan
-                                    </td>
+                                <td>
+                                    {{ $report->created_at ?? '' }}
+                                </td>
+                                <td>
+                                    @can('report_show')
+                                        <a class="btn btn-sm btn-primary"
+                                           href="{{ route('admin.report.show', $report->id) }}">
+                                            {{ trans('global.view') }}
+                                        </a>
+                                    @endcan
+                                </td>
+                                <td>
+                                    @can('report_edit')
+                                        <a class="btn btn-sm btn-info"
+                                           href="{{ route('admin.report.edit', $report->id) }}">
+                                            {{ trans('global.edit') }}
+                                        </a>
+                                    @endcan
+                                </td>
+                                <td class="table-danger">
+                                    @can('report_delete')
+                                        <form action="{{ route('admin.report.destroy', $report->id) }}"
+                                              method="POST"
+                                              onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                              style="display: inline-block;">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="submit" class="btn btn-sm btn-danger"
+                                                   value="{{ trans('global.delete') }}">
+                                        </form>
+                                    @endcan
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

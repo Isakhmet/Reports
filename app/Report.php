@@ -20,6 +20,7 @@ class Report extends Model
     protected $fillable = [
         'code',
         'name',
+        'category_id',
         'is_active',
     ];
 

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'site_title'                           => 'Reports',
+    'site_title'                           => 'eports',
     'company_name_title'                   => 'prodengi.kz',
     'actions'                              => 'Действия',
     'add'                                  => 'Добавить',
@@ -9,11 +9,12 @@ return [
     'areYouSure'                           => 'Вы уверены?',
     'rootUser'                             => 'Вы не можете удалить этого пользователя!',
     'clickHereToVerify'                    => 'Нажмите сюда для верификации',
-    'create'                               => 'Создать',
+    'create'                               => 'Добавление',
     'dashboard'                            => 'Панель управления',
     'delete'                               => 'Удалить',
     'downloadFile'                         => 'Скачать файл',
     'edit'                                 => 'Редактировать',
+    'edit_singular'                        => 'Редактирование',
     'emailVerificationSuccess'             => 'Пользовательский email  успешно подтверждён',
     'entries'                              => 'Записи',
     'filterDate'                           => 'Фильтр по дате',
@@ -28,6 +29,8 @@ return [
     'month'                                => 'Месяц',
     'no'                                   => 'Нет',
     'pleaseSelect'                         => 'Выберите',
+    'profile'                              => 'Профиль',
+    'profile_manage'                       => 'Управление профилем',
     'register'                             => 'Регистрация',
     'redirect_to_site'                     => 'Перейти на сайт',
     'remember_me'                          => 'Запомнить меня',

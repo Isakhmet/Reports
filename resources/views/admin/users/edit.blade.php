@@ -4,7 +4,7 @@
 
         <div class="card">
             <div class="card-header">
-                {{ trans('global.edit') }} {{ trans('cruds.user.title_singular') }}
+                {{ trans('global.edit_singular') }} {{ trans('cruds.user.title_singular_one') }}
             </div>
 
             <div class="card-body">
@@ -52,9 +52,7 @@
                         </p>
                     </div>
                     <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
-                        <label for="roles">{{ trans('cruds.user.fields.roles') }}*
-                            <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
-                            <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
+                        <label for="roles">{{ trans('cruds.user.fields.roles') }}*</label>
                         <select name="roles[]" id="roles" class="form-control select2" required>
                             @foreach($roles as $id => $roles)
                                 @if ($id == 1)
@@ -75,7 +73,7 @@
                         </p>
                     </div>
                     <div>
-                        <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
+                        <input class="btn btn-success" type="submit" value="{{ trans('global.save') }} ">
                     </div>
                 </form>
 

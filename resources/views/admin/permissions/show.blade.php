@@ -4,7 +4,7 @@
 
         <div class="card">
             <div class="card-header">
-                {{ trans('global.show') }} {{ trans('cruds.permission.title') }}
+                {{ trans('global.show') }} {{ trans('cruds.permission.title_singular_one') }}
             </div>
 
             <div class="card-body">
@@ -27,10 +27,34 @@
                                 {{ $permission->title }}
                             </td>
                         </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.permission.fields.code') }}
+                            </th>
+                            <td>
+                                {{ $permission->code }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.permission.fields.created_at') }}
+                            </th>
+                            <td>
+                                {{ $permission->created_at }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.permission.fields.updated_at') }}
+                            </th>
+                            <td>
+                                {{ $permission->updated_at }}
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                     <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
-                        {{ trans('global.back_to_list') }}
+                        {{ trans('global.back_to_list') }} {{ trans('cruds.permission.title_singular') }}
                     </a>
                 </div>
 

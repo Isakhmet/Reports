@@ -4,7 +4,7 @@
 
         <div class="card">
             <div class="card-header">
-                {{ trans('global.edit') }} {{ trans('cruds.role.title_singular') }}
+                {{ trans('global.edit') }} {{ trans('cruds.role.title_singular_one') }}
             </div>
 
             <div class="card-body">
@@ -30,13 +30,12 @@
                         <label for="permissions">{{ trans('cruds.role.fields.permissions') }}*
                             <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
                             <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
-                        <select name="permissions[]" id="permissions" class="form-control select2" multiple="multiple"
-                                required>
-                            @foreach($permissions as $id => $permissions)
+                        <select name="permissions[]" id="permissions" class="form-control select2" multiple="multiple">
+                            @foreach($permissions as $id => $permission)
                                 @if ($id == 18)
                                 @else
                                 <option value="{{ $id }}" {{ (in_array($id, old('permissions', [])) || isset($role) && $role->permissions->contains($id)) ? 'selected' : '' }}>
-                                    {{ $permissions }}
+                                    {{ $permission }}
                                 </option>
                                 @endif
                             @endforeach
@@ -46,6 +45,19 @@
                                 {{ $errors->first('permissions') }}
                             </em>
                         @endif
+                        <label for="badge_role">{{ trans('cruds.role.fields.badge') }}*
+                            <select name="badge_role" id="badge_role" class="form-control" required>
+                                <option value="{{ $role->badge_role}}">{{ $role->badge_role }}</option>
+                                <option value="badge-light">light</option>
+                                <option value="badge-danger">danger</option>
+                                <option value="badge-dark">dark</option>
+                                <option value="badge-info">info</option>
+                                <option value="badge-primary">primary</option>
+                                <option value="badge-secondary">secondary</option>
+                                <option value="badge-success">success</option>
+                                <option value="badge-warning">warning</option>
+                            </select>
+                        </label>
                         <p class="helper-block">
                             {{ trans('cruds.role.fields.permissions_helper') }}
                         </p>
