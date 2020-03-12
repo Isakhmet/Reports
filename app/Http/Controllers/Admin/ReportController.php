@@ -20,19 +20,12 @@ class ReportController extends Controller
 
     public function create()
     {
-        $categories = CategoriesReport::all()
-                                 ->pluck('name', 'id')
-        ;
-
-        return view('admin.report.create', compact('categories'));
+        return view('admin.report.create');
     }
 
     public function store(StoreReportRequest $request)
     {
         $report = Report::create($request->all());
-        $report->category()
-             ->sync($request->input('category_id'))
-        ;
 
         return redirect()->route('admin.report.index');
     }
@@ -40,7 +33,7 @@ class ReportController extends Controller
     public function edit(Report $report)
     {
         $category = CategoriesReport::all()
-                                    ->pluck('name', 'id')
+                                    ->pluck('code', 'id')
         ;
         $report->load('category');
 

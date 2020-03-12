@@ -4,7 +4,7 @@
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ route("admin.roles.create") }}">
-                    {{ trans('global.add') }} {{ trans('cruds.role.title_singular_one') }}
+                    {{ trans('global.add') }} {{ trans('cruds.role.title_singular') }}
                 </a>
             </div>
         </div>
@@ -12,7 +12,7 @@
     @can('role_access')
         <div class="card">
             <div class="card-header">
-                {{ trans('global.list') }} {{ trans('cruds.role.title_singular') }}
+                {{ trans('cruds.role.title_singular') }} {{ trans('global.list') }}
             </div>
 
             <div class="card-body">
@@ -29,8 +29,14 @@
                             <th>
                                 {{ trans('cruds.role.fields.permissions') }}
                             </th>
-                            <th colspan="3" style="text-align: center;">
-                                {{ trans('cruds.manage') }}
+                            <th>
+                                Просмотр
+                            </th>
+                            <th>
+                                Редактирование
+                            </th>
+                            <th>
+                                Удаление
                             </th>
                         </tr>
                         </thead>
@@ -55,12 +61,12 @@
                                 <td>
                                     @can('role_show')
                                         @if ($role->id == 1)
-                                            <a class="btn btn-sm btn-primary disabled"
+                                            <a class="btn btn-sm btn-outline-primary disabled"
                                                href="{{ route('admin.roles.show', $role->id) }}">
                                                 {{ trans('global.view') }}
                                             </a>
                                         @else
-                                            <a class="btn btn-sm btn-primary"
+                                            <a class="btn btn-sm btn-outline-primary"
                                                href="{{ route('admin.roles.show', $role->id) }}">
                                                 {{ trans('global.view') }}
                                             </a>
@@ -70,19 +76,19 @@
                                 <td>
                                     @can('role_edit')
                                         @if ($role->id == 1)
-                                            <a class="btn btn-sm btn-info disabled"
+                                            <a class="btn btn-sm btn-outline-info disabled"
                                                href="{{ route('admin.roles.edit', $role->id) }}">
                                                 {{ trans('global.edit') }}
                                             </a>
                                         @else
-                                            <a class="btn btn-sm btn-info"
+                                            <a class="btn btn-sm btn-outline-info"
                                                href="{{ route('admin.roles.edit', $role->id) }}">
                                                 {{ trans('global.edit') }}
                                             </a>
                                         @endif
                                     @endcan
                                 </td>
-                                <td class="table-danger">
+                                <td>
                                     @can('role_delete')
                                         @if ($role->id == 1)
                                             <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST"
@@ -90,7 +96,7 @@
                                                   style="display: inline-block;">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                <input type="submit" class="btn btn-sm btn-danger"
+                                                <input type="submit" class="btn btn-sm btn-outline-danger"
                                                        value="{{ trans('global.delete') }}" disabled>
                                             </form>
                                         @else
@@ -99,7 +105,7 @@
                                                   style="display: inline-block;">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                <input type="submit" class="btn btn-sm btn-danger"
+                                                <input type="submit" class="btn btn-sm btn-outline-danger"
                                                        value="{{ trans('global.delete') }}">
                                             </form>
                                         @endif

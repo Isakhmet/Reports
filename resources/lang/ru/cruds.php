@@ -1,23 +1,20 @@
 <?php
 
 return [
-    'manage'           => 'Управление',
-    'userManagement'   => [
-        'title' => 'Пользователи',
+    'manage'         => 'Управление',
+    'userManagement' => [
+        'title'          => 'Управление пользователями',
+        'title_singular' => 'Управление пользователями',
     ],
     'reportManagement' => [
-        'title' => 'Управление отчетами',
+        'title'          => 'Управление отчетами',
     ],
-    'permission'       => [
-        'title'                   => 'Доступы',
-        'title_singular'          => 'доступов',
-        'title_singular_one'      => 'доступ',
-        'title_singular_one_edit' => 'доступа',
-        'fields'                  => [
+    'permission'     => [
+        'title'          => 'Доступы',
+        'title_singular' => 'Доступ',
+        'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
-            'code'              => 'Код для разрешения',
-            'code_helper'       => '',
             'title'             => 'Название',
             'title_helper'      => '',
             'created_at'        => 'Создан',
@@ -28,11 +25,10 @@ return [
             'deleted_at_helper' => '',
         ],
     ],
-    'role'             => [
-        'title'              => 'Роли',
-        'title_singular'     => 'ролей',
-        'title_singular_one' => 'роль',
-        'fields'             => [
+    'role'           => [
+        'title'          => 'Роли',
+        'title_singular' => 'Роль',
+        'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => '',
             'title'              => 'Название',
@@ -45,15 +41,12 @@ return [
             'updated_at_helper'  => '',
             'deleted_at'         => 'Удален',
             'deleted_at_helper'  => '',
-            'badge'              => 'Badge',
-            'badge_helper'       => '',
         ],
     ],
-    'user'             => [
-        'title'              => 'Пользователи',
-        'title_singular'     => 'пользователей',
-        'title_singular_one' => 'пользователя',
-        'fields'             => [
+    'user'           => [
+        'title'          => 'Пользователи',
+        'title_singular' => 'Пользователь',
+        'fields'         => [
             'id'                       => 'ID',
             'id_helper'                => '',
             'name'                     => 'Имя',
@@ -77,17 +70,16 @@ return [
             'is_active'                => 'Активен',
             'is_active_helper'         => '',
         ],
-        'roles_badges'       => 'badge-info',
+        'roles_badges'   => 'badge-info',
     ],
-    'report'           => [
-        'title'              => 'Отчеты',
-        'title_single'       => 'отчет',
-        'title_singular'     => 'отчетов',
-        'title_singular_one' => 'отчета',
-        'fields'             => [
+    'report'         => [
+        'title'          => 'Отчеты',
+        'title_single'   => 'отчет',
+        'title_singular' => 'отчетов',
+        'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
-            'code'              => 'Код отчета',
+            'code'              => 'Код',
             'code_helper'       => '',
             'name'              => 'Название',
             'name_helper'       => '',
@@ -103,12 +95,11 @@ return [
             'category_helper'   => '',
         ],
     ],
-    'category'         => [
+    'category'       => [
         'title'               => 'Категории ',
         'title_single'        => 'категория',
         'title_singular'      => 'категорию',
         'title_singular_many' => 'категорий',
-        'title_singular_one'  => 'категории',
         'fields'              => [
             'id'                => 'ID',
             'id_helper'         => '',
@@ -124,7 +115,7 @@ return [
             'updated_at_helper' => '',
         ],
     ],
-    'root'             => [
+    'root'           => [
         'users_view' => 'Просмотр всех пользователей',
     ],
 ];

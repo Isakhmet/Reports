@@ -144,13 +144,3 @@ body {
     font-size: 18px;
 }
 
-.logo-link {
-    text-decoration: none;
-    color: white;
-    padding-right: 10px;
-}
-.logo-link:hover {
-    text-decoration: none;
-    color: black;
-}
-

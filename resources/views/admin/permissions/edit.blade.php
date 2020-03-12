@@ -4,7 +4,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.edit_singular') }} {{ trans('cruds.permission.title_singular_one_edit') }}
+        {{ trans('global.edit') }} {{ trans('cruds.permission.title_singular') }}
     </div>
 
     <div class="card-body">
@@ -12,12 +12,9 @@
             @csrf
             @method('PUT')
             <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                <label for="title">{{ trans('cruds.permission.fields.title') }}</label>
-                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', isset($permission) ? $permission->title : '') }}">
-                <label for="code">{{ trans('cruds.permission.fields.code') }}*</label>
-                <input type="text" id="code" name="code" class="form-control" value="{{ old('code', isset($permission) ? $permission->code : '') }}" required>
-
-            @if($errors->has('code'))
+                <label for="title">{{ trans('cruds.permission.fields.title') }}*</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', isset($permission) ? $permission->title : '') }}" required>
+                @if($errors->has('title'))
                     <em class="invalid-feedback">
                         {{ $errors->first('title') }}
                     </em>

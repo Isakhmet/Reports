@@ -3,7 +3,7 @@
     @can('role_access')
         <div class="card">
             <div class="card-header">
-                {{ trans('global.create') }} {{ trans('cruds.role.title_singular_one') }}
+                {{ trans('global.create') }} {{ trans('cruds.role.title_singular') }}
             </div>
 
             <div class="card-body">
@@ -23,13 +23,14 @@
                         </p>
                     </div>
                     <div class="form-group {{ $errors->has('permissions') ? 'has-error' : '' }}">
-                        <label for="permissions">{{ trans('cruds.role.fields.permissions') }}
+                        <label for="permissions">{{ trans('cruds.role.fields.permissions') }}*
                             <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
                             <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
-                        <select name="permissions[]" id="permissions" class="form-control select2" multiple="multiple">
-                            @foreach($permissions as $id => $permission)
+                        <select name="permissions[]" id="permissions" class="form-control select2" multiple="multiple"
+                                required>
+                            @foreach($permissions as $id => $permissions)
                                 <option value="{{ $id }}" {{ (in_array($id, old('permissions', [])) || isset($role) && $role->permissions->contains($id)) ? 'selected' : '' }}>
-                                    {{ $permission }}
+                                    {{ $permissions }}
                                 </option>
                             @endforeach
                         </select>
@@ -41,20 +42,6 @@
                         <p class="helper-block">
                             {{ trans('cruds.role.fields.permissions_helper') }}
                         </p>
-                        <label for="badge_role">{{ trans('cruds.role.fields.badge') }}
-                            <select name="badge_role" id="badge_role" class="form-control">
-                                <option value="badge-info" selected></option>
-                                <option value="badge-light">light</option>
-                                <option value="badge-danger">danger</option>
-                                <option value="badge-dark">dark</option>
-                                <option value="badge-info">info</option>
-                                <option value="badge-pill ">pill</option>
-                                <option value="badge-primary">primary</option>
-                                <option value="badge-secondary">secondary</option>
-                                <option value="badge-success">success</option>
-                                <option value="badge-warning">warning</option>
-                            </select>
-                        </label>
                     </div>
                     <div>
                         <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">

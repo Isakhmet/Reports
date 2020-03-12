@@ -3,56 +3,36 @@
     @can('user_access')
         <div class="card">
             <div class="card-header">
-                {{ trans('global.create') }} {{ trans('cruds.report.title_singular_one') }}
+                {{ trans('global.create') }} {{ trans('cruds.report.title_single') }}
             </div>
 
             <div class="card-body">
                 <form action="{{ route("admin.report.store") }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                        <label for="name">{{ trans('cruds.report.fields.name') }}*</label>
-                        <input type="text" id="name" name="name" class="form-control"
-                               value="{{ old('name', isset($report) ? $report->name : '') }}" required>
-                        @if($errors->has('name'))
+                        <label for="title">{{ trans('cruds.report.fields.title') }}*</label>
+                        <input type="text" id="title" name="title" class="form-control"
+                               value="{{ old('title', isset($report) ? $report->name : '') }}" required>
+                        @if($errors->has('title'))
                             <em class="invalid-feedback">
-                                {{ $errors->first('name') }}
+                                {{ $errors->first('title') }}
                             </em>
                         @endif
                         <p class="helper-block">
-                            {{ trans('cruds.report.fields.name_helper') }}
+                            {{ trans('cruds.report.fields.title_helper') }}
                         </p>
                     </div>
-                    <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
-                        <label for="code">{{ trans('cruds.report.fields.code') }}*</label>
-                        <input type="text" id="code" name="code" class="form-control"
-                               value="{{ old('code', isset($report) ? $report->code : '') }}" required>
-                        @if($errors->has('code'))
+                    <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
+                        <label for="description">{{ trans('cruds.report.fields.description') }}*</label>
+                        <input type="text" id="description" name="description" class="form-control"
+                               value="{{ old('description', isset($report) ? $report->description : '') }}" required>
+                        @if($errors->has('description'))
                             <em class="invalid-feedback">
-                                {{ $errors->first('code') }}
+                                {{ $errors->first('description') }}
                             </em>
                         @endif
                         <p class="helper-block">
-                            {{ trans('cruds.report.fields.code_helper') }}
-                        </p>
-                    </div>
-                    <div class="form-group {{ $errors->has('category_id') ? 'has-error' : '' }}">
-                        <label for="category_id">{{ trans('cruds.report.fields.category') }}*</label>
-                        <select name="category_id" id="category_id" class="form-control select2"
-                                required>
-                            <option selected></option>
-                        @foreach($categories as $id => $category)
-                                <option value="{{ $id }}">
-                                    {{ $category }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('category_id'))
-                            <em class="invalid-feedback">
-                                {{ $errors->first('category_id') }}
-                            </em>
-                        @endif
-                        <p class="helper-block">
-                            {{ trans('cruds.report.fields.category_helper') }}
+                            {{ trans('cruds.report.fields.description_helper') }}
                         </p>
                     </div>
                     <div class="form-group {{ $errors->has('is_active') ? 'has-error' : '' }}">
