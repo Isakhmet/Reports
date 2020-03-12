@@ -11,7 +11,9 @@ npm-debug.log
 yarn-error.log
 /.idea
 public/css/*
-public/js/
+public/js/*
 !public/js/.gitkeep
 !public/css/.gitkeep
 !public/css/main.css
+!public/js/main.js
+!public/css/custom.css
