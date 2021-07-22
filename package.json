@@ -36,6 +36,6 @@
         "vue-thin-modal": "^1.3.0",
         "vuejs-datepicker": "^1.5.4",
         "vuejs-paginate": "^2.1.0",
-        "xlsx": "^0.15.1"
+        "xlsx": "^0.17.0"
     }
 }
